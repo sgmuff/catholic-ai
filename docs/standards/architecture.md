@@ -20,6 +20,8 @@ Every project exposes the same three commands, regardless of what's underneath t
 
 This is what lets `.github/workflows/ci.yml` pick up a new project automatically: it looks for these targets rather than knowing anything about the project's stack.
 
+For Python specifically — the default language for anything executable in this repository — [`docs/standards/python.md`](python.md) makes this concrete: which tools fill `lint` and `test`, what the `pyproject.toml` looks like, and a coverage floor CI enforces. [`docs/project-template/python-starter/`](../project-template/python-starter/) is a working skeleton that already satisfies it.
+
 ## Layout
 
 **Code projects** follow a conventional layout:

@@ -6,6 +6,20 @@ on:
   pull_request:
 
 jobs:
+  secret-scan:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # v3 requires a GITLEAKS_LICENSE secret only for organization-owned
+      # repos; none is needed while this stays under a personal account.
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   validate-skills:
     name: Validate skills
     runs-on: ubuntu-latest

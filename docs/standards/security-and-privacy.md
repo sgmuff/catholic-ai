@@ -4,7 +4,7 @@ Security and privacy matter here in two distinct ways, and a project has to sati
 
 ## Engineering the repository itself
 
-- **No secrets are committed.** Credentials, API keys, and tokens belong in environment variables or a secrets manager, never in source, fixtures, or example output. If one lands in history anyway, treat it as compromised and rotate it — do not just delete the file.
+- **No secrets are committed.** Credentials, API keys, and tokens belong in environment variables or a secrets manager, never in source, fixtures, or example output. If one lands in history anyway, treat it as compromised and rotate it — do not just delete the file. This is checked twice: `.pre-commit-config.yaml` runs `gitleaks` before a commit is made, and `.github/workflows/ci.yml` runs it again on every push and pull request as a backstop for anyone who skipped the hook.
 - **Dependencies are kept current.** A project's `setup` target should pin versions deliberately, not float on `latest`, and dependency updates should be reviewed rather than merged blind.
 - **CI tokens are least-privilege.** A workflow gets only the scope it needs to do its job — read access by default, write access only where a step genuinely writes.
 - **Test fixtures contain no real personal data.** Sample records, example forms, and demonstration inputs are fabricated or drawn from genuinely public sources, never lifted from a real person's file.

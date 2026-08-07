@@ -1,0 +1,32 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+
+# Node / TypeScript (some projects may use this stack instead)
+node_modules/
+dist/
+*.tsbuildinfo
+
+# OS and editor cruft
+.DS_Store
+.idea/
+.vscode/
+*.swp

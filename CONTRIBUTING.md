@@ -14,9 +14,10 @@ Both tracks answer to the same standards below. What differs is the register, no
 ## Adding a project
 
 1. Copy `docs/project-template/README.template.md` into a new directory under the appropriate track and fill it in completely — a project without a clear audience, status, and grounding isn't ready to add.
-2. Follow `docs/standards/architecture.md` for how the project is laid out and tested, `docs/standards/security-and-privacy.md` for the baseline it must meet, and `docs/standards/skills.md` if it introduces any Claude Skills.
+2. Follow `docs/standards/architecture.md` for how the project is laid out and tested, `docs/standards/security-and-privacy.md` for the baseline it must meet, and `docs/standards/skills.md` if it introduces any Claude Skills. If it's Python — the default for anything executable in this repository — follow `docs/standards/python.md`, or just copy `docs/project-template/python-starter/` and start from a skeleton that already satisfies it.
 3. Give the project a `Makefile` (or `justfile`) with at least `setup`, `test`, and `lint` targets, so it picks up CI automatically — see `.github/workflows/ci.yml`.
-4. Work through `docs/project-template/CHECKLIST.md` before marking the project's status as active.
+4. Run `pre-commit install` once (config is at `.pre-commit-config.yaml`) so lint, formatting, and secret-scan checks run before you commit rather than after CI catches them.
+5. Work through `docs/project-template/CHECKLIST.md` before marking the project's status as active.
 
 ## Citation integrity
 
