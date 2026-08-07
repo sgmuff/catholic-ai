@@ -1,0 +1,14 @@
+# Any change to what a principle means or how it's cited requires the named
+# theological reviewer's sign-off, separate from technical review.
+#
+# TODO (Next Action, due 2026-08-29): recruit or confirm a named theological
+# reviewer and replace the placeholder below before any rubric criteria are
+# written. Do not merge changes to principles/ or rubric/ against this
+# placeholder — it exists to make the missing sign-off visible, not to satisfy
+# the requirement.
+principles/  @TODO-theological-reviewer
+rubric/      @TODO-theological-reviewer
+
+# Technical maintainer: harness code, integrations, and repo scaffolding.
+eval/          @sgmuff
+integrations/  @sgmuff

@@ -1,0 +1,41 @@
+# The shape every file in principles/ follows. This file defines the schema;
+# it is not itself a principle entry. Changing it is a schema change, not a
+# theological one, but any resulting change to a principle file still needs
+# the sign-off in CODEOWNERS — see CONTRIBUTING.md.
+#
+# One voice, not two: there is no catholic/secular split in this schema. Every
+# principle is grounded directly in magisterial_citations, and description is
+# written so a reader who doesn't share the theology can still act on it
+# without the claim being restated in different terms elsewhere.
+
+id: string
+# kebab-case, matches the filename without extension, e.g. "subsidiarity"
+
+name: string
+# the principle's plain name, e.g. "Subsidiarity"
+
+magisterial_citations:
+# at least one entry; more where the tradition supports it
+  - source: string
+    # e.g. "Magnifica Humanitas", "Compendium of the Social Doctrine of the Church"
+    reference: string
+    # paragraph or section number, e.g. "MH 47" or "Compendium §186"
+
+description: string
+# plain-language, grounded explicitly in the citations above, actionable by an
+# institution regardless of whether it shares the theology
+
+tensions:
+# other principles this one commonly pulls against in practice
+  - principle: string
+    # another principle's id
+    summary: string
+    # one or two sentences on how the pull shows up in a real decision
+
+scenarios:
+# 2-3 worked examples per principle
+  - title: string
+    description: string
+    contested: boolean
+    # true if this is a genuinely hard case where two good principles
+    # disagree and it should route to human review, not be forced to a grade

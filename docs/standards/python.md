@@ -7,7 +7,7 @@ Most executable projects in this repository will be Python. This document is a l
 Python projects use a `src/` layout, not a flat one — it forces tests to import the package the way an installed user would, rather than accidentally passing because they're sitting next to the source:
 
 ```
-projects/<track>/<project-name>/
+<project-name>/
 ├── pyproject.toml
 ├── Makefile
 ├── src/

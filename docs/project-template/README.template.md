@@ -1,5 +1,5 @@
 <!--
-  Copy this file to projects/<track>/<project-name>/README.md and fill in every section.
+  Copy this file to <project-name>/README.md at the repository root and fill in every section.
   Delete this comment block once you do. A project without a clear audience, status, and
   grounding isn't ready to add — leaving a section blank is a sign to hold off, not to ship.
 -->
@@ -10,9 +10,10 @@
 
 ## Audience
 
-<Which track — catholic-institutions or secular-institutions — and, more specifically, which
-kind of institution: a diocese, a Catholic hospital system, a secular healthcare provider, a
-university, a parish, a company. Name the reader.>
+<Which kind(s) of institution this project serves — a diocese, a Catholic hospital system, a
+secular healthcare provider, a university, a parish, a company. Name the reader. If the project
+serves both confessional and secular institutions at once, say so and note anywhere the two
+readerships need different emphasis, not different claims.>
 
 ## Status
 
@@ -22,10 +23,10 @@ retired, with a pointer to what replaced it if applicable).>
 ## Grounding
 
 <Which CST principles this project rests on (subsidiarity, solidarity, the common good, human
-dignity — be specific about which ones and why), and which recognized secular framework(s) it
-maps against, if any (NIST AI RMF, ISO/IEC 42001, EU AI Act risk tiers). For a secular-track
-project, state explicitly how the CST grounding is translated into framing the audience doesn't
-need to share the theology to act on.>
+dignity — be specific about which ones and why), cited directly against their magisterial source,
+and which recognized secular framework(s) it maps against, if any (NIST AI RMF, ISO/IEC 42001, EU
+AI Act risk tiers). State plainly how a reader who doesn't share the theology can still act on the
+grounding without it being restated in different terms.>
 
 ## Stack
 

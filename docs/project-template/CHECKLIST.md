@@ -1,7 +1,7 @@
 <!--
-  Copy this file to projects/<track>/<project-name>/CHECKLIST.md if the project needs its own
-  (e.g. a non-code deliverable's review checklist). Code projects can point to this file directly
-  from their README instead of copying it, provided they don't need to extend it.
+  Copy this file to <project-name>/CHECKLIST.md at the repository root if the project needs its
+  own (e.g. a non-code deliverable's review checklist). Code projects can point to this file
+  directly from their README instead of copying it, provided they don't need to extend it.
 -->
 
 # Go-live checklist

@@ -27,7 +27,7 @@ For Python specifically — the default language for anything executable in this
 **Code projects** follow a conventional layout:
 
 ```
-projects/<track>/<project-name>/
+<project-name>/
 ├── README.md       # filled in from docs/project-template/README.template.md
 ├── Makefile        # setup, test, lint
 ├── src/
@@ -40,7 +40,7 @@ The internals of `src/` follow whatever is idiomatic for the language in use (`s
 **Non-code deliverables** (a policy template, a governance framework, a set of encyclical-grounded talking points) use the same root shape minus `src/` and `tests/`:
 
 ```
-projects/<track>/<project-name>/
+<project-name>/
 ├── README.md
 ├── Makefile        # setup (if needed), test → runs the checklist, lint (if applicable)
 ├── docs/            # the deliverable itself, plus supporting material
@@ -55,4 +55,4 @@ A project earns credibility with the audience it's written for by anchoring its 
 - **ISO/IEC 42001** — the AI management-system standard institutions may already be certifying against
 - **The EU AI Act's risk tiers** — for anything with a European or multinational audience
 
-Catholic Social Teaching — subsidiarity, solidarity, the common good, the dignity of the human person — is the throughline that unifies both tracks and the standard by which the frameworks above are themselves judged, not merely cited alongside them. A project on the secular-institutions track should still be built on this foundation; it simply argues from what the foundation implies rather than from the foundation itself.
+Catholic Social Teaching — subsidiarity, solidarity, the common good, the dignity of the human person — is the throughline every project in this repository is built on, and the standard by which the frameworks above are themselves judged, not merely cited alongside them. A project written for a secular audience still rests on this foundation; it simply argues from what the foundation implies, in terms that audience can act on, rather than from the foundation itself.

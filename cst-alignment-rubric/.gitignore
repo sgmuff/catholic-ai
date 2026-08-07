@@ -1,0 +1,4 @@
+# Generated advisory reports are run artifacts, not source — keep the
+# directory in git, not its contents.
+eval/reports/*
+!eval/reports/.gitkeep

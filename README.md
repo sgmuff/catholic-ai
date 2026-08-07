@@ -12,21 +12,18 @@ None of this is written in opposition to the tools themselves. The Church has ne
 
 ## How this repository works
 
-This is not one application but a home for several, added one at a time as they're ready. Each is a self-contained project that helps a real institution govern its use of AI responsibly, and each answers to the same standards regardless of what it's built with — the discipline is meant to feel the same in the tenth project as in the first.
+This is not one application but a home for several, added one at a time as they're ready. Each is a self-contained project, living in its own directory at the repository root, that helps a real institution govern its use of AI responsibly — and each answers to the same standards regardless of what it's built with, so the discipline feels the same in the tenth project as in the first.
 
-Every project sits on one of two tracks:
+There is no confessional/secular split between projects. Every project is grounded explicitly in Catholic Social Teaching — citing *Magnifica Humanitas* and the wider CST tradition directly — but written in a single voice that a diocese, a Catholic hospital, and a secular compliance officer or board can each act on without translation. The lineage is never hidden; the reasoning is never gated behind a shared theology the reader has to accept first.
 
-- **[`projects/catholic-institutions/`](projects/catholic-institutions/)** — work for dioceses, religious orders, Catholic universities, hospitals, and charities. These projects can speak in explicitly confessional terms, citing the Catechism, papal teaching, and canon law directly, because their audience already shares the Church's account of the human person.
-- **[`projects/secular-institutions/`](projects/secular-institutions/)** — work for institutions that don't start from that premise but end up in much the same place. These argue from the same commitments — subsidiarity, solidarity, the common good, a dignity no automated system may override — in terms a secular compliance officer or board can act on without first being persuaded of the theology underneath them.
-
-Both tracks are scaffolded and empty right now. Projects land here as the person maintaining this repository is ready to add them; there's nothing to browse yet beyond the standards that will govern what arrives.
+[`cst-alignment-rubric/`](cst-alignment-rubric/) is the first project to land here; see its own README for what it does.
 
 ## Repository layout
 
 ```
 catholic-ai/
 ├── README.md                        — this file
-├── CONTRIBUTING.md                  — the two tracks, how to add a project, citation and tone rules
+├── CONTRIBUTING.md                  — how to add a project, citation and tone rules
 ├── SECURITY.md                      — vulnerability disclosure
 ├── .gitignore / .env.example        — what never gets committed, and what local setup looks like
 ├── .pre-commit-config.yaml          — lint, formatting, and secret-scan checks run before a commit
@@ -42,14 +39,12 @@ catholic-ai/
 │       ├── CHECKLIST.md             — the go-live checklist before a project is marked active
 │       └── python-starter/          — a working Python project skeleton, ready to copy
 ├── skills/                          — Claude Skills shared across every project
-└── projects/
-    ├── catholic-institutions/       — explicitly confessional work
-    └── secular-institutions/        — the same principles, argued in secular-compatible terms
+└── <project-name>/                  — each project, one directory per project, at the repository root
 ```
 
 ## Standards
 
-Every project — whatever it's written in, whichever track it's on — is held to four documents in [`docs/standards/`](docs/standards/):
+Every project — whatever it's written in, whoever it's written for — is held to four documents in [`docs/standards/`](docs/standards/):
 
 | Standard | Covers |
 |---|---|
@@ -60,4 +55,4 @@ Every project — whatever it's written in, whichever track it's on — is held 
 
 ## Contributing
 
-[`CONTRIBUTING.md`](CONTRIBUTING.md) walks through adding a project end to end: which track it belongs on, what its README has to say before it's ready, and the checklist it clears before going active. Read it before opening a project directory of your own.
+[`CONTRIBUTING.md`](CONTRIBUTING.md) walks through adding a project end to end: what its README has to say before it's ready, and the checklist it clears before going active. Read it before opening a project directory of your own.

@@ -1,0 +1,19 @@
+# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
+# a named theological reviewer is recruited and confirmed (Next Action due
+# 2026-08-29). Shape follows principles/schema.yaml.
+
+id: universal-destination-of-goods
+name: "Universal Destination of Goods"
+
+magisterial_citations: []
+# TODO: cite against Magnifica Humanitas paragraph numbers plus the
+# Compendium/encyclical sources in The Seven Principles.
+
+description: ""
+# TODO: single voice, grounded in the citations above.
+
+tensions: []
+# TODO: which other principles this one commonly pulls against.
+
+scenarios: []
+# TODO: 2-3 worked examples, at least one marked contested: true.
