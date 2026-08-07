@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate-skills:
+    name: Validate skills
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find skill directories
+        id: find
+        run: |
+          find skills projects -type f -name SKILL.md 2>/dev/null \
+            | xargs -r -n1 dirname \
+            | sort -u > skill-dirs.txt || true
+          if [ -s skill-dirs.txt ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.find.outputs.found == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install skills-ref
+        if: steps.find.outputs.found == 'true'
+        run: pip install "git+https://github.com/agentskills/agentskills.git#subdirectory=skills-ref"
+
+      - name: Validate each skill
+        if: steps.find.outputs.found == 'true'
+        run: |
+          status=0
+          while IFS= read -r dir; do
+            echo "Validating $dir"
+            skills-ref validate "$dir" || status=1
+          done < skill-dirs.txt
+          exit $status
+
+  project-checks:
+    name: Project lint & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run setup, lint, and test for every project with a Makefile
+        run: |
+          shopt -s nullglob
+          makefiles=(projects/*/*/Makefile)
+          if [ "${#makefiles[@]}" -eq 0 ]; then
+            echo "No projects with a Makefile yet — nothing to run."
+            exit 0
+          fi
+          status=0
+          for mk in "${makefiles[@]}"; do
+            dir=$(dirname "$mk")
+            echo "::group::$dir"
+            make -C "$dir" setup lint test || status=1
+            echo "::endgroup::"
+          done
+          exit $status
