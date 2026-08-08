@@ -27,9 +27,9 @@ repos:
   # down the commit loop.
   - repo: local
     hooks:
-      - id: cst-alignment-rubric-lint-test
-        name: cst-alignment-rubric lint & test
-        entry: make -C cst-alignment-rubric lint test
+      - id: cst-finding-lint-test
+        name: cst-finding lint & test
+        entry: make -C cst-finding lint test
         language: system
         pass_filenames: false
         stages: [pre-push]

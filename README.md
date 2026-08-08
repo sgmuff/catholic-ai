@@ -16,7 +16,7 @@ This is not one application but a home for several, added one at a time as they'
 
 There is no confessional/secular split between projects. Every project is grounded explicitly in Catholic Social Teaching — citing *Magnifica Humanitas* and the wider CST tradition directly — but written in a single voice that a diocese, a Catholic hospital, and a secular compliance officer or board can each act on without translation. The lineage is never hidden; the reasoning is never gated behind a shared theology the reader has to accept first.
 
-[`cst-alignment-rubric/`](cst-alignment-rubric/) is the first project to land here; see its own README for what it does.
+[`cst-finding/`](cst-finding/) is the first project to land here; see its own README for what it does.
 
 ## Repository layout
 

@@ -28,5 +28,5 @@ Extends [`../docs/project-template/CHECKLIST.md`](../docs/project-template/CHECK
 - [ ] `rubric/known-tensions.md` documents at least three worked hard cases, including the preferential-option-vs-subsidiarity outreach-ranking case
 - [ ] `CODEOWNERS` names a real theological reviewer — the `@TODO-theological-reviewer` placeholder has been replaced
 - [ ] `docs/theological-review-log.md` has at least one dated, completed review entry
-- [ ] `eval/assessment.py` and the `rate-ai-against-cst` skill run against at least one real described AI use and one real audited prompt/response pair — both the bright-line and graded paths, for both subjects — and produce a report artifact, not just a stub
+- [ ] `eval/assessment.py` and the `cst-finding` skill run against at least one real described AI use and one real audited prompt/response pair — both the bright-line and graded paths, for both subjects — and produce a report artifact, not just a stub
 - [ ] A dry run has been completed against 2–3 real use cases (StarRez agentic-AI work, or a diocesan/parish scenario), with results recorded

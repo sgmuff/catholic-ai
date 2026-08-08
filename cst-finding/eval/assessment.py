@@ -1,4 +1,4 @@
-"""Validates a raw assessment (as produced by the `rate-ai-against-cst` skill,
+"""Validates a raw assessment (as produced by the `cst-finding` skill,
 either interviewing a user about a planned AI use or auditing an actual
 prompt/response pair) against the real principle and non-negotiable
 definitions in `principles/`, then renders and writes the advisory report —
@@ -194,7 +194,7 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         required=True,
         help="JSON file with the assessment to validate and render — "
-        "see .claude/skills/rate-ai-against-cst/references/assessment-schema.md",
+        "see .claude/skills/cst-finding/references/assessment-schema.md",
     )
     parser.add_argument("--principles-dir", type=Path, default=Path("principles"))
     parser.add_argument("--out-dir", type=Path, default=Path("eval/reports"))

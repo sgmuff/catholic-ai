@@ -1,5 +1,5 @@
 ---
-name: rate-ai-against-cst
+name: cst-finding
 description: Rates an AI subject against Catholic Social Teaching (the Compendium and Magnifica Humanitas) — either a planned/described AI use case, or an actual prompt/response pair from a deployed LLM being audited after the fact. Checks first whether the subject is flatly incompatible (e.g. an AI use or response that facilitates an elective abortion), and otherwise scores all eight principles with mitigations for anything weak. Use when someone wants to know whether an AI system, use case, or a specific AI response holds up against CST, or asks for this kind of rating or audit by name.
 ---
 
@@ -13,7 +13,7 @@ The judgment happens here, in conversation, grounded directly in `principles/*.y
 
 This skill is an orchestration layer over three things that already exist independently: the principle definitions, a two-stage rubric, and a validate-and-render CLI. It never calls an LLM API itself — the judgment happens in this conversation, using whichever model is already running it.
 
-**This skill's own files** (`.claude/skills/rate-ai-against-cst/`):
+**This skill's own files** (`.claude/skills/cst-finding/`):
 - `SKILL.md` — this file: the six-step procedure below.
 - `references/assessment-schema.md` — the exact JSON shape step 5 writes: two subject shapes (a described use, or a `prompt`/`response`/`model` triple) and two verdict shapes (a bright-line match, or eight graded ratings).
 

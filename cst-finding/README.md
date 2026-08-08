@@ -1,8 +1,10 @@
-# CST Alignment Rubric
+# CST Finding
 
 A schema, a graded rubric, and an advisory eval harness that let a team run an AI system against Catholic Social Teaching before it ships — the translation layer CST has never had, the way GDPR Art. 35 turned "protect fundamental rights" into a mandatory, auditable DPIA.
 
 It started life as `cst-model-constitution`. The rename matters and stays visible here: "constitution" implied this shapes model *behavior* the way training-time alignment does. Almost no institution using this repo trains foundation models; they call a vendor API. What this repo does is *audit and advise*, not train. Overclaiming that distinction is how a governance tool turns into ethics-washing — which is exactly what the section below exists to prevent.
+
+Renamed again, from `cst-alignment-rubric`, to match the Claude Skill that does the actual work: shorter, and named for what the tool produces — one advisory finding per subject, per `rubric/criteria.md` — rather than restating that it's a rubric, which the Non-Goals below already qualify heavily.
 
 ## Non-Goals
 
@@ -18,7 +20,7 @@ Any institution — Catholic or secular — that has to decide whether an AI sys
 
 ## Status
 
-`draft` (beta). All eight principles and the non-negotiables bright-line list are drafted and cited, and the assessment tool (`eval/assessment.py` + the `rate-ai-against-cst` skill) runs end to end — but every word of principle content is **unreviewed**: no theological reviewer has signed off yet. See [Definition of done (v0.1)](#definition-of-done-v01) for what "active" requires.
+`draft` (beta). All eight principles and the non-negotiables bright-line list are drafted and cited, and the assessment tool (`eval/assessment.py` + the `cst-finding` skill) runs end to end — but every word of principle content is **unreviewed**: no theological reviewer has signed off yet. See [Definition of done (v0.1)](#definition-of-done-v01) for what "active" requires.
 
 The theological-reviewer sign-off requirement in `CODEOWNERS` is paused for this beta phase (see `CONTRIBUTING.md` "Beta status") and will be reimposed, with retroactive review of anything written in the meantime, before this project leaves beta. Any principle or rubric content written during this period is unreviewed and must say so.
 
@@ -29,7 +31,7 @@ Eight principles, each cited directly against *Magnifica Humanitas* paragraph nu
 ## How it works, in plain terms
 
 1. **Write down the values.** Each of the eight principles gets its own file: what it means in plain terms, where it comes from in Church teaching, and which other principles it tends to clash with. A separate, smaller file — `principles/non-negotiables.yaml` — holds the handful of things CST treats as settled, not as one factor to weigh: direct abortion, euthanasia, direct killing of the innocent, systemic wage theft by design, and facilitation of trafficking or sexual exploitation — the last two added from the Catechism's "sins that cry to heaven" (CCC 1867) and Evangelium Vitae §3.
-2. **Bring a subject, in conversation.** The `rate-ai-against-cst` Claude Skill takes either of two things: someone deciding whether to build, buy, or keep running a specific AI use describes it — what it does, who it affects, what it decides — with follow-up questions only where the description is genuinely unclear; or someone with an actual prompt and response from a deployed AI system pastes them in verbatim to have that specific interaction audited after the fact.
+2. **Bring a subject, in conversation.** The `cst-finding` Claude Skill takes either of two things: someone deciding whether to build, buy, or keep running a specific AI use describes it — what it does, who it affects, what it decides — with follow-up questions only where the description is genuinely unclear; or someone with an actual prompt and response from a deployed AI system pastes them in verbatim to have that specific interaction audited after the fact.
 3. **Check the bright line first.** Before anything gets scored, the subject — the described use, or what the response actually said or did — is checked against `principles/non-negotiables.yaml`. If it matches, the assessment says so plainly and stops there — see [Non-Goals](#non-goals) and `rubric/criteria.md`.
 4. **Otherwise, score all eight principles.** Each principle gets a 1-5 score grounded in that principle's own description, a real rationale, and — for anything scoring 3 or below — a specific mitigation, not generic advice. A case where two good principles genuinely disagree gets flagged `contested`, not averaged into a single number.
 5. **Hand back a report, not a verdict.** Nothing here is a certification. A low score or even a bright-line match is a finding for a person to act on.
@@ -43,7 +45,7 @@ Three layers, each independent of the other two, wired together by one skill:
 
 **The rubric's algorithm — `rubric/`.** `criteria.md` is the source of truth for the two-stage process (bright-line gate, then graded rubric) that both the skill's procedure and `eval/`'s validation logic implement — if either ever drifts from what `criteria.md` says, `criteria.md` wins. `known-tensions.md` is the stress-test library of worked hard cases (two good principles genuinely in conflict) that back a `contested: true` finding instead of forcing a case to a single misleading number.
 
-**The orchestration — `.claude/skills/rate-ai-against-cst/`.** The `rate-ai-against-cst` Claude Skill is where the actual judgment happens, in conversation, grounded directly in `principles/*.yaml` and `non-negotiables.yaml` — it interviews the user (or takes a prompt/response pair to audit), reasons through the two-stage rubric, and writes the finished judgment as JSON matching `references/assessment-schema.md`. It never calls a separate LLM API; the model already running the conversation *is* the rater. See that skill's own `SKILL.md` for its six-step procedure and a file-level breakdown of what it reads and calls.
+**The orchestration — `.claude/skills/cst-finding/`.** The `cst-finding` Claude Skill is where the actual judgment happens, in conversation, grounded directly in `principles/*.yaml` and `non-negotiables.yaml` — it interviews the user (or takes a prompt/response pair to audit), reasons through the two-stage rubric, and writes the finished judgment as JSON matching `references/assessment-schema.md`. It never calls a separate LLM API; the model already running the conversation *is* the rater. See that skill's own `SKILL.md` for its six-step procedure and a file-level breakdown of what it reads and calls.
 
 **The validator and renderer — `eval/`.** Once the skill has written an assessment JSON, `eval/assessment.py` (the CLI both the skill and a human can call directly) loads real principle/non-negotiable ids via `eval/principles.py` and checks the JSON against them — a fabricated id, an out-of-range score, or a low score with no mitigation all fail loudly here rather than silently rendering. `eval/report.py` holds the `Assessment`/`PrincipleRating`/`BrightLineFinding` dataclasses and the Markdown renderer, reached only through `assessment.py`. The rendered report lands in `eval/reports/` (gitignored — advisory output, not a build artifact). `eval/` never makes a judgment call itself; it only catches a judgment that doesn't check out.
 
@@ -51,7 +53,7 @@ Three layers, each independent of the other two, wired together by one skill:
 
 ## Stack
 
-Python (`eval/`) for validating and rendering an assessment, following [`docs/standards/python.md`](../docs/standards/python.md) — it never calls an LLM itself; the judgment is made in conversation by whoever runs the `rate-ai-against-cst` skill, grounded directly in the principle files. YAML for the principle and non-negotiables schema and entries (`principles/`). Markdown for the rubric, tensions library, and integration docs — this repo is a hybrid of code and non-code deliverables, held to both halves of [`docs/standards/architecture.md`](../docs/standards/architecture.md).
+Python (`eval/`) for validating and rendering an assessment, following [`docs/standards/python.md`](../docs/standards/python.md) — it never calls an LLM itself; the judgment is made in conversation by whoever runs the `cst-finding` skill, grounded directly in the principle files. YAML for the principle and non-negotiables schema and entries (`principles/`). Markdown for the rubric, tensions library, and integration docs — this repo is a hybrid of code and non-code deliverables, held to both halves of [`docs/standards/architecture.md`](../docs/standards/architecture.md).
 
 ## Setup
 
@@ -67,7 +69,7 @@ Installs `eval/`'s dependencies (just `pyyaml` plus dev tooling) into a local `.
 
 ### Running an assessment
 
-The normal path is the `rate-ai-against-cst` Claude Skill (`.claude/skills/rate-ai-against-cst/`) — it either interviews you about a planned AI use, or takes an actual prompt/response pair to audit, does the rating itself in conversation grounded in `principles/*.yaml`, and calls the CLI below to validate and render the result. To run the CLI directly against an already-written assessment JSON (see `.claude/skills/rate-ai-against-cst/references/assessment-schema.md` for the shape):
+The normal path is the `cst-finding` Claude Skill (`.claude/skills/cst-finding/`) — it either interviews you about a planned AI use, or takes an actual prompt/response pair to audit, does the rating itself in conversation grounded in `principles/*.yaml`, and calls the CLI below to validate and render the result. To run the CLI directly against an already-written assessment JSON (see `.claude/skills/cst-finding/references/assessment-schema.md` for the shape):
 
 ```
 .venv/bin/python -m eval.assessment \
@@ -84,12 +86,12 @@ This project's outputs are advisory findings about *a described AI use or an aud
 
 ## Skills used or provided
 
-- `.claude/skills/rate-ai-against-cst` (project-local, not shared) — either interviews the user about a planned AI use, or takes an actual prompt/response pair to audit, and rates it against CST, checking `principles/non-negotiables.yaml` first. Lives under `.claude/skills/` rather than the repo's shared `skills/` convention so Claude Code actually discovers and can invoke it in this project — kept project-local because it's tightly coupled to this project's own principle files and file layout, not a capability another project could reuse as-is.
+- `.claude/skills/cst-finding` (project-local, not shared) — either interviews the user about a planned AI use, or takes an actual prompt/response pair to audit, and rates it against CST, checking `principles/non-negotiables.yaml` first. Lives under `.claude/skills/` rather than the repo's shared `skills/` convention so Claude Code actually discovers and can invoke it in this project — kept project-local because it's tightly coupled to this project's own principle files and file layout, not a capability another project could reuse as-is.
 
 ## Repo structure
 
 ```
-cst-alignment-rubric/
+cst-finding/
 ├── README.md                    # this file
 ├── CONTRIBUTING.md              # theological + technical review process
 ├── CODEOWNERS                   # named theological reviewer + technical maintainer
@@ -127,7 +129,7 @@ cst-alignment-rubric/
 │   └── usccb-foundational-documents-index.md # full USCCB list, what's cited vs. still Tier C
 ├── .claude/
 │   └── skills/
-│       └── rate-ai-against-cst/  # project-local Claude Skill: interview + rate
+│       └── cst-finding/  # project-local Claude Skill: interview + rate
 │           ├── SKILL.md
 │           └── references/
 │               └── assessment-schema.md
@@ -142,7 +144,7 @@ cst-alignment-rubric/
 - [ ] Eight principle files, fully cited against MH and the Compendium/encyclical sources in each principle's `magisterial_citations`
 - [ ] `principles/non-negotiables.yaml` reviewed and confirmed as the complete, correctly-scoped bright-line list
 - [ ] A known-tensions library with at least three worked hard cases
-- [ ] `eval/assessment.py` and the `rate-ai-against-cst` skill run against at least one real described use, and at least one real audited prompt/response pair, and produce a report artifact for each
+- [ ] `eval/assessment.py` and the `cst-finding` skill run against at least one real described use, and at least one real audited prompt/response pair, and produce a report artifact for each
 - [ ] A named theological reviewer listed in `CODEOWNERS` with at least one completed review logged in `docs/theological-review-log.md`
 - [ ] A dry run against 2–3 real use cases with results good enough to present publicly
 

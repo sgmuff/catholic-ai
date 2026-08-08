@@ -1,4 +1,4 @@
-# Contributing to cst-alignment-rubric
+# Contributing to cst-finding
 
 This project has two kinds of change, reviewed differently, per `CODEOWNERS`.
 
