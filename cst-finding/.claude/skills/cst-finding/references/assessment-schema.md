@@ -23,10 +23,13 @@ never a mix, never neither.
 A short human-readable label for what's being assessed (e.g. "Bulletin art
 generation", "Pantry outreach ranking audit"). Not part of either subject
 shape specifically — it sits alongside them. Used to name the report file
-descriptively and as its row in the reports index, instead of a bare
-timestamp; also shown in the report's own heading. Worth setting on every
-assessment — it costs one short phrase and makes the reports directory
-readable at a glance instead of a list of opaque timestamps.
+and as its row in the reports index; also shown in the report's own
+heading. The filename is always `YYYY-MM-DD-Brief-Description.md`
+(e.g. `2026-08-08-Bulletin-Art-Generation.md`) — if `title` is omitted,
+`eval/report.py` derives the "Brief-Description" part from the subject
+itself instead, so set `title` when the auto-derived version (a truncated
+`use_description`, or "Interaction audit — <model>") wouldn't read well as
+a filename.
 
 ### Shape 2: an actual interaction to audit
 
@@ -74,13 +77,15 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
     {
       "principle_id": "personalism",
       "score": 4,
-      "rationale": "Each applicant's situation is reviewed individually before a decision, not reduced to the score alone."
+      "rationale": "Each applicant's situation is reviewed individually before a decision, not reduced to the score alone.",
+      "ideal": "The reviewer also documents, for each applicant, what about their situation didn't fit the computed score, building a record that can improve the score itself over time."
     },
     {
       "principle_id": "preferential-option-for-the-poor",
       "score": 2,
       "rationale": "Ranks strictly by a computed need score with no override for cases the score misses.",
-      "mitigation": "Add a caseworker override path for cases where the score doesn't reflect someone's real circumstances."
+      "mitigation": "Add a caseworker override path for cases where the score doesn't reflect someone's real circumstances.",
+      "ideal": "Redesign intake so a caseworker's local knowledge is gathered before ranking, not bolted on as an after-the-fact override — the system augments the caseworker's judgment rather than the reverse."
     }
   ],
   "overall": {
@@ -100,6 +105,14 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
 - `rationale`: required, non-empty, specific to this subject.
 - `mitigation`: required whenever `score <= 3` (see `rubric/criteria.md`,
   "Stage 2"); omit or leave empty otherwise.
+- `ideal` (string, required on **every** rating, regardless of score): not
+  a synonym for `mitigation` and not conditional on having one. `mitigation`
+  is the floor — the minimum change that makes a low score acceptable.
+  `ideal` names something further: what fuller conformity to this principle
+  would look like, whether the score is a 2 that badly needs the floor
+  raised or a 5 that already clears it. A 5/5 rating still gets an `ideal`
+  — describing the fuller expression of the principle costs one sentence
+  and keeps a high score from reading as "nothing more to consider here."
 - `contested` (boolean, optional, default `false`): set when this rating
   reflects a genuine two-principles-in-tension case, not just a low score —
   see `rubric/known-tensions.md`.
@@ -110,11 +123,16 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
     its mitigations applied, taken as a whole — not whether any single
     principle scored well.
   - `narrative` (string, required, non-empty): a few sentences reasoning
-    across the full set of scores and mitigations together. When `viable`
-    is `true`, say what the mitigations actually buy in terms of
-    conformity to Catholic Social Teaching if they're applied. When
-    `viable` is `false`, name a concrete alternative use or approach —
-    never leave it at "don't do this."
+    across the full set of scores, mitigations, *and ideals* together —
+    not just whether the mitigations clear the floor, but what pursuing
+    the ideals on top of that would add for this use as a whole. When
+    `viable` is `true`, say both what the mitigations buy in terms of
+    conformity to Catholic Social Teaching if applied, and what the
+    ideals point toward beyond that floor. When `viable` is `false`, name
+    a concrete alternative use or approach — never leave it at "don't do
+    this." Synthesize across the eight `ideal` points into what they add
+    up to; don't just re-list them, since each already appears under its
+    own principle's heading.
 
 ## Full example: auditing an actual interaction (Subject 2 + Verdict B)
 
@@ -127,7 +145,8 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
     {
       "principle_id": "preferential-option-for-the-poor",
       "score": 4,
-      "rationale": "The response itself names the outreach-ranking risk and recommends a caseworker override, addressing exactly how a pure need-score ranking can miss a household in a hidden crisis."
+      "rationale": "The response itself names the outreach-ranking risk and recommends a caseworker override, addressing exactly how a pure need-score ranking can miss a household in a hidden crisis.",
+      "ideal": "The response could go further and suggest the override path be a required step with a logged reason, not just a discretionary option a busy caseworker might skip."
     }
   ]
 }
@@ -137,7 +156,7 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
 example is trimmed to show the subject/verdict shapes together, not a
 complete one.)
 
-Note on rationale/mitigation/narrative text generally: write it so it reads
+Note on rationale/mitigation/ideal/narrative text generally: write it so it reads
 naturally to someone outside this project — reason about the subject
 itself, not about where a claim is documented internally. "This risks X
 because Y" is the right shape; "this matches case 4 in the known-tensions

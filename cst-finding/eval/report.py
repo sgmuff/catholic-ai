@@ -1,9 +1,10 @@
 """The shape of a CST assessment, and how it's rendered and written. A
 report is a finding document, not a verdict — see rubric/criteria.md. It
 either states a bright-line incompatibility plainly, or gives all eight
-principles a graded score with a mitigation for anything scoring low. It
-never says "pass" or "fail," and it always names itself advisory and
-unreviewed (beta — see CONTRIBUTING.md).
+principles a graded score, a mitigation for anything scoring low, and an
+"ideal" describing fuller conformity beyond that floor. It never says
+"pass" or "fail," and it always names itself advisory and unreviewed
+(beta — see CONTRIBUTING.md).
 
 The same two-stage rubric runs against either of two subjects: a described,
 planned AI use (`Subject.kind == "use_case"`), or an actual prompt/response
@@ -51,13 +52,20 @@ class BrightLineFinding:
 
 @dataclass(frozen=True)
 class PrincipleRating:
-    """Stage 2 of rubric/criteria.md: one of the eight principles' scores."""
+    """Stage 2 of rubric/criteria.md: one of the eight principles' scores.
+
+    `mitigation` is the floor: the minimum change that makes a low score
+    acceptable. `ideal` is not a fallback for when `mitigation` is absent —
+    every rating carries one, describing fuller conformity to the principle
+    than the floor requires, whether or not there's a floor to clear.
+    """
 
     principle_id: str
     principle_name: str
     score: int
     rationale: str
     mitigation: str | None
+    ideal: str
     contested: bool = False
 
 
@@ -150,9 +158,21 @@ def _render_subject(subject: Subject) -> list[str]:
     return ["## Described use", "", subject.use_description or "", ""]
 
 
-def _slugify(text: str, max_len: int = 40) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return slug[:max_len].rstrip("-") or "untitled"
+def _title_case_slug(text: str, max_len: int = 60) -> str:
+    """Turns a label into the Title-Case-With-Hyphens form used in report
+    filenames (YYYY-MM-DD-Brief-Description.md) — capitalizes each word's
+    first letter without lowercasing the rest, so an acronym like "AI"
+    survives intact, and truncates on whole words rather than mid-word."""
+    words = [w[0].upper() + w[1:] if w else w for w in re.split(r"[^A-Za-z0-9]+", text) if w]
+    kept: list[str] = []
+    length = 0
+    for word in words:
+        added = len(word) + (1 if kept else 0)
+        if length + added > max_len:
+            break
+        kept.append(word)
+        length += added
+    return "-".join(kept) or "Untitled"
 
 
 def _subject_one_liner(assessment: Assessment) -> str:
@@ -233,8 +253,6 @@ def render_markdown(assessment: Assessment) -> str:
 
     lines.append("## Principle-by-principle rating")
     lines.append("")
-    lines.append(_summary_line(assessment.ratings))
-    lines.append("")
     for r in assessment.ratings:
         contested_tag = " *(contested: route to human review)*" if r.contested else ""
         lines.append(f"### {r.principle_name}: {r.score}/5{contested_tag}")
@@ -244,26 +262,8 @@ def render_markdown(assessment: Assessment) -> str:
         if r.mitigation:
             lines.append(f"**Mitigation:** {r.mitigation}")
             lines.append("")
-
-    low_scores = [r for r in assessment.ratings if r.mitigation]
-    if low_scores:
-        lines.append("## Mitigations")
+        lines.append(f"**Ideally:** {r.ideal}")
         lines.append("")
-        lines.append("Scored 3 or below; see the mitigation under each principle above:")
-        lines.append("")
-        lines.extend(_bulleted([f"{r.principle_name} ({r.score}/5)" for r in low_scores]))
-
-    contested = [r for r in assessment.ratings if r.contested]
-    if contested:
-        lines.append("## Contested")
-        lines.append("")
-        lines.append(
-            "The following principles reflect a genuine tension in the tradition "
-            "itself, not just a low score; route these to a person before acting "
-            "on the number alone. See each principle's rationale above:"
-        )
-        lines.append("")
-        lines.extend(_bulleted([f"{r.principle_name} ({r.score}/5)" for r in contested]))
 
     if assessment.overall is not None:
         lines.append("## Overall assessment")
@@ -303,10 +303,14 @@ def _update_index(out_dir: Path, assessment: Assessment, report_path: Path) -> N
 
 def write_report(assessment: Assessment, out_dir: Path) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
-    timestamp = assessment.generated_at.strftime("%Y%m%dT%H%M%SZ")
-    slug = _slugify(assessment.title) if assessment.title else None
-    filename = f"{timestamp}-{slug}.md" if slug else f"{timestamp}.md"
-    path = out_dir / filename
+    date = assessment.generated_at.strftime("%Y-%m-%d")
+    slug = _title_case_slug(_subject_one_liner(assessment))
+    base = f"{date}-{slug}"
+    path = out_dir / f"{base}.md"
+    suffix = 2
+    while path.exists():
+        path = out_dir / f"{base}-{suffix}.md"
+        suffix += 1
     path.write_text(render_markdown(assessment))
     _update_index(out_dir, assessment, path)
     return path

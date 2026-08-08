@@ -88,12 +88,19 @@ def _validate_rating(raw: dict[str, Any], principles: dict[str, Principle]) -> P
             f"{principle_id}: scored {score} (<= {MITIGATION_THRESHOLD}) but has no 'mitigation' "
             "— see rubric/criteria.md, Stage 2"
         )
+    ideal = raw.get("ideal")
+    if not ideal:
+        raise ValueError(
+            f"{principle_id}: 'ideal' is required on every rating, not just low-scoring ones — "
+            "it describes fuller conformity to the principle beyond the mitigation floor"
+        )
     return PrincipleRating(
         principle_id=str(principle_id),
         principle_name=principles[str(principle_id)].name,
         score=score,
         rationale=str(rationale).strip(),
         mitigation=str(mitigation).strip() if mitigation else None,
+        ideal=str(ideal).strip(),
         contested=bool(raw.get("contested", False)),
     )
 

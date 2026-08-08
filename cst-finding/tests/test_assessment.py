@@ -52,12 +52,14 @@ def _full_ratings() -> list[dict]:
             "principle_id": "personalism",
             "score": 4,
             "rationale": "Treats each person individually.",
+            "ideal": "Also document what made each case distinct, not just that it was reviewed.",
         },
         {
             "principle_id": "solidarity",
             "score": 2,
             "rationale": "No mechanism for shared accountability.",
             "mitigation": "Add a community feedback loop.",
+            "ideal": "Give the affected community a standing voice in how the system is run, not just a feedback channel.",
         },
     ]
 
@@ -184,6 +186,24 @@ def test_build_assessment_raises_on_low_score_without_mitigation(principles_dir:
     ratings[1].pop("mitigation")
 
     with pytest.raises(ValueError, match="no 'mitigation'"):
+        build_assessment({"use_description": "x", "ratings": ratings}, principles_dir)
+
+
+def test_build_assessment_raises_on_missing_ideal(principles_dir: Path):
+    ratings = _full_ratings()
+    ratings[0].pop("ideal")
+
+    with pytest.raises(ValueError, match="'ideal' is required"):
+        build_assessment({"use_description": "x", "ratings": ratings}, principles_dir)
+
+
+def test_build_assessment_raises_on_missing_ideal_even_with_high_score(principles_dir: Path):
+    # personalism scores 4 (no mitigation needed) but should still require 'ideal'.
+    ratings = _full_ratings()
+    assert ratings[0]["score"] == 4
+    ratings[0].pop("ideal")
+
+    with pytest.raises(ValueError, match="personalism: 'ideal' is required"):
         build_assessment({"use_description": "x", "ratings": ratings}, principles_dir)
 
 

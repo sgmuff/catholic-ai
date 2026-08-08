@@ -58,6 +58,7 @@ def _graded_assessment(
                 score=4,
                 rationale="Treats each applicant individually.",
                 mitigation=None,
+                ideal="Document, for each applicant, what about their situation the score missed.",
                 contested=False,
             ),
             PrincipleRating(
@@ -66,6 +67,7 @@ def _graded_assessment(
                 score=2,
                 rationale="Ranks strictly by a need score with no override.",
                 mitigation="Add a caseworker override for edge cases the score misses.",
+                ideal="Gather the caseworker's local knowledge before ranking, not as an after-the-fact override.",
                 contested=False,
             ),
             PrincipleRating(
@@ -74,6 +76,7 @@ def _graded_assessment(
                 score=3,
                 rationale="Automates a decision a local caseworker used to make.",
                 mitigation="Keep a human in the loop for borderline cases.",
+                ideal="Let the caseworker set the ranking criteria themselves rather than only reviewing the system's output.",
                 contested=True,
             ),
         ),
@@ -105,11 +108,19 @@ def test_graded_report_includes_scores_and_mitigations():
     assert "Add a caseworker override for edge cases the score misses." in text
 
 
-def test_graded_report_flags_contested_ratings_separately():
+def test_graded_report_flags_contested_ratings_inline():
     text = render_markdown(_graded_assessment())
     assert "*(contested: route to human review)*" in text
-    assert "## Contested" in text
-    assert "route these to a person before acting" in text
+
+
+def test_graded_report_has_no_mitigations_or_contested_roundup_sections():
+    # These used to be separate sections at the bottom, duplicating what's
+    # already stated under each principle's own heading — removed as
+    # redundant. The per-principle mitigation and contested tag are the only
+    # place this information appears now.
+    text = render_markdown(_graded_assessment())
+    assert "## Mitigations" not in text
+    assert "## Contested" not in text
 
 
 def test_graded_report_includes_summary_line():
@@ -119,11 +130,34 @@ def test_graded_report_includes_summary_line():
     assert "1 flagged contested: Subsidiarity" in text
 
 
-def test_graded_report_mitigations_and_contested_sections_do_not_repeat_rationale():
+def test_graded_report_summary_line_appears_only_once():
+    # It's quoted in "At a glance"; the per-principle section below it
+    # should not repeat the same computed sentence.
     text = render_markdown(_graded_assessment())
-    # The full rationale lives once, under the principle's own heading — the
-    # roundup sections at the bottom should reference it, not repeat it.
-    assert text.count("Automates a decision a local caseworker used to make.") == 1
+    assert text.count("1 of 3 principles scored 4 or higher") == 1
+
+
+def test_graded_report_includes_ideal_after_mitigation():
+    text = render_markdown(_graded_assessment())
+    mitigation_line = "**Mitigation:** Add a caseworker override for edge cases the score misses."
+    ideal_line = (
+        "**Ideally:** Gather the caseworker's local knowledge before ranking, "
+        "not as an after-the-fact override."
+    )
+    assert mitigation_line in text
+    assert ideal_line in text
+    assert text.index(mitigation_line) < text.index(ideal_line)
+
+
+def test_graded_report_includes_ideal_even_without_mitigation():
+    # Personalism scores 4/5 in the fixture and has no mitigation, but should
+    # still carry an "Ideally:" point.
+    text = render_markdown(_graded_assessment())
+    start = text.index("### Personalism: 4/5")
+    end = text.index("###", start + 1)
+    personalism_section = text[start:end]
+    assert "**Ideally:** Document, for each applicant" in personalism_section
+    assert "**Mitigation:**" not in personalism_section
 
 
 def test_bullet_lists_have_a_blank_line_between_items():
@@ -173,10 +207,10 @@ def test_graded_report_includes_not_viable_overall_section_with_alternative():
     assert "consider a human-run process instead" in text
 
 
-def test_write_report_creates_timestamped_file(tmp_path: Path):
+def test_write_report_uses_date_and_slug_filename(tmp_path: Path):
     assessment = _graded_assessment()
     path = write_report(assessment, tmp_path)
-    assert path == tmp_path / "20260102T030405Z.md"
+    assert path == tmp_path / "2026-01-02-An-AI-Triage-System-For-A-Diocesan-Food-Pantry.md"
     assert path.read_text() == render_markdown(assessment)
 
 
@@ -189,7 +223,21 @@ def test_write_report_creates_out_dir(tmp_path: Path):
 def test_write_report_uses_slug_from_title(tmp_path: Path):
     assessment = _graded_assessment(title="Bulletin Art Generation")
     path = write_report(assessment, tmp_path)
-    assert path.name == "20260102T030405Z-bulletin-art-generation.md"
+    assert path.name == "2026-01-02-Bulletin-Art-Generation.md"
+
+
+def test_write_report_title_slug_preserves_acronyms(tmp_path: Path):
+    assessment = _graded_assessment(title="AI use for bulletins")
+    path = write_report(assessment, tmp_path)
+    assert path.name == "2026-01-02-AI-Use-For-Bulletins.md"
+
+
+def test_write_report_avoids_filename_collision(tmp_path: Path):
+    first = write_report(_graded_assessment(title="Bulletin Art Generation"), tmp_path)
+    second = write_report(_graded_assessment(title="Bulletin Art Generation"), tmp_path)
+    assert first.name == "2026-01-02-Bulletin-Art-Generation.md"
+    assert second.name == "2026-01-02-Bulletin-Art-Generation-2.md"
+    assert first.exists() and second.exists()
 
 
 def test_render_markdown_heading_includes_title():
