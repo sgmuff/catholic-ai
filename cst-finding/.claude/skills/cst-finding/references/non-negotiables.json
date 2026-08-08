@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "id": "direct-abortion",
+      "title": "Direct (elective/procured) abortion",
+      "description": "An AI use that facilitates, recommends, or carries out the direct termination of a pregnancy — e.g. an assistant that helps someone plan, obtain, or carry out an elective abortion, or a system that routes a user toward abortion as a recommended option. Not the same question as a system that discusses abortion informationally, or one whose users may raise it among many topics; this item is about the AI use itself directing toward or enabling the act.",
+      "sharpest_instance_of": "dignity-and-inviolability-of-life",
+      "citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§155 (Ch. 3, §II, on the right to life as \"the first among rights and the condition for all other rights of the person\" — naming \"the illicitness of every form of procured abortion and of euthanasia\")"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§55 (Ch. 2, within \"The supreme value of human rights\" — naming \"induced abortion, killing of the innocent and euthanasia\" as denials of the right to life \"from conception to its natural end\" that the Church considers gravely wrong)"
+        }
+      ]
+    },
+    {
+      "id": "euthanasia-or-assisted-suicide",
+      "title": "Euthanasia or assisted suicide",
+      "description": "An AI use that facilitates, recommends, or carries out ending a person's life at their own request or a caregiver's, including an assistant that helps plan or obtain the means for assisted suicide, or a system that recommends withdrawing ordinary care with the intent of causing death rather than allowing it.",
+      "sharpest_instance_of": "dignity-and-inviolability-of-life",
+      "citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§155 (Ch. 3, §II, on the right to life as \"the first among rights and the condition for all other rights of the person\" — naming \"the illicitness of every form of procured abortion and of euthanasia\")"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§55 (Ch. 2, within \"The supreme value of human rights\" — naming \"induced abortion, killing of the innocent and euthanasia\" as denials of the right to life \"from conception to its natural end\" that the Church considers gravely wrong)"
+        }
+      ]
+    },
+    {
+      "id": "direct-killing-of-the-innocent",
+      "title": "Direct, intentional killing of an innocent person",
+      "description": "An AI use whose function is to identify, target, or cause the direct killing of a person who has done nothing to forfeit the right to life — the general case the two items above are specific instances of, and the tradition's own root case for this item: CCC 1867's \"blood of Abel,\" the first of the sins that cry to heaven. Covers uses outside those two categories: e.g. an autonomous system designed to select and kill a specific non-combatant, or an assistant that helps plan such an act.",
+      "sharpest_instance_of": "dignity-and-inviolability-of-life",
+      "citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§155 (Ch. 3, §II, on the right to life as \"the first among rights and the condition for all other rights of the person\" — naming \"the illicitness of every form of procured abortion and of euthanasia\")"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§55 (Ch. 2, within \"The supreme value of human rights\" — naming \"induced abortion, killing of the innocent and euthanasia\" as denials of the right to life \"from conception to its natural end\" that the Church considers gravely wrong)"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1867 (Part Three, Section One, Chapter One, Article 8, §V \"The Proliferation of Sin\" — naming \"the blood of Abel\" first among the \"sins that cry to heaven\")"
+        }
+      ]
+    },
+    {
+      "id": "systemic-wage-theft-by-design",
+      "title": "Systemic denial of a worker's due wages, by design",
+      "description": "An AI use whose function is to calculate, process, withhold, or report wages in a way designed to systematically deprive workers of wages they are legally and morally owed — e.g. a payroll or scheduling system built to under-report hours worked, misclassify workers to avoid wage obligations, or silently claw back earned pay, where the underpayment is the system's intended effect rather than an incidental bug or a good-faith dispute about how a contract or law applies. Not the same question as a payroll system that has an ordinary error rate, or one whose outputs are contested through a legitimate wage dispute — this item is about the AI use itself being built to produce the underpayment.",
+      "sharpest_instance_of": "personalism",
+      "citations": [
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1867 (Part Three, Section One, Chapter One, Article 8, §V \"The Proliferation of Sin\" — naming \"injustice to the wage earner\" among the \"sins that cry to heaven\")"
+        },
+        {
+          "source": "Evangelium Vitae",
+          "reference": "§3 (quoting Gaudium et Spes §27 verbatim — naming \"disgraceful working conditions, where people are treated as mere instruments of gain rather than as free and responsible persons\" among the \"infamies\" the passage says \"poison human society\")"
+        },
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§302 (Ch. 6, \"Human Work\" — \"they commit grave injustice who refuse to pay a just wage or who do not give it in due time and in proportion to the work done\"; \"natural justice precedes and is above the freedom of the contract\")"
+        }
+      ]
+    },
+    {
+      "id": "facilitation-of-trafficking-or-sexual-exploitation",
+      "title": "Facilitation of human trafficking or sexual exploitation",
+      "description": "An AI use that facilitates, recommends, or carries out human trafficking or the sexual exploitation of a person — e.g. a system that helps identify, recruit, transport, or advertise a person for trafficking or sexual exploitation, or that generates or distributes child sexual abuse material. Not the same question as a general-purpose system a user could misuse for this, or one that discusses the subject informationally (e.g. in a safety, legal, or support context); this item is about the AI use itself directing toward or enabling the act.\nNote on citations: this item's Catechism grounding is CCC 1867's traditional association of \"the sin of the Sodomites\" with the sins that cry to heaven — an association this project treats cautiously given the narrative's own more expansive reading (Genesis 19, Ezekiel 16:49-50) as violent exploitation of the vulnerable, not a general judgment on a class of persons. The description above is written to what both readings agree is gravely wrong, not the contested part. See ../docs/ccc-citation-map.md and ../CHECKLIST.md, which flags this as the one item in this file without a clean, uncontested translation into an AI-use bright line.",
+      "sharpest_instance_of": "dignity-and-inviolability-of-life",
+      "citations": [
+        {
+          "source": "Evangelium Vitae",
+          "reference": "§3 (quoting Gaudium et Spes §27 verbatim — naming \"the selling of women and children\" and \"prostitution\" among the \"infamies\" the passage says \"poison human society\")"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1867 (Part Three, Section One, Chapter One, Article 8, §V \"The Proliferation of Sin\" — naming \"the sin of the Sodomites\" among the \"sins that cry to heaven\"; see the note in this item's description above on how this project reads that association)"
+        }
+      ]
+    }
+  ]
+}

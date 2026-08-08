@@ -1,0 +1,369 @@
+{
+  "principles": [
+    {
+      "id": "common-good",
+      "name": "Common Good",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§164-170 (Ch. 4, §II, 'The Principle of the Common Good')"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§59-64 (Ch. 2, 'The principle of the common good')"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1905-1912 (Part Three, Section One, Chapter Two, Article 2, §II \"The Common Good\" — the same \"sum total of social conditions\" the Compendium's own §164 definition draws from)"
+        },
+        {
+          "source": "Gaudium et Spes",
+          "reference": "§26 (Second Vatican Council, 1965 — \"the sum of those conditions of social life which allow social groups and their individual members relatively thorough and ready access to their own fulfilment,\" the original source both the Compendium's and CCC's definitions draw from)"
+        }
+      ],
+      "description": "The common good is the set of social conditions that let people and groups reach their own fulfillment more fully and more easily (§164) — not simply the sum or average of individual goods, and not something any single group gets to claim exclusively for itself. The Compendium makes it everyone's responsibility, not just the state's, and ties the political community's core task to protecting the conditions — material, intellectual, moral, spiritual — that let people flourish. For an institution deploying an AI system, this principle asks whether its benefits actually reach the whole community it touches, or are concentrated in ways that let a well-served majority stand in for everyone.",
+      "tensions": [
+        {
+          "principle": "subsidiarity",
+          "summary": "The common good can motivate centralizing decisions to guarantee consistent outcomes for everyone, while subsidiarity insists decisions stay as close as possible to those affected. CST treats these as mutually correcting, not opposed, but a system built to optimize aggregate common-good metrics can drift toward centralizing judgment that subsidiarity would keep local."
+        },
+        {
+          "principle": "personalism",
+          "summary": "The common good is meant to serve persons, not subsume them into a population-level metric — see personalism.yaml."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "System-wide efficiency vs. an underserved subgroup",
+          "description": "An AI resource-allocation tool measurably improves outcomes for an institution as a whole but leaves a smaller subgroup — a minority-language population, a rural parish, a low-bandwidth region — worse served than before. Whose common good is actually being measured when \"overall\" numbers improve?",
+          "contested": false
+        },
+        {
+          "title": "Convenience for the many, burden for the few",
+          "description": "An AI-driven scheduling or intake system reduces friction for most users but creates real difficulty for a subset who can't use the interface — elderly parishioners, people without reliable internet. The common good asks whether that trade-off was made deliberately and disclosed, not just absorbed as an acceptable loss.",
+          "contested": false
+        }
+      ]
+    },
+    {
+      "id": "dignity-and-inviolability-of-life",
+      "name": "Dignity and Inviolability of Life",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§108 (the human person as imago Dei); §155 (Ch. 3, §IV, on the right to life)"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§51 (Ch. 2, 'The equal dignity of all human beings'); §55-56 (Ch. 2, within 'The supreme value of human rights', on the right to life 'from conception to its natural end' as first among rights)"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§2258 (Part Three, Section Two, Chapter Two, Article 5, opening statement — \"Human life is sacred... God alone is the Lord of life from its beginning until its end\"); §2270-2275 (abortion); §2276-2279 (euthanasia)"
+        },
+        {
+          "source": "Evangelium Vitae",
+          "reference": "§57 (John Paul II, 1995 — \"the deliberate decision to deprive an innocent human being of his life is always morally evil and can never be licit either as an end in itself or as a means to a good end\")"
+        }
+      ],
+      "description": "Human dignity rests on being made in the image of God (§108) — a status that doesn't rise or fall with a person's utility, health, productivity, or any score a system might assign them. Its most concrete expression is the right to life itself, described as the first among rights and the condition for the exercise of every other right (§155): not one interest to be weighed against others, but the ground every other claim stands on. For AI governance, this is the principle that refuses trade-off logic at the point where a system's decision could bear on someone's life or basic safety — no automated process gets to treat a human life as a variable in a cost-benefit calculation, however favorable the rest of the calculation looks.\nNote on non-negotiables.yaml: §155's own language — \"the illicitness of every form of procured abortion and of euthanasia\" — is what non-negotiables.yaml draws its bright-line gate from. That file exists because this principle's scenarios below are genuinely graded cases (triage under scarcity, a risk score feeding a safety decision); direct abortion, euthanasia, and direct killing of the innocent are not — they are this principle's sharpest, non-negotiable instance, checked before any of the eight principles are scored rather than scored alongside them.",
+      "tensions": [
+        {
+          "principle": "common-good",
+          "summary": "The common good is real and can pull toward aggregate optimization — a triage or resource-allocation system that produces better population-level outcomes overall. Dignity and inviolability of life is the hard limit: an individual life is never simply a variable to be traded against the aggregate, however favorable the trade looks in total."
+        },
+        {
+          "principle": "personalism",
+          "summary": "Closely related — personalism is the general claim that the person is never a mere means; this principle is its sharpest, least negotiable instance."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "AI-assisted triage under scarcity",
+          "description": "A hospital deploys an AI system to help allocate scarce critical-care resources during a surge. Any triage protocol involves prioritization, but this principle asks where the line falls between prioritizing under genuine scarcity and treating a person's life as a number to be optimized away.",
+          "contested": true
+        },
+        {
+          "title": "Predictive risk scores feeding directly into safety decisions",
+          "description": "An AI-generated risk score feeds into a decision that could affect someone's physical safety — a welfare-check dispatch, a discharge decision — with no human required to review a low-confidence or borderline score before it's acted on. Does removing the human step here cross a line this principle wouldn't allow, regardless of the model's accuracy?",
+          "contested": false
+        }
+      ]
+    },
+    {
+      "id": "personalism",
+      "name": "Personalism",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§105-107 (Ch. 3, §I, 'Social Doctrine and the Personalist Principle')"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§48 (Ch. 2, 'The human person: image of the Triune God')"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1701-1709 (Part Three, Section One, Chapter One, Article 1, \"Man: The Image of God\" — grounding the person's dignity in being made in the image of God, restored and ennobled in Christ)"
+        },
+        {
+          "source": "Gaudium et Spes",
+          "reference": "§22 (Second Vatican Council, 1965 — \"only in the mystery of the incarnate Word does the mystery of man take on light\"; Christ \"fully reveals man to man himself\")"
+        }
+      ],
+      "description": "The starting point for evaluating any social system, institutional decision, or technology is the individual person, not an abstraction, a statistic, or an aggregate outcome. The Compendium presents the human person, in his or her concrete reality, as the foundation the Church's social doctrine builds from and returns to (§105) — not economic structures, political ideologies, or collective utility taken on their own terms. Magnifica Humanitas doesn't use the term \"personalist principle,\" but opens its own account of Social Doctrine's foundations the same way: with the human person as image of the Triune God (§48), prior to and beneath any of the principles that follow. For an institution reviewing an AI system, personalism asks not only \"does this produce good aggregate results,\" but \"does this treat each person it touches as a subject with irreducible worth, not an instance in a dataset.\"",
+      "tensions": [
+        {
+          "principle": "common-good",
+          "summary": "Personalism insists the individual is never merely a means to a collective end, while the common good asks what serves the community as a whole. CST treats these as reinforcing rather than opposed, but a system tuned purely to aggregate or common-good metrics can, in practice, start treating individuals as instrumental to that aggregate."
+        },
+        {
+          "principle": "dignity-and-inviolability-of-life",
+          "summary": "Closely related rather than opposed — personalism is the general principle that the person is never a mere means; dignity and inviolability of life is its sharpest, least negotiable instance."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Aggregate accuracy vs. individual treatment",
+          "description": "An AI triage or scoring system achieves high aggregate accuracy but produces individually unjust or dehumanizing outcomes in some cases — flattening a person's actual circumstances into a score that doesn't reflect their situation. Does \"good enough on average\" satisfy personalism, or does every individual case need its own accounting?",
+          "contested": false
+        },
+        {
+          "title": "Replacing a caseworker's discretionary judgment",
+          "description": "A diocese or agency replaces a human caseworker's discretionary judgment in an assistance program with an AI recommendation the caseworker is expected to follow by default. Personalism asks whether the person receiving assistance is still being encountered as a subject to be understood, or processed as a case to be classified.",
+          "contested": false
+        },
+        {
+          "title": "Substituting AI-generated content where the human origin itself matters",
+          "description": "An AI-generated image, text, or other artifact stands in for something a person would otherwise have made, in a case where no one's livelihood is at stake and the AI output is technically comparable. Personalism's grounding in the human person as imago Dei (§105-107; Magnifica Humanitas §48) is also the grounding for human creative work itself as a participation in the Creator's own creativity, not an interchangeable way of producing a finished artifact. Does encountering the fruit of another person's genuine creative act carry a real value distinct from encountering a statistically-generated substitute, even when a recipient can't articulate the difference doctrinally? A documented, real reluctance toward pervasive AI-generated content (\"AI fatigue\") is one visible sign that recipients experience this as a loss, not merely a taste preference to be overridden by convenience or cost.",
+          "contested": false
+        }
+      ]
+    },
+    {
+      "id": "preferential-option-for-the-poor",
+      "name": "Preferential Option for the Poor",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§182 (Ch. 4, §III.c, 'The Universal Destination of Goods and the Preferential Option for the Poor')"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§77-79 (Ch. 2, within 'The principle of social justice', not its own heading); §78 names the preferential option specifically"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§2443-2449 (Part Three, Section Two, Chapter Two, Article 7, §VI \"Love for the Poor\" — \"God blesses those who come to the aid of the poor,\" part of the Church's \"constant tradition\")"
+        },
+        {
+          "source": "Sollicitudo Rei Socialis",
+          "reference": "§42 (John Paul II, 1987 — the encyclical that gives the phrase \"preferential option for the poor\" its clearest magisterial statement: \"an option, or a special form of primacy in the exercise of Christian charity, to which the whole tradition of the Church bears witness\")"
+        }
+      ],
+      "description": "Wherever the universal destination of goods can't be honored equally for everyone at once, priority goes to those with the least power, the fewest resources, and the weakest position to contest a bad decision — not as charity offered from a position of comfort, but as the concrete shape solidarity has to take when goods or attention are scarce (§182). For an AI system, this is the principle that asks who bears the cost of the system's errors. A false negative or a low-confidence score rarely lands evenly: the person who can't afford a second opinion, doesn't know how to appeal, or has no other option is usually the one who actually absorbs the system's mistake.\nNote on sourcing: unlike the Compendium, which folds this principle under the universal destination of goods (§182), Magnifica Humanitas places it under a different, broader principle it names explicitly — \"the principle of social justice\" (§77-81) — with the preferential option named at §78 as one expression of it, alongside a warning against a \"throw away culture\" that produces new forms of exclusion. This project now carries social justice as its own eighth principle (`social-justice.yaml`); see docs/magnifica-humanitas-findings.md for how that decision came about.",
+      "tensions": [
+        {
+          "principle": "subsidiarity",
+          "summary": "See subsidiarity.yaml and rubric/known-tensions.md's outreach-ranking case — priority for whoever has the least power to contest a decision can pull against trusting the judgment of whoever is locally closest to the case."
+        },
+        {
+          "principle": "universal-destination-of-goods",
+          "summary": "This principle is that one's practical edge under scarcity, not a separate claim — see universal-destination-of-goods.yaml."
+        },
+        {
+          "principle": "social-justice",
+          "summary": "See social-justice.yaml — Magnifica Humanitas treats this principle as one expression of social justice rather than a fully separate claim, though this project keeps both as distinct files because each foregrounds a different fix: this principle asks who bears the cost of a specific decision, social justice asks whether the system's structure produces that pattern \"automatically.\""
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Outreach ranking: the widow and the hidden crisis",
+          "description": "Ranking two households for limited outreach capacity: a bankrupt widow with a documented, visible need, and a stable-looking family secretly in crisis that a local caseworker knows about but the system's data doesn't reflect. See rubric/known-tensions.md.",
+          "contested": true
+        },
+        {
+          "title": "Error rates that fall unevenly by income",
+          "description": "An AI screening tool has a materially higher false-negative rate for applicants with no prior institutional history — no credit file, no prior case record, no digital paper trail — who are disproportionately the poorest applicants, even though its aggregate accuracy looks fine. Does the aggregate number satisfy this principle, or does the uneven failure mode itself violate it regardless of the overall score?",
+          "contested": false
+        }
+      ]
+    },
+    {
+      "id": "social-justice",
+      "name": "Social Justice",
+      "magisterial_citations": [
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§77-81 (Ch. 2, 'The principle of social justice')"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1928-1942 (Part Three, Section One, Chapter Two, Article 3, \"Social Justice\" — unlike the Compendium, the Catechism does give this its own heading, covering §I \"Respect for the Human Person\" (1929-1933), §II \"Equality and Differences Among Men\" (1934-1938), and §III \"Human Solidarity,\" 1939-1942, cited separately in solidarity.yaml)"
+        },
+        {
+          "source": "Quadragesimo Anno",
+          "reference": "§57-58 (Pius XI, 1931 — one of the term's own magisterial popularizations: distribution of goods \"must be effectively called back to and brought into conformity with the norms of the common good, that is, social justice\")"
+        }
+      ],
+      "description": "Social justice is the capacity of a social, economic, and political order to let everyone — particularly the weakest — live a genuinely dignified life, leaving no one behind (§77). What distinguishes it from the common good is where it locates the problem: social justice insists that injustice doesn't arise only from individual wrongdoing, but from \"structures, mechanisms and economic and cultural systems that produce inequality almost automatically\" (§79). Applied to AI, this is the principle that asks about the system's design and training data, not just its individual outputs: a model can produce no single decision anyone would call malicious and still reproduce or amplify a structural pattern of exclusion baked into the data or process it was built from. Social justice names that as a defect in the structure itself, not an acceptable side effect of otherwise-good individual decisions.",
+      "tensions": [
+        {
+          "principle": "preferential-option-for-the-poor",
+          "summary": "Magnifica Humanitas treats the preferential option for the poor as one concrete expression of social justice rather than a separate claim (§78) — closer to containment than tension. Where they can pull apart in practice: preferential option asks who bears the cost of a specific decision, while social justice asks whether the system's structure produces that pattern of cost-bearing \"automatically,\" which can call for a different kind of fix (redesigning the system, not just flagging individual cases)."
+        },
+        {
+          "principle": "common-good",
+          "summary": "A system can look fine by common-good metrics — aggregate conditions improved, most people better off — while still having a structural defect that social justice would flag: a training-data pattern or a design choice that systematically disadvantages one group, regardless of what the aggregate numbers show."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Structural bias reproduced without individual wrongdoing",
+          "description": "An AI hiring, lending, or admissions tool reproduces a historical pattern of exclusion present in its training data, systematically disadvantaging one group, even though no individual decision-maker acted with bad intent and aggregate accuracy metrics look fine. Social justice asks about the structure that produced the outcome, not whether any single decision can be pinned on someone.",
+          "contested": false
+        },
+        {
+          "title": "Group-level correction for a documented structural pattern",
+          "description": "An institution adjusts an AI system's thresholds or outputs by demographic group specifically to correct a documented structural disadvantage the system would otherwise reproduce. Is this a legitimate application of social justice's structural-correction logic, or does group-level adjustment cross into treating individuals differently based on group membership in a way that pulls against personalism's individual-based fairness? This mirrors real, unresolved debates about disparate impact vs. disparate treatment in algorithmic fairness.",
+          "contested": true
+        }
+      ]
+    },
+    {
+      "id": "solidarity",
+      "name": "Solidarity",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§192-196 (Ch. 4, §VI, 'The Principle of Solidarity')"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§73-76 (Ch. 2, 'The principle of solidarity')"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1939-1942 (Part Three, Section One, Chapter Two, Article 3, §III \"Human Solidarity\" — the closing subsection of the Catechism's own \"Social Justice\" article; see social-justice.yaml)"
+        },
+        {
+          "source": "Sollicitudo Rei Socialis",
+          "reference": "§38 (John Paul II, 1987 — the source of this file's own description: solidarity as \"a firm and persevering determination to commit oneself to the common good; that is to say to the good of all and of each individual, because we are all really responsible for all\")"
+        }
+      ],
+      "description": "Solidarity is both a social principle and a moral virtue: a firm, ongoing commitment to the good of all and of each individual, because everyone is genuinely responsible for everyone (§192). It isn't a passing feeling of sympathy at other people's troubles; it's a standing commitment that treats the wellbeing of people outside one's own institution, parish, or customer base as a real claim, not a footnote. For AI governance, solidarity is the check against building a system that serves the people already inside an institution's care very well while treating everyone else it displaces, excludes, or never reaches as someone else's problem.",
+      "tensions": [
+        {
+          "principle": "subsidiarity",
+          "summary": "The Compendium treats these two as deliberately paired: subsidiarity keeps solidarity from collapsing into a centralized program that overrides local particularity, and solidarity keeps subsidiarity from becoming an excuse to abandon people a local level can't adequately help on its own."
+        },
+        {
+          "principle": "universal-destination-of-goods",
+          "summary": "Closely aligned — solidarity is the moral commitment; universal destination of goods is the claim about what that commitment is actually owed against."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Adopting a vendor whose costs fall on people the institution never sees",
+          "description": "An institution adopts an AI system from a vendor whose training data sourcing, labor practices, or downstream effects burden workers or communities the institution never has to look at directly. Does the institution's own gain — efficiency, cost savings — outweigh a debt of solidarity it never has to reckon with because the cost is externalized?",
+          "contested": false
+        },
+        {
+          "title": "Data-sharing that helps many at a re-identification risk to a few",
+          "description": "A diocese or hospital system shares de-identified data into a broader AI research consortium that could improve care for many people, but a small number of individuals in the dataset could plausibly be re-identified given how narrow their circumstances are. Solidarity asks whose interests actually count in that trade.",
+          "contested": false
+        }
+      ]
+    },
+    {
+      "id": "subsidiarity",
+      "name": "Subsidiarity",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§185-188 (Ch. 4, §IV, 'The Principle of Subsidiarity')"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§68-72 (Ch. 2, 'The principle of subsidiarity'); §71 specifically extends the principle to AI and digital platforms"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§1883-1885 (Part Three, Section One, Chapter Two, Article 1, \"The Person and Society\" — naming subsidiarity explicitly and describing it as \"opposed to all forms of collectivism\")"
+        },
+        {
+          "source": "Quadragesimo Anno",
+          "reference": "§79-80 (Pius XI, 1931 — the encyclical that coined the principle: \"it is an injustice and at the same time a grave evil and a disturbance of right order to transfer to the larger and higher collectivity functions which can be performed and provided for by lesser and subordinate bodies\")"
+        }
+      ],
+      "description": "A decision or action belongs at the most immediate, local level capable of handling it well. A higher authority — a diocese, a state, a corporate parent — steps in only to help where a smaller community genuinely cannot act on its own, and never simply to replace or absorb what that smaller community could do itself (§185). Applied to AI governance, subsidiarity is a caution against exactly what AI systems are naturally good at: routing every judgment call up to a single model or a single dashboard because it's more efficient, even when the people closest to a situation could and should decide it themselves.\nMagnifica Humanitas makes this application explicit rather than leaving it to inference. §71 argues that in the digital era, the \"highest level\" subsidiarity has to reckon with isn't only the state — it's the handful of technology companies and platforms that hold de facto power over data, visibility, and the conditions of everyday digital life. Subsidiarity, on this reading, requires that such power not be exercised \"from above in an opaque and unilateral manner,\" but with transparency, accountability, and meaningful participation — naming independent checks, algorithmic transparency, and equitable data access as concrete expressions of the principle, not just goals in tension with it.",
+      "tensions": [
+        {
+          "principle": "common-good",
+          "summary": "See common-good.yaml — centralizing for consistency vs. keeping judgment local."
+        },
+        {
+          "principle": "preferential-option-for-the-poor",
+          "summary": "Subsidiarity says a decision belongs with whoever is closest to a situation; preferential option for the poor says outcomes should be weighted toward whoever has the least power to contest a bad decision. These can pull in different directions when the person closest to a case doesn't have the standing or resources to act on behalf of the most vulnerable party — see rubric/known-tensions.md's outreach-ranking case."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "A centralized recommendation applied uniformly across local sites",
+          "description": "A diocesan or hospital-system AI tool issues a single recommendation meant to apply across many local sites, each with circumstances the model wasn't tuned on. Does deploying it as a default overstep what subsidiarity would allow a central office to decide on behalf of the local level?",
+          "contested": false
+        },
+        {
+          "title": "Outreach ranking: the poor vs. the local",
+          "description": "An AI system ranks two households for limited outreach capacity: a bankrupt widow, and a stable-looking family secretly in crisis that a local caseworker knows about but the model doesn't. Preferential option for the poor pulls toward the widow on the visible data; subsidiarity pulls toward trusting the local caseworker's closer knowledge. See rubric/known-tensions.md.",
+          "contested": true
+        }
+      ]
+    },
+    {
+      "id": "universal-destination-of-goods",
+      "name": "Universal Destination of Goods",
+      "magisterial_citations": [
+        {
+          "source": "Compendium of the Social Doctrine of the Church",
+          "reference": "§171 (origin and meaning), §176-178 (relation to private property) (Ch. 4, §III)"
+        },
+        {
+          "source": "Magnifica Humanitas",
+          "reference": "§65-67 (Ch. 2, 'The principle of the universal destination of goods'); §67 explicitly names patents, algorithms, digital platforms, technological infrastructure, and data as goods this principle covers"
+        },
+        {
+          "source": "Catechism of the Catholic Church",
+          "reference": "§2402-2406 (Part Three, Section Two, Chapter Two, Article 7, §I \"The Universal Destination and the Private Ownership of Goods\" — private property \"does not do away with the original gift of the earth to the whole of mankind\")"
+        },
+        {
+          "source": "Populorum Progressio",
+          "reference": "§22-23 (Paul VI, 1967 — \"God intended the earth and everything in it for the use of all human beings and peoples\"; \"no one is justified in keeping for his exclusive use what he does not need, when others lack necessities\")"
+        }
+      ],
+      "description": "The goods of creation are meant for the whole human race, not for whoever happens to hold title to them at a given moment (§171). Private property is a real and legitimate right — it flows from labor and supports personal freedom and responsibility — but it remains subordinate to this more basic destination, not an absolute claim that overrides it (§176-178). Applied to AI, the clearest translation is data and the value AI systems generate from it: information about people, and the economic value an institution or vendor extracts from it, doesn't automatically belong exclusively to whoever holds the infrastructure just because they collected it. Ownership of a model, a dataset, or a platform is a real claim, but a stewardship claim before it's an absolute one.\nMagnifica Humanitas makes this connection directly rather than by analogy. §66 extends the universal destination beyond material goods to \"immaterial and cultural goods,\" and §67 names the concrete list: patents, algorithms, digital platforms, technological infrastructure, and data. It warns that when these remain concentrated in a few hands without adequate sharing or access, the imbalance widens the gap \"between those who can participate in the digital revolution and those who remain on the margins\" — the same logic §176-178 applies to land and material wealth, stated for the digital economy specifically.",
+      "tensions": [
+        {
+          "principle": "personalism",
+          "summary": "Private property, an application of this principle, is meant to support personal freedom and responsibility, so the two usually align. Tension appears when \"my data, my property\" framing is used to justify hoarding value CST would say is owed more broadly."
+        },
+        {
+          "principle": "preferential-option-for-the-poor",
+          "summary": "The Compendium ties these directly together (§182): universal destination of goods is the foundation, and preferential option for the poor is its sharpest practical edge when what's available — goods, or the benefits of an AI system — is scarce or unevenly distributed."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Monetizing aggregated data from the people an institution serves",
+          "description": "An AI vendor contract lets the vendor monetize aggregated, de-identified interaction data from a population the institution serves — parishioners, patients, students — without that population's direct knowledge or share of the resulting value. Does the institution's consent on their behalf satisfy this principle?",
+          "contested": false
+        },
+        {
+          "title": "A proprietary model built on freely given contributions",
+          "description": "An AI system's value comes substantially from data or content people contributed without expecting commercial use — forum posts, parish records, open contributions — later enclosed inside a proprietary, revenue-generating model. Is that enclosure legitimate stewardship, or an appropriation of something never meant to be exclusively owned?",
+          "contested": false
+        }
+      ]
+    }
+  ]
+}

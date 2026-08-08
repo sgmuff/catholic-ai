@@ -1,0 +1,7 @@
+{
+  "name": "cst-finding",
+  "description": "Rates an AI use case or an audited prompt/response pair against Catholic Social Teaching.",
+  "version": "0.1.0",
+  "author": { "name": "sgmuff", "email": "sgmuff@proton.me" },
+  "repository": "https://github.com/sgmuff/catholic-ai"
+}

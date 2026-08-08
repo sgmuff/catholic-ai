@@ -39,6 +39,9 @@ catholic-ai/
 │       ├── CHECKLIST.md             — the go-live checklist before a project is marked active
 │       └── python-starter/          — a working Python project skeleton, ready to copy
 ├── .claude/skills/                  — Claude Skills shared across every project
+├── .claude-plugin/marketplace.json  — lets `/plugin marketplace add sgmuff/catholic-ai` install a
+│                                       standalone-capable skill (see docs/standards/skills.md
+│                                       "Distributing a skill outside this repo")
 └── <project-name>/                  — each project, one directory per project, at the repository root
 ```
 

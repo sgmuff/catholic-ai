@@ -1,0 +1,41 @@
+name: Release cst-finding skill
+
+# Publishes a ready-to-upload zip of the cst-finding skill (just the skill
+# folder — SKILL.md, references/, scripts/, .claude-plugin/), attached to a
+# GitHub Release. That release asset's URL is the "link" for installing this
+# skill on Claude.ai web/desktop (Settings -> Capabilities -> Skills ->
+# Create skill -> upload zip), which has no install-from-git-URL flow. Claude
+# Code users install from this same repo directly instead — see the
+# repo-root .claude-plugin/marketplace.json and cst-finding/README.md.
+#
+# Triggered by pushing a tag like `cst-finding-v0.1.0`; never runs on an
+# ordinary push, so it only fires when someone deliberately cuts a release.
+
+on:
+  push:
+    tags:
+      - "cst-finding-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip the skill folder
+        run: |
+          cd cst-finding/.claude/skills
+          zip -r "${GITHUB_WORKSPACE}/cst-finding-skill.zip" cst-finding \
+            -x "cst-finding/.venv/*"
+
+      - name: Create release with the zip attached
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            "${GITHUB_WORKSPACE}/cst-finding-skill.zip" \
+            --title "cst-finding skill ${{ github.ref_name }}" \
+            --notes "Standalone cst-finding Claude Skill. Upload cst-finding-skill.zip directly in Claude.ai (Settings -> Capabilities -> Skills -> Create skill), or unzip it into your own .claude/skills/ for Claude Code."

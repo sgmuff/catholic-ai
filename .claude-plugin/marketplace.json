@@ -1,0 +1,13 @@
+{
+  "name": "catholic-ai",
+  "owner": { "name": "sgmuff", "email": "sgmuff@proton.me" },
+  "description": "Claude Skills from the catholic-ai repository.",
+  "plugins": [
+    {
+      "name": "cst-finding",
+      "source": "./cst-finding/.claude/skills/cst-finding",
+      "description": "Rates an AI use case or an audited prompt/response pair against Catholic Social Teaching.",
+      "category": "productivity"
+    }
+  ]
+}

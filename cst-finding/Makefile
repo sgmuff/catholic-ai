@@ -10,3 +10,6 @@ lint:
 
 test:
 	.venv/bin/pytest --cov --cov-report=term-missing
+
+sync-skill-bundle:
+	.venv/bin/python -m eval.sync_skill_bundle
