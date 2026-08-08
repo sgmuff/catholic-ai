@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: personalism
 name: "Personalism"
@@ -12,6 +13,16 @@ magisterial_citations:
     reference: "§105-107 (Ch. 3, §I, 'Social Doctrine and the Personalist Principle')"
   - source: "Magnifica Humanitas"
     reference: "§48 (Ch. 2, 'The human person: image of the Triune God')"
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §1701-1709 (Part Three, Section One, Chapter One, Article 1, "Man:
+      The Image of God" — grounding the person's dignity in being made in
+      the image of God, restored and ennobled in Christ)
+  - source: "Gaudium et Spes"
+    reference: >-
+      §22 (Second Vatican Council, 1965 — "only in the mystery of the
+      incarnate Word does the mystery of man take on light"; Christ "fully
+      reveals man to man himself")
 
 description: >
   The starting point for evaluating any social system, institutional

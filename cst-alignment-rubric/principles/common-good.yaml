@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: common-good
 name: "Common Good"
@@ -12,6 +13,17 @@ magisterial_citations:
     reference: "§164-170 (Ch. 4, §II, 'The Principle of the Common Good')"
   - source: "Magnifica Humanitas"
     reference: "§59-64 (Ch. 2, 'The principle of the common good')"
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §1905-1912 (Part Three, Section One, Chapter Two, Article 2, §II
+      "The Common Good" — the same "sum total of social conditions" the
+      Compendium's own §164 definition draws from)
+  - source: "Gaudium et Spes"
+    reference: >-
+      §26 (Second Vatican Council, 1965 — "the sum of those conditions of
+      social life which allow social groups and their individual members
+      relatively thorough and ready access to their own fulfilment," the
+      original source both the Compendium's and CCC's definitions draw from)
 
 description: >
   The common good is the set of social conditions that let people and

@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: preferential-option-for-the-poor
 name: "Preferential Option for the Poor"
@@ -14,6 +15,18 @@ magisterial_citations:
     reference: >-
       §77-79 (Ch. 2, within 'The principle of social justice', not its own
       heading); §78 names the preferential option specifically
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §2443-2449 (Part Three, Section Two, Chapter Two, Article 7, §VI
+      "Love for the Poor" — "God blesses those who come to the aid of the
+      poor," part of the Church's "constant tradition")
+  - source: "Sollicitudo Rei Socialis"
+    reference: >-
+      §42 (John Paul II, 1987 — the encyclical that gives the phrase
+      "preferential option for the poor" its clearest magisterial
+      statement: "an option, or a special form of primacy in the exercise
+      of Christian charity, to which the whole tradition of the Church
+      bears witness")
 
 description: >
   Wherever the universal destination of goods can't be honored equally
@@ -58,7 +71,7 @@ tensions:
       system's structure produces that pattern "automatically."
 
 scenarios:
-  - title: "Outreach ranking: the widow and the hidden crisis (seed case)"
+  - title: "Outreach ranking: the widow and the hidden crisis"
     description: >
       Ranking two households for limited outreach capacity: a bankrupt
       widow with a documented, visible need, and a stable-looking family

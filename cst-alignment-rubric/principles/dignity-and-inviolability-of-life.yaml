@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: dignity-and-inviolability-of-life
 name: "Dignity and Inviolability of Life"
@@ -15,6 +16,18 @@ magisterial_citations:
       §51 (Ch. 2, 'The equal dignity of all human beings'); §55-56 (Ch. 2,
       within 'The supreme value of human rights', on the right to life
       'from conception to its natural end' as first among rights)
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §2258 (Part Three, Section Two, Chapter Two, Article 5, opening
+      statement — "Human life is sacred... God alone is the Lord of life
+      from its beginning until its end"); §2270-2275 (abortion); §2276-2279
+      (euthanasia)
+  - source: "Evangelium Vitae"
+    reference: >-
+      §57 (John Paul II, 1995 — "the deliberate decision to deprive an
+      innocent human being of his life is always morally evil and can
+      never be licit either as an end in itself or as a means to a good
+      end")
 
 description: >
   Human dignity rests on being made in the image of God (§108) — a status

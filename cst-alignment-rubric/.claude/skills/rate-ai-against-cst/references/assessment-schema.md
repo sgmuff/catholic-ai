@@ -47,7 +47,9 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
 
 - `bright_line.non_negotiable_id` must be one of `principles/non-negotiables.yaml`'s
   item ids (`direct-abortion`, `euthanasia-or-assisted-suicide`,
-  `direct-killing-of-the-innocent`) — anything else is rejected.
+  `direct-killing-of-the-innocent`, `systemic-wage-theft-by-design`,
+  `facilitation-of-trafficking-or-sexual-exploitation`) — anything else is
+  rejected.
 - `bright_line.explanation` is required and should say *why* the subject
   matches, not just restate the item's title.
 - Omit `ratings` entirely, or leave it empty — a bright-line match never gets

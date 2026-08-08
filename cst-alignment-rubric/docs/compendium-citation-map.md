@@ -35,3 +35,5 @@ first, before any of them get scored (see `../rubric/criteria.md`, Stage 1).
 ## Next step
 
 Once a named theological reviewer is confirmed in `../CODEOWNERS`, these citations need their sign-off — verified paragraph numbers aren't the same as theological review.
+
+Two bright-line items added 2026-08-08 (`systemic-wage-theft-by-design`, `facilitation-of-trafficking-or-sexual-exploitation`) are grounded in the Catechism of the Catholic Church and Evangelium Vitae, not the Compendium or Magnifica Humanitas — see `ccc-citation-map.md` rather than this file for their citations.

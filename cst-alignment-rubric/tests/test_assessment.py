@@ -22,15 +22,15 @@ _PRINCIPLES = {
 }
 
 _NON_NEGOTIABLES = {
-    "grounding": [
-        {"source": "Compendium of the Social Doctrine of the Church", "reference": "§155"},
-        {"source": "Magnifica Humanitas", "reference": "§55"},
-    ],
     "items": [
         {
             "id": "direct-abortion",
             "title": "Direct (elective/procured) abortion",
             "description": "Facilitates or carries out a direct abortion.",
+            "citations": [
+                {"source": "Compendium of the Social Doctrine of the Church", "reference": "§155"},
+                {"source": "Magnifica Humanitas", "reference": "§55"},
+            ],
         },
     ],
 }

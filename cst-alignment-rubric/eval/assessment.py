@@ -26,7 +26,6 @@ from eval.principles import (
     NonNegotiable,
     Principle,
     load_non_negotiables,
-    load_non_negotiables_grounding,
     load_principles,
 )
 from eval.report import (
@@ -157,7 +156,7 @@ def build_assessment(raw: dict[str, Any], principles_dir: Path) -> Assessment:
         matched_item = non_negotiables[bright_line.non_negotiable_id]  # type: ignore[index]
         non_negotiable_title = matched_item.title
         non_negotiable_citations = tuple(
-            f"{c.source}, {c.reference}" for c in load_non_negotiables_grounding(principles_dir)
+            f"{c.source}, {c.reference}" for c in matched_item.citations
         )
     else:
         raw_ratings = raw.get("ratings")

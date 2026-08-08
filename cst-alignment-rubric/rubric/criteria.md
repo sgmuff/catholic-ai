@@ -19,14 +19,15 @@ ideal response would have said.
 
 Check the subject against `principles/non-negotiables.yaml` first, before
 anything gets scored. If it matches an entry there (direct abortion,
-euthanasia/assisted suicide, or direct killing of the innocent), the
-assessment stops: the report states plainly that the subject is
+euthanasia/assisted suicide, direct killing of the innocent, systemic wage
+theft by design, or facilitation of trafficking or sexual exploitation),
+the assessment stops: the report states plainly that the subject is
 incompatible with Catholic Social Teaching, names the matched item and its
 citation, and does **not** produce a 1-5 score for it. These are cases the
 tradition treats as non-negotiable, not as one factor among several —
 scoring them would misrepresent a settled question as an open one.
 
-This is a judgment call about whether the subject matches one of three
+This is a judgment call about whether the subject matches one of five
 narrow, explicitly-named categories — not a keyword filter. It has to be
 made by whoever (or whatever) is conducting the assessment, grounded in
 `principles/non-negotiables.yaml`'s citations, not invented case by case.

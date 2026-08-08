@@ -1,12 +1,16 @@
-# BETA — unreviewed. Written strictly from Magnifica Humanitas (see
-# CONTRIBUTING.md "Beta status"); no theological reviewer has signed off
-# yet. Paragraph numbers were verified directly against the primary text,
-# not reconstructed from memory or a summary. Added as an eighth principle
-# after Magnifica Humanitas named it as one of its own five headline
-# principles — see docs/magnifica-humanitas-findings.md for how this came
-# up and why it wasn't in the original seven. Not covered by a distinct
-# heading in the Compendium of the Social Doctrine of the Church, so no
-# Compendium citation is given here (see docs/compendium-citation-map.md).
+# BETA — unreviewed. Magnifica Humanitas citation written strictly from
+# that text; a Catechism of the Catholic Church citation was added
+# 2026-08-08 (see CONTRIBUTING.md "Beta status"). No theological reviewer
+# has signed off yet. Paragraph numbers were verified directly against the
+# primary texts, not reconstructed from memory or a summary. Added as an
+# eighth principle after Magnifica Humanitas named it as one of its own
+# five headline principles — see docs/magnifica-humanitas-findings.md for
+# how this came up and why it wasn't in the original seven. Not covered by
+# a distinct heading in the Compendium of the Social Doctrine of the
+# Church, so no Compendium citation is given here (see
+# docs/compendium-citation-map.md) — unlike the Compendium, the Catechism
+# does give social justice its own heading (CCC Art. 3), so it gets a CCC
+# citation despite having no Compendium one.
 
 id: social-justice
 name: "Social Justice"
@@ -14,6 +18,19 @@ name: "Social Justice"
 magisterial_citations:
   - source: "Magnifica Humanitas"
     reference: "§77-81 (Ch. 2, 'The principle of social justice')"
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §1928-1942 (Part Three, Section One, Chapter Two, Article 3, "Social
+      Justice" — unlike the Compendium, the Catechism does give this its
+      own heading, covering §I "Respect for the Human Person" (1929-1933),
+      §II "Equality and Differences Among Men" (1934-1938), and §III
+      "Human Solidarity," 1939-1942, cited separately in solidarity.yaml)
+  - source: "Quadragesimo Anno"
+    reference: >-
+      §57-58 (Pius XI, 1931 — one of the term's own magisterial
+      popularizations: distribution of goods "must be effectively called
+      back to and brought into conformity with the norms of the common
+      good, that is, social justice")
 
 description: >
   Social justice is the capacity of a social, economic, and political

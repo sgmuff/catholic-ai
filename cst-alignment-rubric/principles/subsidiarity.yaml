@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: subsidiarity
 name: "Subsidiarity"
@@ -14,6 +15,18 @@ magisterial_citations:
     reference: >-
       §68-72 (Ch. 2, 'The principle of subsidiarity'); §71 specifically
       extends the principle to AI and digital platforms
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §1883-1885 (Part Three, Section One, Chapter Two, Article 1, "The
+      Person and Society" — naming subsidiarity explicitly and describing
+      it as "opposed to all forms of collectivism")
+  - source: "Quadragesimo Anno"
+    reference: >-
+      §79-80 (Pius XI, 1931 — the encyclical that coined the principle:
+      "it is an injustice and at the same time a grave evil and a
+      disturbance of right order to transfer to the larger and higher
+      collectivity functions which can be performed and provided for by
+      lesser and subordinate bodies")
 
 description: >
   A decision or action belongs at the most immediate, local level capable
@@ -62,7 +75,7 @@ scenarios:
       default overstep what subsidiarity would allow a central office to
       decide on behalf of the local level?
     contested: false
-  - title: "Outreach ranking: the poor vs. the local (seed case)"
+  - title: "Outreach ranking: the poor vs. the local"
     description: >
       An AI system ranks two households for limited outreach capacity: a
       bankrupt widow, and a stable-looking family secretly in crisis that

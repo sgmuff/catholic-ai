@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: solidarity
 name: "Solidarity"
@@ -12,6 +13,17 @@ magisterial_citations:
     reference: "§192-196 (Ch. 4, §VI, 'The Principle of Solidarity')"
   - source: "Magnifica Humanitas"
     reference: "§73-76 (Ch. 2, 'The principle of solidarity')"
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §1939-1942 (Part Three, Section One, Chapter Two, Article 3, §III
+      "Human Solidarity" — the closing subsection of the Catechism's own
+      "Social Justice" article; see social-justice.yaml)
+  - source: "Sollicitudo Rei Socialis"
+    reference: >-
+      §38 (John Paul II, 1987 — the source of this file's own description:
+      solidarity as "a firm and persevering determination to commit
+      oneself to the common good; that is to say to the good of all and
+      of each individual, because we are all really responsible for all")
 
 description: >
   Solidarity is both a social principle and a moral virtue: a firm,

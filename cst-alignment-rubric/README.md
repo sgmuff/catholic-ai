@@ -24,16 +24,30 @@ The theological-reviewer sign-off requirement in `CODEOWNERS` is paused for this
 
 ## Grounding
 
-Eight principles, each cited directly against *Magnifica Humanitas* paragraph numbers and the wider CST tradition: personalism, common good, subsidiarity, solidarity, universal destination of goods, preferential option for the poor, dignity and inviolability of life, and social justice (added after *Magnifica Humanitas* named it as one of its own headline principles — see `docs/magnifica-humanitas-findings.md`). Where relevant, a principle's rubric criteria are also mapped to NIST AI RMF, ISO/IEC 42001, and the EU AI Act's risk tiers, per [`docs/standards/architecture.md`](../docs/standards/architecture.md#reference-frameworks) — but CST is the throughline those frameworks are judged against, not a parallel authority alongside it.
+Eight principles, each cited directly against *Magnifica Humanitas* paragraph numbers and the wider CST tradition: personalism, common good, subsidiarity, solidarity, universal destination of goods, preferential option for the poor, dignity and inviolability of life, and social justice (added after *Magnifica Humanitas* named it as one of its own headline principles — see `docs/magnifica-humanitas-findings.md`). The bright-line gate and all eight graded principles additionally cite the Catechism of the Catholic Church (see `docs/ccc-citation-map.md`); the bright-line gate also cites Evangelium Vitae, and each graded principle cites one further USCCB-foundational-documents-list encyclical. `docs/usccb-foundational-documents-index.md` catalogues the full USCCB list and what remains uncited (Tier C). Where relevant, a principle's rubric criteria are also mapped to NIST AI RMF, ISO/IEC 42001, and the EU AI Act's risk tiers, per [`docs/standards/architecture.md`](../docs/standards/architecture.md#reference-frameworks) — but CST is the throughline those frameworks are judged against, not a parallel authority alongside it.
 
 ## How it works, in plain terms
 
-1. **Write down the values.** Each of the eight principles gets its own file: what it means in plain terms, where it comes from in Church teaching, and which other principles it tends to clash with. A separate, smaller file — `principles/non-negotiables.yaml` — holds the handful of things CST treats as settled, not as one factor to weigh: direct abortion, euthanasia, and direct killing of the innocent.
+1. **Write down the values.** Each of the eight principles gets its own file: what it means in plain terms, where it comes from in Church teaching, and which other principles it tends to clash with. A separate, smaller file — `principles/non-negotiables.yaml` — holds the handful of things CST treats as settled, not as one factor to weigh: direct abortion, euthanasia, direct killing of the innocent, systemic wage theft by design, and facilitation of trafficking or sexual exploitation — the last two added from the Catechism's "sins that cry to heaven" (CCC 1867) and Evangelium Vitae §3.
 2. **Bring a subject, in conversation.** The `rate-ai-against-cst` Claude Skill takes either of two things: someone deciding whether to build, buy, or keep running a specific AI use describes it — what it does, who it affects, what it decides — with follow-up questions only where the description is genuinely unclear; or someone with an actual prompt and response from a deployed AI system pastes them in verbatim to have that specific interaction audited after the fact.
 3. **Check the bright line first.** Before anything gets scored, the subject — the described use, or what the response actually said or did — is checked against `principles/non-negotiables.yaml`. If it matches, the assessment says so plainly and stops there — see [Non-Goals](#non-goals) and `rubric/criteria.md`.
 4. **Otherwise, score all eight principles.** Each principle gets a 1-5 score grounded in that principle's own description, a real rationale, and — for anything scoring 3 or below — a specific mitigation, not generic advice. A case where two good principles genuinely disagree gets flagged `contested`, not averaged into a single number.
 5. **Hand back a report, not a verdict.** Nothing here is a certification. A low score or even a bright-line match is a finding for a person to act on.
 6. **Keep a real person accountable for the definitions.** Changing what a principle or non-negotiable file says requires sign-off from a named theologian, the same way changing a contract needs a lawyer's, not just an engineer's opinion.
+
+## Architecture
+
+Three layers, each independent of the other two, wired together by one skill:
+
+**The rubric's definitions — `principles/`.** The eight graded principle files (`personalism.yaml`, `common-good.yaml`, `subsidiarity.yaml`, `solidarity.yaml`, `universal-destination-of-goods.yaml`, `preferential-option-for-the-poor.yaml`, `dignity-and-inviolability-of-life.yaml`, `social-justice.yaml`) each follow the shape `schema.yaml` documents — `id`, `magisterial_citations`, a plain-language `description`, `tensions` with other principles, and worked `scenarios`. `non-negotiables.yaml` is the separate, smaller bright-line gate, checked before any of the eight get scored — see Non-Goals above for why it's kept deliberately short. Nothing in `principles/` is code; it's the actual theological content, and it's what a theological reviewer signs off on, not `eval/` or the skill.
+
+**The rubric's algorithm — `rubric/`.** `criteria.md` is the source of truth for the two-stage process (bright-line gate, then graded rubric) that both the skill's procedure and `eval/`'s validation logic implement — if either ever drifts from what `criteria.md` says, `criteria.md` wins. `known-tensions.md` is the stress-test library of worked hard cases (two good principles genuinely in conflict) that back a `contested: true` finding instead of forcing a case to a single misleading number.
+
+**The orchestration — `.claude/skills/rate-ai-against-cst/`.** The `rate-ai-against-cst` Claude Skill is where the actual judgment happens, in conversation, grounded directly in `principles/*.yaml` and `non-negotiables.yaml` — it interviews the user (or takes a prompt/response pair to audit), reasons through the two-stage rubric, and writes the finished judgment as JSON matching `references/assessment-schema.md`. It never calls a separate LLM API; the model already running the conversation *is* the rater. See that skill's own `SKILL.md` for its six-step procedure and a file-level breakdown of what it reads and calls.
+
+**The validator and renderer — `eval/`.** Once the skill has written an assessment JSON, `eval/assessment.py` (the CLI both the skill and a human can call directly) loads real principle/non-negotiable ids via `eval/principles.py` and checks the JSON against them — a fabricated id, an out-of-range score, or a low score with no mitigation all fail loudly here rather than silently rendering. `eval/report.py` holds the `Assessment`/`PrincipleRating`/`BrightLineFinding` dataclasses and the Markdown renderer, reached only through `assessment.py`. The rendered report lands in `eval/reports/` (gitignored — advisory output, not a build artifact). `eval/` never makes a judgment call itself; it only catches a judgment that doesn't check out.
+
+`docs/` sits outside this runtime path entirely — it's citation research (`ccc-citation-map.md`, `compendium-citation-map.md`, `usccb-foundational-documents-index.md`, `magnifica-humanitas-findings.md`) and process history (`theological-review-log.md`), not something the skill or `eval/` reads at assessment time.
 
 ## Stack
 
@@ -95,20 +109,22 @@ cst-alignment-rubric/
 │   ├── social-justice.yaml       # eighth principle, added from Magnifica Humanitas §77-81
 │   └── non-negotiables.yaml      # bright-line gate, checked before the 8 are scored
 ├── rubric/
-│   ├── criteria.md              # the two-stage rubric eval/assessment.py implements
+│   ├── criteria.md              # the two-stage rubric this project follows; eval/assessment.py validates the shape of it, doesn't implement the judgment
 │   └── known-tensions.md        # stress-test library, documented not hidden
 ├── eval/
 │   ├── principles.py             # loads + validates principles/*.yaml and non-negotiables.yaml
 │   ├── assessment.py             # validates a written assessment, CLI entry point
 │   ├── report.py                 # Assessment/rating dataclasses, markdown rendering + writing
 │   └── reports/                  # advisory output, not a gate — gitignored contents
-├── integrations/
-│   ├── gateway-hook.md
-│   └── governance-hook.md
+├── integrations/                 # both files below are TODO stubs, not yet written
+│   ├── gateway-hook.md           # will document importing principles/schema.yaml into ai-acceptable-use-gateway
+│   └── governance-hook.md        # will document routing a contested case to governance-as-code's required-reviewer mechanism
 ├── docs/
 │   ├── theological-review-log.md
 │   ├── compendium-citation-map.md          # source -> principle map, paragraph numbers verified
-│   └── magnifica-humanitas-findings.md     # MH-specific findings, incl. the social-justice addition
+│   ├── magnifica-humanitas-findings.md     # MH-specific findings, incl. the social-justice addition
+│   ├── ccc-citation-map.md                 # Catechism + USCCB-list encyclical citations landed so far
+│   └── usccb-foundational-documents-index.md # full USCCB list, what's cited vs. still Tier C
 ├── .claude/
 │   └── skills/
 │       └── rate-ai-against-cst/  # project-local Claude Skill: interview + rate

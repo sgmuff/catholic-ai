@@ -16,7 +16,7 @@ import yaml
 _NON_PRINCIPLE_FILES = frozenset({"schema.yaml", "non-negotiables.yaml"})
 _REQUIRED_PRINCIPLE_FIELDS = ("id", "name", "magisterial_citations", "description")
 _REQUIRED_CITATION_FIELDS = ("source", "reference")
-_REQUIRED_ITEM_FIELDS = ("id", "title", "description")
+_REQUIRED_ITEM_FIELDS = ("id", "title", "description", "citations")
 
 
 @dataclass(frozen=True)
@@ -38,11 +38,14 @@ class NonNegotiable:
     id: str
     title: str
     description: str
+    citations: tuple[Citation, ...]
 
 
-def _citations_from(raw: object, source: Path) -> tuple[Citation, ...]:
+def _citations_from(
+    raw: object, source: Path, field: str = "magisterial_citations"
+) -> tuple[Citation, ...]:
     if not isinstance(raw, list) or not raw:
-        raise ValueError(f"{source}: 'magisterial_citations' must be a non-empty list")
+        raise ValueError(f"{source}: '{field}' must be a non-empty list")
     citations = []
     for entry in raw:
         if not isinstance(entry, dict):
@@ -95,6 +98,7 @@ def _non_negotiable_from_dict(data: dict[str, object], source: Path) -> NonNegot
         id=str(data["id"]),
         title=str(data["title"]),
         description=str(data["description"]).strip(),
+        citations=_citations_from(data["citations"], source, field="citations"),
     )
 
 
@@ -108,7 +112,9 @@ def _load_non_negotiables_file(principles_dir: Path) -> dict[str, object]:
 
 def load_non_negotiables(principles_dir: Path) -> tuple[NonNegotiable, ...]:
     """Loads `principles/non-negotiables.yaml`'s `items` list — the bright-line
-    gate `eval/assessment.py` checks before the graded rubric runs.
+    gate `eval/assessment.py` checks before the graded rubric runs. Each
+    item carries its own `citations`, matching `magisterial_citations` on a
+    graded `Principle` — see `NonNegotiable`.
     """
     path = principles_dir / "non-negotiables.yaml"
     data = _load_non_negotiables_file(principles_dir)
@@ -126,16 +132,3 @@ def load_non_negotiables(principles_dir: Path) -> tuple[NonNegotiable, ...]:
         seen_ids.add(item.id)
         non_negotiables.append(item)
     return tuple(non_negotiables)
-
-
-def load_non_negotiables_grounding(principles_dir: Path) -> tuple[Citation, ...]:
-    """Loads `principles/non-negotiables.yaml`'s top-level `grounding`
-    citations — these apply to the file's items collectively (see the
-    file's own header comment), not one citation per item.
-    """
-    path = principles_dir / "non-negotiables.yaml"
-    data = _load_non_negotiables_file(principles_dir)
-    grounding = data.get("grounding")
-    if grounding is None:
-        raise ValueError(f"{path}: missing top-level 'grounding' citations")
-    return _citations_from(grounding, path)

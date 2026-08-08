@@ -3,11 +3,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from eval.principles import (
-    load_non_negotiables,
-    load_non_negotiables_grounding,
-    load_principles,
-)
+from eval.principles import load_non_negotiables, load_principles
 
 _VALID_PRINCIPLE = {
     "id": "solidarity",
@@ -21,20 +17,23 @@ _VALID_PRINCIPLE = {
 }
 
 _VALID_NON_NEGOTIABLES = {
-    "grounding": [
-        {"source": "Compendium of the Social Doctrine of the Church", "reference": "§155"},
-        {"source": "Magnifica Humanitas", "reference": "§55"},
-    ],
     "items": [
         {
             "id": "direct-abortion",
             "title": "Direct (elective/procured) abortion",
             "description": "An AI use that facilitates or carries out a direct abortion.",
+            "citations": [
+                {"source": "Compendium of the Social Doctrine of the Church", "reference": "§155"},
+                {"source": "Magnifica Humanitas", "reference": "§55"},
+            ],
         },
         {
             "id": "euthanasia-or-assisted-suicide",
             "title": "Euthanasia or assisted suicide",
             "description": "An AI use that facilitates or carries out ending a person's life.",
+            "citations": [
+                {"source": "Compendium of the Social Doctrine of the Church", "reference": "§155"},
+            ],
         },
     ],
 }
@@ -94,11 +93,13 @@ def test_load_non_negotiables_happy_path(tmp_path: Path):
     items = load_non_negotiables(tmp_path)
 
     assert {i.id for i in items} == {"direct-abortion", "euthanasia-or-assisted-suicide"}
+    abortion = next(i for i in items if i.id == "direct-abortion")
+    assert abortion.citations[0].source == "Compendium of the Social Doctrine of the Church"
+    assert abortion.citations[1].reference == "§55"
 
 
 def test_load_non_negotiables_raises_on_duplicate_id(tmp_path: Path):
     data = {
-        "grounding": _VALID_NON_NEGOTIABLES["grounding"],
         "items": [_VALID_NON_NEGOTIABLES["items"][0], _VALID_NON_NEGOTIABLES["items"][0]],
     }
     _write_yaml(tmp_path / "non-negotiables.yaml", data)
@@ -108,25 +109,18 @@ def test_load_non_negotiables_raises_on_duplicate_id(tmp_path: Path):
 
 
 def test_load_non_negotiables_raises_on_empty_items(tmp_path: Path):
-    data = {"grounding": _VALID_NON_NEGOTIABLES["grounding"], "items": []}
+    data = {"items": []}
     _write_yaml(tmp_path / "non-negotiables.yaml", data)
 
     with pytest.raises(ValueError, match="non-empty list"):
         load_non_negotiables(tmp_path)
 
 
-def test_load_non_negotiables_grounding_happy_path(tmp_path: Path):
-    _write_yaml(tmp_path / "non-negotiables.yaml", _VALID_NON_NEGOTIABLES)
-
-    citations = load_non_negotiables_grounding(tmp_path)
-
-    assert citations[0].source == "Compendium of the Social Doctrine of the Church"
-    assert citations[1].reference == "§55"
-
-
-def test_load_non_negotiables_grounding_raises_when_missing(tmp_path: Path):
-    data = {"items": _VALID_NON_NEGOTIABLES["items"]}
+def test_load_non_negotiables_raises_on_item_missing_citations(tmp_path: Path):
+    item = dict(_VALID_NON_NEGOTIABLES["items"][0])
+    del item["citations"]
+    data = {"items": [item]}
     _write_yaml(tmp_path / "non-negotiables.yaml", data)
 
-    with pytest.raises(ValueError, match="grounding"):
-        load_non_negotiables_grounding(tmp_path)
+    with pytest.raises(ValueError, match="citations"):
+        load_non_negotiables(tmp_path)

@@ -1,8 +1,9 @@
-# BETA — unreviewed. Written strictly from the Compendium of the Social
-# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
-# status"); no theological reviewer has signed off yet. Paragraph numbers
-# were verified directly against the primary texts, not reconstructed from
-# memory or a summary.
+# BETA — unreviewed. Compendium of the Social Doctrine of the Church and
+# Magnifica Humanitas citations written strictly from those two texts; a
+# Catechism of the Catholic Church citation was added 2026-08-08 (see
+# CONTRIBUTING.md "Beta status"). No theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary texts,
+# not reconstructed from memory or a summary.
 
 id: universal-destination-of-goods
 name: "Universal Destination of Goods"
@@ -16,6 +17,18 @@ magisterial_citations:
       goods'); §67 explicitly names patents, algorithms, digital
       platforms, technological infrastructure, and data as goods this
       principle covers
+  - source: "Catechism of the Catholic Church"
+    reference: >-
+      §2402-2406 (Part Three, Section Two, Chapter Two, Article 7, §I "The
+      Universal Destination and the Private Ownership of Goods" — private
+      property "does not do away with the original gift of the earth to
+      the whole of mankind")
+  - source: "Populorum Progressio"
+    reference: >-
+      §22-23 (Paul VI, 1967 — "God intended the earth and everything in it
+      for the use of all human beings and peoples"; "no one is justified
+      in keeping for his exclusive use what he does not need, when others
+      lack necessities")
 
 description: >
   The goods of creation are meant for the whole human race, not for
