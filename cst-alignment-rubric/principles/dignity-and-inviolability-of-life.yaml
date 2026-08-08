@@ -1,19 +1,73 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: dignity-and-inviolability-of-life
 name: "Dignity and Inviolability of Life"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§108 (the human person as imago Dei); §155 (Ch. 3, §IV, on the right to life)"
+  - source: "Magnifica Humanitas"
+    reference: >-
+      §51 (Ch. 2, 'The equal dignity of all human beings'); §55-56 (Ch. 2,
+      within 'The supreme value of human rights', on the right to life
+      'from conception to its natural end' as first among rights)
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  Human dignity rests on being made in the image of God (§108) — a status
+  that doesn't rise or fall with a person's utility, health, productivity,
+  or any score a system might assign them. Its most concrete expression
+  is the right to life itself, described as the first among rights and
+  the condition for the exercise of every other right (§155): not one
+  interest to be weighed against others, but the ground every other claim
+  stands on. For AI governance, this is the principle that refuses
+  trade-off logic at the point where a system's decision could bear on
+  someone's life or basic safety — no automated process gets to treat a
+  human life as a variable in a cost-benefit calculation, however
+  favorable the rest of the calculation looks.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+  Note on non-negotiables.yaml: §155's own language — "the illicitness of
+  every form of procured abortion and of euthanasia" — is what
+  non-negotiables.yaml draws its bright-line gate from. That file exists
+  because this principle's scenarios below are genuinely graded cases
+  (triage under scarcity, a risk score feeding a safety decision); direct
+  abortion, euthanasia, and direct killing of the innocent are not — they
+  are this principle's sharpest, non-negotiable instance, checked before
+  any of the eight principles are scored rather than scored alongside them.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+tensions:
+  - principle: common-good
+    summary: >
+      The common good is real and can pull toward aggregate
+      optimization — a triage or resource-allocation system that
+      produces better population-level outcomes overall. Dignity and
+      inviolability of life is the hard limit: an individual life is
+      never simply a variable to be traded against the aggregate,
+      however favorable the trade looks in total.
+  - principle: personalism
+    summary: >
+      Closely related — personalism is the general claim that the person
+      is never a mere means; this principle is its sharpest, least
+      negotiable instance.
+
+scenarios:
+  - title: "AI-assisted triage under scarcity"
+    description: >
+      A hospital deploys an AI system to help allocate scarce
+      critical-care resources during a surge. Any triage protocol
+      involves prioritization, but this principle asks where the line
+      falls between prioritizing under genuine scarcity and treating a
+      person's life as a number to be optimized away.
+    contested: true
+  - title: "Predictive risk scores feeding directly into safety decisions"
+    description: >
+      An AI-generated risk score feeds into a decision that could affect
+      someone's physical safety — a welfare-check dispatch, a discharge
+      decision — with no human required to review a low-confidence or
+      borderline score before it's acted on. Does removing the human step
+      here cross a line this principle wouldn't allow, regardless of the
+      model's accuracy?
+    contested: false

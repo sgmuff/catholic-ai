@@ -1,19 +1,73 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: subsidiarity
 name: "Subsidiarity"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§185-188 (Ch. 4, §IV, 'The Principle of Subsidiarity')"
+  - source: "Magnifica Humanitas"
+    reference: >-
+      §68-72 (Ch. 2, 'The principle of subsidiarity'); §71 specifically
+      extends the principle to AI and digital platforms
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  A decision or action belongs at the most immediate, local level capable
+  of handling it well. A higher authority — a diocese, a state, a
+  corporate parent — steps in only to help where a smaller community
+  genuinely cannot act on its own, and never simply to replace or absorb
+  what that smaller community could do itself (§185). Applied to AI
+  governance, subsidiarity is a caution against exactly what AI systems
+  are naturally good at: routing every judgment call up to a single model
+  or a single dashboard because it's more efficient, even when the people
+  closest to a situation could and should decide it themselves.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+  Magnifica Humanitas makes this application explicit rather than leaving
+  it to inference. §71 argues that in the digital era, the "highest
+  level" subsidiarity has to reckon with isn't only the state — it's the
+  handful of technology companies and platforms that hold de facto power
+  over data, visibility, and the conditions of everyday digital life.
+  Subsidiarity, on this reading, requires that such power not be
+  exercised "from above in an opaque and unilateral manner," but with
+  transparency, accountability, and meaningful participation — naming
+  independent checks, algorithmic transparency, and equitable data access
+  as concrete expressions of the principle, not just goals in tension
+  with it.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+tensions:
+  - principle: common-good
+    summary: >
+      See common-good.yaml — centralizing for consistency vs. keeping
+      judgment local.
+  - principle: preferential-option-for-the-poor
+    summary: >
+      Subsidiarity says a decision belongs with whoever is closest to a
+      situation; preferential option for the poor says outcomes should be
+      weighted toward whoever has the least power to contest a bad
+      decision. These can pull in different directions when the person
+      closest to a case doesn't have the standing or resources to act on
+      behalf of the most vulnerable party — see rubric/known-tensions.md's
+      outreach-ranking case.
+
+scenarios:
+  - title: "A centralized recommendation applied uniformly across local sites"
+    description: >
+      A diocesan or hospital-system AI tool issues a single
+      recommendation meant to apply across many local sites, each with
+      circumstances the model wasn't tuned on. Does deploying it as a
+      default overstep what subsidiarity would allow a central office to
+      decide on behalf of the local level?
+    contested: false
+  - title: "Outreach ranking: the poor vs. the local (seed case)"
+    description: >
+      An AI system ranks two households for limited outreach capacity: a
+      bankrupt widow, and a stable-looking family secretly in crisis that
+      a local caseworker knows about but the model doesn't. Preferential
+      option for the poor pulls toward the widow on the visible data;
+      subsidiarity pulls toward trusting the local caseworker's closer
+      knowledge. See rubric/known-tensions.md.
+    contested: true

@@ -1,19 +1,59 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: solidarity
 name: "Solidarity"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§192-196 (Ch. 4, §VI, 'The Principle of Solidarity')"
+  - source: "Magnifica Humanitas"
+    reference: "§73-76 (Ch. 2, 'The principle of solidarity')"
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  Solidarity is both a social principle and a moral virtue: a firm,
+  ongoing commitment to the good of all and of each individual, because
+  everyone is genuinely responsible for everyone (§192). It isn't a
+  passing feeling of sympathy at other people's troubles; it's a standing
+  commitment that treats the wellbeing of people outside one's own
+  institution, parish, or customer base as a real claim, not a footnote.
+  For AI governance, solidarity is the check against building a system
+  that serves the people already inside an institution's care very well
+  while treating everyone else it displaces, excludes, or never reaches
+  as someone else's problem.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+tensions:
+  - principle: subsidiarity
+    summary: >
+      The Compendium treats these two as deliberately paired: subsidiarity
+      keeps solidarity from collapsing into a centralized program that
+      overrides local particularity, and solidarity keeps subsidiarity
+      from becoming an excuse to abandon people a local level can't
+      adequately help on its own.
+  - principle: universal-destination-of-goods
+    summary: >
+      Closely aligned — solidarity is the moral commitment; universal
+      destination of goods is the claim about what that commitment is
+      actually owed against.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+scenarios:
+  - title: "Adopting a vendor whose costs fall on people the institution never sees"
+    description: >
+      An institution adopts an AI system from a vendor whose training
+      data sourcing, labor practices, or downstream effects burden
+      workers or communities the institution never has to look at
+      directly. Does the institution's own gain — efficiency, cost
+      savings — outweigh a debt of solidarity it never has to reckon with
+      because the cost is externalized?
+    contested: false
+  - title: "Data-sharing that helps many at a re-identification risk to a few"
+    description: >
+      A diocese or hospital system shares de-identified data into a
+      broader AI research consortium that could improve care for many
+      people, but a small number of individuals in the dataset could
+      plausibly be re-identified given how narrow their circumstances
+      are. Solidarity asks whose interests actually count in that trade.
+    contested: false

@@ -4,9 +4,11 @@ Claude Skills in this repository follow the open [Agent Skills specification](ht
 
 ## Where a skill lives
 
-Skills default to `skills/<skill-name>/` at the repository root, because the useful ones are the ones reused across projects: a skill that assesses an AI system against CST and a recognized risk framework, or one that drafts a model-documentation record, is exactly as useful to a diocese as to a secular hospital system — there's no confessional/secular split to route it through.
+Skills live under `.claude/skills/<skill-name>/`, not a plain `skills/` at the top level — `.claude/skills/` is what Claude Code actually scans to discover and invoke a skill by name. A skill sitting anywhere else might satisfy the Agent Skills spec, but Claude Code won't find it.
 
-A skill lives inside a project's own `skills/` directory only when it is genuinely specific to that project — a template-filling script tied to one institution's exact intake form, say. That's the exception, and a skill placed there should have a one-line note in the project's README explaining why it isn't shared.
+Skills default to `.claude/skills/<skill-name>/` at the repository root, because the useful ones are the ones reused across projects: a skill that assesses an AI system against CST and a recognized risk framework, or one that drafts a model-documentation record, is exactly as useful to a diocese as to a secular hospital system — there's no confessional/secular split to route it through.
+
+A skill lives inside a project's own `<project-name>/.claude/skills/` directory only when it is genuinely specific to that project — a template-filling script tied to one institution's exact intake form, say, or one wired tightly to that project's own CLI and file layout. That's the exception, and a skill placed there should have a one-line note in the project's README explaining why it isn't shared.
 
 ## Naming
 
@@ -16,7 +18,7 @@ Skill names are kebab-case and verb-first where the skill performs an action, ma
 - `draft-model-card` — produce a model-documentation record
 - `review-data-retention-policy` — check a policy against the retention baseline in `docs/standards/security-and-privacy.md`
 
-Avoid vague names (`helper`, `utils`, `ai-tools`) that don't tell an agent — or a person browsing `skills/` — what the skill actually does.
+Avoid vague names (`helper`, `utils`, `ai-tools`) that don't tell an agent — or a person browsing `.claude/skills/` — what the skill actually does.
 
 ## Description quality
 
@@ -32,10 +34,10 @@ No promotional language — "powerful," "seamless," "revolutionary" — has any 
 Before a skill is merged, validate it with the reference tool:
 
 ```
-skills-ref validate ./skills/<skill-name>
+skills-ref validate ./.claude/skills/<skill-name>
 ```
 
-`.github/workflows/ci.yml` runs this same check against every skill directory it finds under `skills/` and each project's own `<project-name>/skills/`, so a skill that fails validation fails CI.
+`.github/workflows/ci.yml` runs this same check against every `SKILL.md` it finds anywhere in the repository, so a skill that fails validation fails CI regardless of whether it's shared or project-local.
 
 ## Size discipline
 

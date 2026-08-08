@@ -1,19 +1,77 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: preferential-option-for-the-poor
 name: "Preferential Option for the Poor"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§182 (Ch. 4, §III.c, 'The Universal Destination of Goods and the Preferential Option for the Poor')"
+  - source: "Magnifica Humanitas"
+    reference: >-
+      §77-79 (Ch. 2, within 'The principle of social justice', not its own
+      heading); §78 names the preferential option specifically
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  Wherever the universal destination of goods can't be honored equally
+  for everyone at once, priority goes to those with the least power, the
+  fewest resources, and the weakest position to contest a bad decision —
+  not as charity offered from a position of comfort, but as the concrete
+  shape solidarity has to take when goods or attention are scarce (§182).
+  For an AI system, this is the principle that asks who bears the cost of
+  the system's errors. A false negative or a low-confidence score rarely
+  lands evenly: the person who can't afford a second opinion, doesn't
+  know how to appeal, or has no other option is usually the one who
+  actually absorbs the system's mistake.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+  Note on sourcing: unlike the Compendium, which folds this principle
+  under the universal destination of goods (§182), Magnifica Humanitas
+  places it under a different, broader principle it names explicitly —
+  "the principle of social justice" (§77-81) — with the preferential
+  option named at §78 as one expression of it, alongside a warning
+  against a "throw away culture" that produces new forms of exclusion.
+  This project now carries social justice as its own eighth principle
+  (`social-justice.yaml`); see docs/magnifica-humanitas-findings.md for
+  how that decision came about.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+tensions:
+  - principle: subsidiarity
+    summary: >
+      See subsidiarity.yaml and rubric/known-tensions.md's outreach-ranking
+      case — priority for whoever has the least power to contest a
+      decision can pull against trusting the judgment of whoever is
+      locally closest to the case.
+  - principle: universal-destination-of-goods
+    summary: >
+      This principle is that one's practical edge under scarcity, not a
+      separate claim — see universal-destination-of-goods.yaml.
+  - principle: social-justice
+    summary: >
+      See social-justice.yaml — Magnifica Humanitas treats this principle
+      as one expression of social justice rather than a fully separate
+      claim, though this project keeps both as distinct files because
+      each foregrounds a different fix: this principle asks who bears the
+      cost of a specific decision, social justice asks whether the
+      system's structure produces that pattern "automatically."
+
+scenarios:
+  - title: "Outreach ranking: the widow and the hidden crisis (seed case)"
+    description: >
+      Ranking two households for limited outreach capacity: a bankrupt
+      widow with a documented, visible need, and a stable-looking family
+      secretly in crisis that a local caseworker knows about but the
+      system's data doesn't reflect. See rubric/known-tensions.md.
+    contested: true
+  - title: "Error rates that fall unevenly by income"
+    description: >
+      An AI screening tool has a materially higher false-negative rate
+      for applicants with no prior institutional history — no credit
+      file, no prior case record, no digital paper trail — who are
+      disproportionately the poorest applicants, even though its
+      aggregate accuracy looks fine. Does the aggregate number satisfy
+      this principle, or does the uneven failure mode itself violate it
+      regardless of the overall score?
+    contested: false

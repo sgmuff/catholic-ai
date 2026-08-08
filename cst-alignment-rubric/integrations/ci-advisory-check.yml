@@ -1,9 +1,0 @@
-# TODO: not yet built. Will run eval/harness.py against a sampled subset of
-# scenarios on a PR and post the resulting report as a check-run annotation —
-# advisory only. This workflow must never be able to fail a PR's required
-# checks; see the Non-Goals section in ../README.md ("Not a hard CI gate by
-# default") and ../CHECKLIST.md's "integrations/ci-advisory-check.yml is
-# non-blocking" item.
-#
-# Not wired into any repository's actual CI yet — this file documents intent
-# for now, not a working workflow.

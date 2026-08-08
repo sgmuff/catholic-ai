@@ -72,7 +72,7 @@ jobs:
           makefiles=()
           for mk in "${all[@]}"; do
             case "$mk" in
-              docs/*|skills/*) continue ;;
+              docs/*|.claude/*) continue ;;
             esac
             makefiles+=("$mk")
           done

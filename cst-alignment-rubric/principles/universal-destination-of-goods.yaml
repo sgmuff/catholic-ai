@@ -1,19 +1,77 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: universal-destination-of-goods
 name: "Universal Destination of Goods"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§171 (origin and meaning), §176-178 (relation to private property) (Ch. 4, §III)"
+  - source: "Magnifica Humanitas"
+    reference: >-
+      §65-67 (Ch. 2, 'The principle of the universal destination of
+      goods'); §67 explicitly names patents, algorithms, digital
+      platforms, technological infrastructure, and data as goods this
+      principle covers
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  The goods of creation are meant for the whole human race, not for
+  whoever happens to hold title to them at a given moment (§171). Private
+  property is a real and legitimate right — it flows from labor and
+  supports personal freedom and responsibility — but it remains
+  subordinate to this more basic destination, not an absolute claim that
+  overrides it (§176-178). Applied to AI, the clearest translation is
+  data and the value AI systems generate from it: information about
+  people, and the economic value an institution or vendor extracts from
+  it, doesn't automatically belong exclusively to whoever holds the
+  infrastructure just because they collected it. Ownership of a model, a
+  dataset, or a platform is a real claim, but a stewardship claim before
+  it's an absolute one.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+  Magnifica Humanitas makes this connection directly rather than by
+  analogy. §66 extends the universal destination beyond material goods to
+  "immaterial and cultural goods," and §67 names the concrete list:
+  patents, algorithms, digital platforms, technological infrastructure,
+  and data. It warns that when these remain concentrated in a few hands
+  without adequate sharing or access, the imbalance widens the gap
+  "between those who can participate in the digital revolution and those
+  who remain on the margins" — the same logic §176-178 applies to land
+  and material wealth, stated for the digital economy specifically.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+tensions:
+  - principle: personalism
+    summary: >
+      Private property, an application of this principle, is meant to
+      support personal freedom and responsibility, so the two usually
+      align. Tension appears when "my data, my property" framing is used
+      to justify hoarding value CST would say is owed more broadly.
+  - principle: preferential-option-for-the-poor
+    summary: >
+      The Compendium ties these directly together (§182): universal
+      destination of goods is the foundation, and preferential option for
+      the poor is its sharpest practical edge when what's available —
+      goods, or the benefits of an AI system — is scarce or unevenly
+      distributed.
+
+scenarios:
+  - title: "Monetizing aggregated data from the people an institution serves"
+    description: >
+      An AI vendor contract lets the vendor monetize aggregated,
+      de-identified interaction data from a population the institution
+      serves — parishioners, patients, students — without that
+      population's direct knowledge or share of the resulting value.
+      Does the institution's consent on their behalf satisfy this
+      principle?
+    contested: false
+  - title: "A proprietary model built on freely given contributions"
+    description: >
+      An AI system's value comes substantially from data or content
+      people contributed without expecting commercial use — forum posts,
+      parish records, open contributions — later enclosed inside a
+      proprietary, revenue-generating model. Is that enclosure legitimate
+      stewardship, or an appropriation of something never meant to be
+      exclusively owned?
+    contested: false

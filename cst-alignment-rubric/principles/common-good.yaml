@@ -1,19 +1,60 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: common-good
 name: "Common Good"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§164-170 (Ch. 4, §II, 'The Principle of the Common Good')"
+  - source: "Magnifica Humanitas"
+    reference: "§59-64 (Ch. 2, 'The principle of the common good')"
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  The common good is the set of social conditions that let people and
+  groups reach their own fulfillment more fully and more easily (§164) —
+  not simply the sum or average of individual goods, and not something
+  any single group gets to claim exclusively for itself. The Compendium
+  makes it everyone's responsibility, not just the state's, and ties the
+  political community's core task to protecting the conditions —
+  material, intellectual, moral, spiritual — that let people flourish.
+  For an institution deploying an AI system, this principle asks whether
+  its benefits actually reach the whole community it touches, or are
+  concentrated in ways that let a well-served majority stand in for
+  everyone.
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+tensions:
+  - principle: subsidiarity
+    summary: >
+      The common good can motivate centralizing decisions to guarantee
+      consistent outcomes for everyone, while subsidiarity insists
+      decisions stay as close as possible to those affected. CST treats
+      these as mutually correcting, not opposed, but a system built to
+      optimize aggregate common-good metrics can drift toward
+      centralizing judgment that subsidiarity would keep local.
+  - principle: personalism
+    summary: >
+      The common good is meant to serve persons, not subsume them into a
+      population-level metric — see personalism.yaml.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+scenarios:
+  - title: "System-wide efficiency vs. an underserved subgroup"
+    description: >
+      An AI resource-allocation tool measurably improves outcomes for an
+      institution as a whole but leaves a smaller subgroup — a
+      minority-language population, a rural parish, a low-bandwidth
+      region — worse served than before. Whose common good is actually
+      being measured when "overall" numbers improve?
+    contested: false
+  - title: "Convenience for the many, burden for the few"
+    description: >
+      An AI-driven scheduling or intake system reduces friction for most
+      users but creates real difficulty for a subset who can't use the
+      interface — elderly parishioners, people without reliable
+      internet. The common good asks whether that trade-off was made
+      deliberately and disclosed, not just absorbed as an acceptable
+      loss.
+    contested: false

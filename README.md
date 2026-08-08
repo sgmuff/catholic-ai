@@ -38,7 +38,7 @@ catholic-ai/
 │       ├── README.template.md       — the sections a new project's README must fill in
 │       ├── CHECKLIST.md             — the go-live checklist before a project is marked active
 │       └── python-starter/          — a working Python project skeleton, ready to copy
-├── skills/                          — Claude Skills shared across every project
+├── .claude/skills/                  — Claude Skills shared across every project
 └── <project-name>/                  — each project, one directory per project, at the repository root
 ```
 

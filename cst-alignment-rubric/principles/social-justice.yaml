@@ -1,0 +1,74 @@
+# BETA — unreviewed. Written strictly from Magnifica Humanitas (see
+# CONTRIBUTING.md "Beta status"); no theological reviewer has signed off
+# yet. Paragraph numbers were verified directly against the primary text,
+# not reconstructed from memory or a summary. Added as an eighth principle
+# after Magnifica Humanitas named it as one of its own five headline
+# principles — see docs/magnifica-humanitas-findings.md for how this came
+# up and why it wasn't in the original seven. Not covered by a distinct
+# heading in the Compendium of the Social Doctrine of the Church, so no
+# Compendium citation is given here (see docs/compendium-citation-map.md).
+
+id: social-justice
+name: "Social Justice"
+
+magisterial_citations:
+  - source: "Magnifica Humanitas"
+    reference: "§77-81 (Ch. 2, 'The principle of social justice')"
+
+description: >
+  Social justice is the capacity of a social, economic, and political
+  order to let everyone — particularly the weakest — live a genuinely
+  dignified life, leaving no one behind (§77). What distinguishes it from
+  the common good is where it locates the problem: social justice
+  insists that injustice doesn't arise only from individual wrongdoing,
+  but from "structures, mechanisms and economic and cultural systems
+  that produce inequality almost automatically" (§79). Applied to AI,
+  this is the principle that asks about the system's design and training
+  data, not just its individual outputs: a model can produce no single
+  decision anyone would call malicious and still reproduce or amplify a
+  structural pattern of exclusion baked into the data or process it was
+  built from. Social justice names that as a defect in the structure
+  itself, not an acceptable side effect of otherwise-good individual
+  decisions.
+
+tensions:
+  - principle: preferential-option-for-the-poor
+    summary: >
+      Magnifica Humanitas treats the preferential option for the poor as
+      one concrete expression of social justice rather than a separate
+      claim (§78) — closer to containment than tension. Where they can
+      pull apart in practice: preferential option asks who bears the cost
+      of a specific decision, while social justice asks whether the
+      system's structure produces that pattern of cost-bearing
+      "automatically," which can call for a different kind of fix
+      (redesigning the system, not just flagging individual cases).
+  - principle: common-good
+    summary: >
+      A system can look fine by common-good metrics — aggregate
+      conditions improved, most people better off — while still having a
+      structural defect that social justice would flag: a training-data
+      pattern or a design choice that systematically disadvantages one
+      group, regardless of what the aggregate numbers show.
+
+scenarios:
+  - title: "Structural bias reproduced without individual wrongdoing"
+    description: >
+      An AI hiring, lending, or admissions tool reproduces a historical
+      pattern of exclusion present in its training data, systematically
+      disadvantaging one group, even though no individual decision-maker
+      acted with bad intent and aggregate accuracy metrics look fine.
+      Social justice asks about the structure that produced the outcome,
+      not whether any single decision can be pinned on someone.
+    contested: false
+  - title: "Group-level correction for a documented structural pattern"
+    description: >
+      An institution adjusts an AI system's thresholds or outputs by
+      demographic group specifically to correct a documented structural
+      disadvantage the system would otherwise reproduce. Is this a
+      legitimate application of social justice's structural-correction
+      logic, or does group-level adjustment cross into treating
+      individuals differently based on group membership in a way that
+      pulls against personalism's individual-based fairness? This mirrors
+      real, unresolved debates about disparate impact vs. disparate
+      treatment in algorithmic fairness.
+    contested: true

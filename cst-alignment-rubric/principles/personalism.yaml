@@ -1,19 +1,65 @@
-# TODO: not yet written. Per CODEOWNERS, this file may not be filled in until
-# a named theological reviewer is recruited and confirmed (Next Action due
-# 2026-08-29). Shape follows principles/schema.yaml.
+# BETA — unreviewed. Written strictly from the Compendium of the Social
+# Doctrine of the Church and Magnifica Humanitas (see CONTRIBUTING.md "Beta
+# status"); no theological reviewer has signed off yet. Paragraph numbers
+# were verified directly against the primary texts, not reconstructed from
+# memory or a summary.
 
 id: personalism
 name: "Personalism"
 
-magisterial_citations: []
-# TODO: cite against Magnifica Humanitas paragraph numbers plus the
-# Compendium/encyclical sources in The Seven Principles.
+magisterial_citations:
+  - source: "Compendium of the Social Doctrine of the Church"
+    reference: "§105-107 (Ch. 3, §I, 'Social Doctrine and the Personalist Principle')"
+  - source: "Magnifica Humanitas"
+    reference: "§48 (Ch. 2, 'The human person: image of the Triune God')"
 
-description: ""
-# TODO: single voice, grounded in the citations above.
+description: >
+  The starting point for evaluating any social system, institutional
+  decision, or technology is the individual person, not an abstraction, a
+  statistic, or an aggregate outcome. The Compendium presents the human
+  person, in his or her concrete reality, as the foundation the Church's
+  social doctrine builds from and returns to (§105) — not economic
+  structures, political ideologies, or collective utility taken on their
+  own terms. Magnifica Humanitas doesn't use the term "personalist
+  principle," but opens its own account of Social Doctrine's foundations
+  the same way: with the human person as image of the Triune God (§48),
+  prior to and beneath any of the principles that follow. For an
+  institution reviewing an AI system, personalism asks not only "does
+  this produce good aggregate results," but "does this treat each person
+  it touches as a subject with irreducible worth, not an instance in a
+  dataset."
 
-tensions: []
-# TODO: which other principles this one commonly pulls against.
+tensions:
+  - principle: common-good
+    summary: >
+      Personalism insists the individual is never merely a means to a
+      collective end, while the common good asks what serves the
+      community as a whole. CST treats these as reinforcing rather than
+      opposed, but a system tuned purely to aggregate or common-good
+      metrics can, in practice, start treating individuals as
+      instrumental to that aggregate.
+  - principle: dignity-and-inviolability-of-life
+    summary: >
+      Closely related rather than opposed — personalism is the general
+      principle that the person is never a mere means; dignity and
+      inviolability of life is its sharpest, least negotiable instance.
 
-scenarios: []
-# TODO: 2-3 worked examples, at least one marked contested: true.
+scenarios:
+  - title: "Aggregate accuracy vs. individual treatment"
+    description: >
+      An AI triage or scoring system achieves high aggregate accuracy but
+      produces individually unjust or dehumanizing outcomes in some
+      cases — flattening a person's actual circumstances into a score
+      that doesn't reflect their situation. Does "good enough on average"
+      satisfy personalism, or does every individual case need its own
+      accounting?
+    contested: false
+  - title: "Replacing a caseworker's discretionary judgment"
+    description: >
+      A diocese or agency replaces a human caseworker's discretionary
+      judgment in an assistance program with an AI recommendation the
+      caseworker is expected to follow by default. Personalism asks
+      whether the person receiving assistance is still being encountered
+      as a subject to be understood, or processed as a case to be
+      classified.
+    contested: false

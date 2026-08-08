@@ -1,13 +1,14 @@
-# Any change to what a principle means or how it's cited requires the named
-# theological reviewer's sign-off, separate from technical review.
+# BETA: the theological-reviewer sign-off requirement below is paused for
+# the beta phase (paused 2026-08-07 — see CONTRIBUTING.md "Beta status" and
+# the corresponding entry in docs/theological-review-log.md). Any principle
+# or rubric content written while this is paused is unreviewed and must be
+# marked as such wherever it appears.
 #
-# TODO (Next Action, due 2026-08-29): recruit or confirm a named theological
-# reviewer and replace the placeholder below before any rubric criteria are
-# written. Do not merge changes to principles/ or rubric/ against this
-# placeholder — it exists to make the missing sign-off visible, not to satisfy
-# the requirement.
-principles/  @TODO-theological-reviewer
-rubric/      @TODO-theological-reviewer
+# REQUIRED before this project leaves beta: recruit or confirm a named
+# theological reviewer, uncomment the two lines below with their real
+# handle, and get retroactive review of anything written during beta.
+# principles/  @<theological-reviewer>
+# rubric/      @<theological-reviewer>
 
 # Technical maintainer: harness code, integrations, and repo scaffolding.
 eval/          @sgmuff
