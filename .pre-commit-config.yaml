@@ -20,3 +20,16 @@ repos:
     rev: v8.24.2
     hooks:
       - id: gitleaks
+
+  # Type-checking and the test suite are slower and touch every file, so
+  # they run at push time rather than on every commit — still blocks
+  # anything reaching origin before CI would catch it, without slowing
+  # down the commit loop.
+  - repo: local
+    hooks:
+      - id: cst-alignment-rubric-lint-test
+        name: cst-alignment-rubric lint & test
+        entry: make -C cst-alignment-rubric lint test
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
