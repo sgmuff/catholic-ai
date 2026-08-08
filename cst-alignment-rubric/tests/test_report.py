@@ -116,7 +116,10 @@ def test_graded_report_mitigations_and_contested_sections_do_not_repeat_rational
 
 def test_bullet_lists_have_a_blank_line_between_items():
     text = render_markdown(_bright_line_assessment())
-    assert "- Compendium of the Social Doctrine of the Church, §155\n\n- Magnifica Humanitas, §55" in text
+    assert (
+        "- Compendium of the Social Doctrine of the Church, §155\n\n- Magnifica Humanitas, §55"
+        in text
+    )
 
 
 def test_report_states_advisory_disclaimer():
