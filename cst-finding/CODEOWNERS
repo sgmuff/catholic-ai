@@ -1,15 +1,16 @@
-# BETA: the theological-reviewer sign-off requirement below is paused for
-# the beta phase (paused 2026-08-07 — see CONTRIBUTING.md "Beta status" and
-# the corresponding entry in docs/theological-review-log.md). Any principle
-# or rubric content written while this is paused is unreviewed and must be
-# marked as such wherever it appears.
-#
-# REQUIRED before this project leaves beta: recruit or confirm a named
-# theological reviewer, uncomment the two lines below with their real
-# handle, and get retroactive review of anything written during beta.
-# principles/  @<theological-reviewer>
-# rubric/      @<theological-reviewer>
+# 2026-08-08: the named theological-reviewer sign-off requirement that used
+# to gate principles/ and rubric/ changes has been removed (see
+# CONTRIBUTING.md "Review" and the corresponding entry in
+# docs/theological-review-log.md). Content here is still unreviewed and
+# must say so wherever it's presented; instead of a project-level named
+# reviewer, each generated report itself recommends review by a parish's
+# own pastor or someone else there well versed in Catholic theology before
+# a finding is acted on.
 
-# Technical maintainer: harness code, integrations, and repo scaffolding.
+# Technical maintainer: harness code, integrations, and repo scaffolding,
+# and now also principles/ and rubric/ content (ordinary review applies —
+# see CONTRIBUTING.md).
 eval/          @sgmuff
 integrations/  @sgmuff
+principles/    @sgmuff
+rubric/        @sgmuff

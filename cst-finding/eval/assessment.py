@@ -31,6 +31,7 @@ from eval.principles import (
 from eval.report import (
     Assessment,
     BrightLineFinding,
+    OverallRecommendation,
     PrincipleRating,
     Subject,
     now_utc,
@@ -97,6 +98,25 @@ def _validate_rating(raw: dict[str, Any], principles: dict[str, Principle]) -> P
     )
 
 
+def _validate_overall(raw: dict[str, Any] | None) -> OverallRecommendation:
+    """A graded verdict (Stage 2) always ends in a holistic viability
+    judgment across all eight scores together — see rubric/criteria.md.
+    Required whenever `ratings` is given; there is no default because this
+    judgment can't be derived mechanically from the individual scores.
+    """
+    if not raw:
+        raise ValueError(
+            "no bright-line match, but 'overall' is missing — a graded assessment needs "
+            "a holistic viable/narrative judgment across all eight scores"
+        )
+    if "viable" not in raw or not isinstance(raw.get("viable"), bool):
+        raise ValueError("'overall.viable' is required and must be true or false")
+    narrative = raw.get("narrative")
+    if not narrative:
+        raise ValueError("'overall.narrative' is required and must be non-empty")
+    return OverallRecommendation(viable=bool(raw["viable"]), narrative=str(narrative).strip())
+
+
 def _validate_subject(raw: dict[str, Any]) -> Subject:
     """Exactly one of two shapes: `use_description` (a planned/described AI
     use), or `prompt` + `response` + `model` together (an actual interaction
@@ -144,11 +164,15 @@ def build_assessment(raw: dict[str, Any], principles_dir: Path) -> Assessment:
 
     subject = _validate_subject(raw)
 
+    title_raw = raw.get("title")
+    title = str(title_raw).strip() if title_raw else None
+
     follow_ups = tuple(str(q).strip() for q in raw.get("follow_up_questions", []))
 
     bright_line = _validate_bright_line(raw.get("bright_line") or {}, non_negotiables)
 
     ratings: tuple[PrincipleRating, ...] = ()
+    overall: OverallRecommendation | None = None
     non_negotiable_title: str | None = None
     non_negotiable_citations: tuple[str, ...] = ()
 
@@ -169,15 +193,18 @@ def build_assessment(raw: dict[str, Any], principles_dir: Path) -> Assessment:
         missing_ids = set(principles) - rated_ids
         if missing_ids:
             raise ValueError(f"missing ratings for principle(s): {sorted(missing_ids)}")
+        overall = _validate_overall(raw.get("overall"))
 
     return Assessment(
         subject=subject,
         follow_up_questions=follow_ups,
         bright_line=bright_line,
         ratings=ratings,
+        overall=overall,
         non_negotiable_title=non_negotiable_title,
         non_negotiable_citations=non_negotiable_citations,
         generated_at=now_utc(),
+        title=title,
     )
 
 

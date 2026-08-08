@@ -14,6 +14,7 @@ two — only what's being judged does.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -61,21 +62,35 @@ class PrincipleRating:
 
 
 @dataclass(frozen=True)
+class OverallRecommendation:
+    """A holistic judgment made after all eight principles are scored, not
+    an average of them: given the full set of scores and mitigations
+    together, is the use still viable, and what follows from that."""
+
+    viable: bool
+    narrative: str
+
+
+@dataclass(frozen=True)
 class Assessment:
     subject: Subject
     follow_up_questions: tuple[str, ...]
     bright_line: BrightLineFinding
     ratings: tuple[PrincipleRating, ...]
+    overall: OverallRecommendation | None
     non_negotiable_title: str | None
     non_negotiable_citations: tuple[str, ...]
     generated_at: datetime
+    title: str | None
 
 
 _DISCLAIMER = (
     "This is an advisory finding, not a certification or a pass/fail verdict. "
-    "The principle content behind it is unreviewed and in beta (see CONTRIBUTING.md); "
-    "it reflects a working interpretation of Catholic Social Teaching, not a "
-    "canonical magisterial one. A person makes the final call, not this report."
+    "The reasoning behind it is a working interpretation of Catholic Social "
+    "Teaching, still unreviewed, not a canonical magisterial one. A person "
+    "makes the final call, not this report: specifically, a parish's pastor "
+    "or someone else there well versed in Catholic theology should review "
+    "this finding before it's acted on."
 )
 
 
@@ -135,9 +150,41 @@ def _render_subject(subject: Subject) -> list[str]:
     return ["## Described use", "", subject.use_description or "", ""]
 
 
+def _slugify(text: str, max_len: int = 40) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return slug[:max_len].rstrip("-") or "untitled"
+
+
+def _subject_one_liner(assessment: Assessment) -> str:
+    """A short label for this assessment's subject — used in the index and
+    as a fallback report title. Prefers the given `title`; otherwise
+    derives something short from the subject itself rather than leaving an
+    index row blank."""
+    if assessment.title:
+        return assessment.title
+    subject = assessment.subject
+    if subject.kind == "llm_interaction":
+        return f"Interaction audit — {subject.model}"
+    text = (subject.use_description or "").strip().replace("\n", " ")
+    return text if len(text) <= 80 else text[:77] + "..."
+
+
+def _verdict_one_liner(assessment: Assessment) -> str:
+    if assessment.bright_line.matched:
+        return f"Incompatible — {assessment.non_negotiable_title}"
+    if assessment.overall is not None:
+        return (
+            "Viable (with mitigations)" if assessment.overall.viable else "Not viable as described"
+        )
+    return "Graded"
+
+
 def render_markdown(assessment: Assessment) -> str:
+    heading = "# CST alignment assessment"
+    if assessment.title:
+        heading = f"{heading}: {assessment.title}"
     lines = [
-        "# CST alignment assessment",
+        heading,
         "",
         _DISCLAIMER,
         "",
@@ -145,6 +192,17 @@ def render_markdown(assessment: Assessment) -> str:
         "",
         *_render_subject(assessment.subject),
     ]
+
+    if not assessment.bright_line.matched and assessment.overall is not None:
+        lines.append("## At a glance")
+        lines.append("")
+        glance = (
+            "Viable, with the mitigations below"
+            if assessment.overall.viable
+            else "Not viable as described"
+        )
+        lines.append(f"**{glance}.** {_summary_line(assessment.ratings)}")
+        lines.append("")
 
     if assessment.follow_up_questions:
         lines.append("## Follow-up questions asked")
@@ -155,9 +213,8 @@ def render_markdown(assessment: Assessment) -> str:
         lines.append("## Verdict: incompatible with Catholic Social Teaching")
         lines.append("")
         lines.append(
-            f"This {_subject_noun(assessment.subject)} matches a non-negotiable in "
-            f"`principles/non-negotiables.yaml`: **{assessment.non_negotiable_title}** "
-            f"(`{assessment.bright_line.non_negotiable_id}`)."
+            f"This {_subject_noun(assessment.subject)} matches a line Catholic Social "
+            f"Teaching treats as settled, not open to weighing: **{assessment.non_negotiable_title}**."
         )
         lines.append("")
         lines.append(assessment.bright_line.explanation or "")
@@ -168,7 +225,8 @@ def render_markdown(assessment: Assessment) -> str:
             lines.extend(_bulleted(list(assessment.non_negotiable_citations)))
         lines.append(
             "No principle-by-principle score follows. This is not one factor among "
-            "several to be weighed; see rubric/criteria.md, Stage 1."
+            "several to be weighed — the tradition treats it as a line that ends the "
+            "assessment the moment it's crossed."
         )
         lines.append("")
         return "\n".join(lines)
@@ -207,14 +265,50 @@ def render_markdown(assessment: Assessment) -> str:
         lines.append("")
         lines.extend(_bulleted([f"{r.principle_name} ({r.score}/5)" for r in contested]))
 
+    if assessment.overall is not None:
+        lines.append("## Overall assessment")
+        lines.append("")
+        verdict = (
+            "Viable, with the mitigations above"
+            if assessment.overall.viable
+            else "Not viable as described"
+        )
+        lines.append(f"**{verdict}.**")
+        lines.append("")
+        lines.append(assessment.overall.narrative)
+        lines.append("")
+
     return "\n".join(lines)
+
+
+_INDEX_HEADER = (
+    "# CST assessment index\n\n"
+    "Every report generated in this directory, oldest first.\n\n"
+    "| Date | Subject | Verdict | Report |\n"
+    "| --- | --- | --- | --- |\n"
+)
+
+
+def _update_index(out_dir: Path, assessment: Assessment, report_path: Path) -> None:
+    index_path = out_dir / "INDEX.md"
+    if not index_path.exists():
+        index_path.write_text(_INDEX_HEADER)
+    date = assessment.generated_at.strftime("%Y-%m-%d")
+    subject = _subject_one_liner(assessment)
+    verdict = _verdict_one_liner(assessment)
+    row = f"| {date} | {subject} | {verdict} | [{report_path.name}]({report_path.name}) |\n"
+    with index_path.open("a") as f:
+        f.write(row)
 
 
 def write_report(assessment: Assessment, out_dir: Path) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
-    filename = assessment.generated_at.strftime("%Y%m%dT%H%M%SZ") + ".md"
+    timestamp = assessment.generated_at.strftime("%Y%m%dT%H%M%SZ")
+    slug = _slugify(assessment.title) if assessment.title else None
+    filename = f"{timestamp}-{slug}.md" if slug else f"{timestamp}.md"
     path = out_dir / filename
     path.write_text(render_markdown(assessment))
+    _update_index(out_dir, assessment, path)
     return path
 
 

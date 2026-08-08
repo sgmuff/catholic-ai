@@ -18,6 +18,16 @@ never a mix, never neither.
 - `follow_up_questions` (array of strings, optional): the follow-ups actually
   asked, for the record. Omit if none were needed.
 
+### `title` (string, optional, either subject shape)
+
+A short human-readable label for what's being assessed (e.g. "Bulletin art
+generation", "Pantry outreach ranking audit"). Not part of either subject
+shape specifically — it sits alongside them. Used to name the report file
+descriptively and as its row in the reports index, instead of a bare
+timestamp; also shown in the report's own heading. Worth setting on every
+assessment — it costs one short phrase and makes the reports directory
+readable at a glance instead of a list of opaque timestamps.
+
 ### Shape 2: an actual interaction to audit
 
 - `prompt` (string, required): the exact prompt given to the AI system,
@@ -72,7 +82,11 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
       "rationale": "Ranks strictly by a computed need score with no override for cases the score misses.",
       "mitigation": "Add a caseworker override path for cases where the score doesn't reflect someone's real circumstances."
     }
-  ]
+  ],
+  "overall": {
+    "viable": true,
+    "narrative": "With the caseworker override in place, this use holds up: the remaining scores are already solid, and the one weak principle now has a concrete fix rather than an open gap."
+  }
 }
 ```
 
@@ -89,6 +103,18 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
 - `contested` (boolean, optional, default `false`): set when this rating
   reflects a genuine two-principles-in-tension case, not just a low score —
   see `rubric/known-tensions.md`.
+- `overall` (required whenever `ratings` is given — i.e. for every graded
+  verdict): a holistic judgment made only after all eight scores are
+  written, not an average or a ninth principle.
+  - `viable` (boolean, required): whether the use is still workable with
+    its mitigations applied, taken as a whole — not whether any single
+    principle scored well.
+  - `narrative` (string, required, non-empty): a few sentences reasoning
+    across the full set of scores and mitigations together. When `viable`
+    is `true`, say what the mitigations actually buy in terms of
+    conformity to Catholic Social Teaching if they're applied. When
+    `viable` is `false`, name a concrete alternative use or approach —
+    never leave it at "don't do this."
 
 ## Full example: auditing an actual interaction (Subject 2 + Verdict B)
 
@@ -101,11 +127,24 @@ and rejects `prompt`/`response`/`model` mixed with `use_description`.
     {
       "principle_id": "preferential-option-for-the-poor",
       "score": 4,
-      "rationale": "The response itself names the outreach-ranking risk and recommends a caseworker override, matching rubric/known-tensions.md's seed case."
+      "rationale": "The response itself names the outreach-ranking risk and recommends a caseworker override, addressing exactly how a pure need-score ranking can miss a household in a hidden crisis."
     }
   ]
 }
 ```
 
-(A real assessment rates all eight principles — this example is trimmed to
-show the subject/verdict shapes together, not a complete one.)
+(A real assessment rates all eight principles and includes `overall` — this
+example is trimmed to show the subject/verdict shapes together, not a
+complete one.)
+
+Note on rationale/mitigation/narrative text generally: write it so it reads
+naturally to someone outside this project — reason about the subject
+itself, not about where a claim is documented internally. "This risks X
+because Y" is the right shape; "this matches case 4 in the known-tensions
+file" is not, even when a documented worked case is exactly what's driving
+the judgment. This is only about this project's own internal files
+(principle YAML files, the rubric, the skill itself) — a direct magisterial
+citation (e.g. "Magnifica Humanitas §67 names algorithms and data among the
+goods this principle covers") is exactly the kind of citation that
+strengthens a rationale and should be used where it genuinely helps, not
+avoided.

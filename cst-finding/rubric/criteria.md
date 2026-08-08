@@ -65,5 +65,5 @@ gets a score:
 Not a certification and not a pass/fail check — see the README's
 Non-Goals. A low score or even a Stage 1 match is a finding to act on, not
 an automated verdict; nothing about this rubric removes the need for a
-person (and, per `CONTRIBUTING.md`, an actual theological reviewer once one
-is named) to weigh in on a real decision.
+person — specifically, per every generated report, a pastor or someone
+else well versed in Catholic theology — to weigh in on a real decision.

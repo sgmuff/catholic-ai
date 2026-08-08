@@ -62,6 +62,13 @@ def _full_ratings() -> list[dict]:
     ]
 
 
+def _overall() -> dict:
+    return {
+        "viable": True,
+        "narrative": "With the community feedback loop added, this use holds up overall.",
+    }
+
+
 def test_build_assessment_bright_line_match(principles_dir: Path):
     raw = {
         "use_description": "An assistant that helps plan an elective abortion.",
@@ -94,7 +101,11 @@ def test_build_assessment_bright_line_unknown_id_raises(principles_dir: Path):
 
 
 def test_build_assessment_graded_happy_path(principles_dir: Path):
-    raw = {"use_description": "A pantry triage system.", "ratings": _full_ratings()}
+    raw = {
+        "use_description": "A pantry triage system.",
+        "ratings": _full_ratings(),
+        "overall": _overall(),
+    }
 
     assessment = build_assessment(raw, principles_dir)
 
@@ -102,6 +113,52 @@ def test_build_assessment_graded_happy_path(principles_dir: Path):
     assert {r.principle_id for r in assessment.ratings} == {"personalism", "solidarity"}
     solidarity = next(r for r in assessment.ratings if r.principle_id == "solidarity")
     assert solidarity.mitigation == "Add a community feedback loop."
+    assert assessment.overall is not None
+    assert assessment.overall.viable is True
+    assert assessment.overall.narrative == _overall()["narrative"]
+    assert assessment.title is None
+
+
+def test_build_assessment_passes_through_optional_title(principles_dir: Path):
+    raw = {
+        "use_description": "A pantry triage system.",
+        "title": "Pantry triage",
+        "ratings": _full_ratings(),
+        "overall": _overall(),
+    }
+
+    assessment = build_assessment(raw, principles_dir)
+
+    assert assessment.title == "Pantry triage"
+
+
+def test_build_assessment_raises_when_overall_missing(principles_dir: Path):
+    raw = {"use_description": "A pantry triage system.", "ratings": _full_ratings()}
+
+    with pytest.raises(ValueError, match="'overall' is missing"):
+        build_assessment(raw, principles_dir)
+
+
+def test_build_assessment_raises_when_overall_viable_not_bool(principles_dir: Path):
+    raw = {
+        "use_description": "A pantry triage system.",
+        "ratings": _full_ratings(),
+        "overall": {"viable": "yes", "narrative": "x"},
+    }
+
+    with pytest.raises(ValueError, match="overall.viable"):
+        build_assessment(raw, principles_dir)
+
+
+def test_build_assessment_raises_when_overall_narrative_missing(principles_dir: Path):
+    raw = {
+        "use_description": "A pantry triage system.",
+        "ratings": _full_ratings(),
+        "overall": {"viable": False},
+    }
+
+    with pytest.raises(ValueError, match="overall.narrative"):
+        build_assessment(raw, principles_dir)
 
 
 def test_build_assessment_raises_on_unknown_principle(principles_dir: Path):
@@ -195,6 +252,7 @@ def test_build_assessment_interaction_graded_happy_path(principles_dir: Path):
         "response": "A strict score can miss a hidden crisis a caseworker would otherwise catch.",
         "model": "Claude Sonnet 5",
         "ratings": _full_ratings(),
+        "overall": _overall(),
     }
 
     assessment = build_assessment(raw, principles_dir)
@@ -208,7 +266,13 @@ def test_build_assessment_interaction_graded_happy_path(principles_dir: Path):
 def test_run_writes_report(tmp_path: Path, principles_dir: Path):
     input_path = tmp_path / "assessment.json"
     input_path.write_text(
-        json.dumps({"use_description": "A pantry triage system.", "ratings": _full_ratings()})
+        json.dumps(
+            {
+                "use_description": "A pantry triage system.",
+                "ratings": _full_ratings(),
+                "overall": _overall(),
+            }
+        )
     )
     out_dir = tmp_path / "reports"
 
@@ -221,7 +285,13 @@ def test_run_writes_report(tmp_path: Path, principles_dir: Path):
 def test_main_returns_zero_and_writes_report(tmp_path: Path, principles_dir: Path, capsys):
     input_path = tmp_path / "assessment.json"
     input_path.write_text(
-        json.dumps({"use_description": "A pantry triage system.", "ratings": _full_ratings()})
+        json.dumps(
+            {
+                "use_description": "A pantry triage system.",
+                "ratings": _full_ratings(),
+                "overall": _overall(),
+            }
+        )
     )
     out_dir = tmp_path / "reports"
 

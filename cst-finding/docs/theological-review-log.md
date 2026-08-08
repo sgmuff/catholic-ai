@@ -1,13 +1,18 @@
 # Theological review log
 
-A dated record of what was reviewed in `principles/` or `rubric/`, and by whom — the direct fix for "who has interpretive authority" over a working (not canonical) interpretation of CST. Every entry here corresponds to a sign-off required by `CODEOWNERS`.
+A dated record of substantive changes to `principles/` or `rubric/`, and the reasoning behind them — the direct fix for "who has interpretive authority" over a working (not canonical) interpretation of CST, now that no single named reviewer holds that role. See `../CODEOWNERS` and `../CONTRIBUTING.md` "Beta status" for the current review model: ordinary technical review plus this log, not a standing theological sign-off.
 
-No content reviews yet — no named theological reviewer has been recruited or confirmed. This is a process log entry, not a content review:
+No content reviews by a named theological reviewer have occurred. This is a process log entry, not a content review:
 
 ## 2026-08-07 — sign-off requirement paused for beta
 Decision by: project maintainer (sgmuff)
 Change: `CODEOWNERS`'s theological-reviewer requirement for `principles/` and `rubric/` is paused for this project's beta phase, to be reimposed before the project leaves beta — see `../CONTRIBUTING.md` "Beta status".
 Notes: any principle or rubric content written before this is lifted is unreviewed and must be marked as such. This entry exists so the pause itself is dated and visible, not just the requirement it suspends.
+
+## 2026-08-08 — named theological-reviewer requirement retired, not just paused
+Decision by: project maintainer (sgmuff)
+Change: `CODEOWNERS` no longer names a placeholder theological-reviewer slot for `principles/` and `rubric/`; both now fall under the same technical-maintainer review as `eval/` and `integrations/`. In its place, `eval/report.py`'s rendered report now always recommends that a parish using a finding route it to their own pastor or someone else there well versed in Catholic theology before acting on it, and states its unreviewed/beta status without pointing to this project's internal files by name.
+Notes: this moves "who has interpretive authority" from a single named project-level reviewer (never recruited in practice) to the person actually accountable for how a finding gets used at each parish. Content is no less unreviewed than before; this log and dated entries for substantive `principles/`/`rubric/` changes remain the record of what changed and why, per `../CHECKLIST.md`.
 
 ## 2026-08-08 — bright-line gate expanded with two items from CCC 1867
 Decision by: project maintainer (sgmuff), during the beta pause — **unreviewed**, logged per the pause terms above.

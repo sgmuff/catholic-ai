@@ -20,9 +20,9 @@ Any institution — Catholic or secular — that has to decide whether an AI sys
 
 ## Status
 
-`draft` (beta). All eight principles and the non-negotiables bright-line list are drafted and cited, and the assessment tool (`eval/assessment.py` + the `cst-finding` skill) runs end to end — but every word of principle content is **unreviewed**: no theological reviewer has signed off yet. See [Definition of done (v0.1)](#definition-of-done-v01) for what "active" requires.
+`draft` (beta). All eight principles and the non-negotiables bright-line list are drafted and cited, and the assessment tool (`eval/assessment.py` + the `cst-finding` skill) runs end to end — but every word of principle content is **unreviewed**: no named theological reviewer has signed off on it. See [Definition of done (v0.1)](#definition-of-done-v01) for what "active" requires.
 
-The theological-reviewer sign-off requirement in `CODEOWNERS` is paused for this beta phase (see `CONTRIBUTING.md` "Beta status") and will be reimposed, with retroactive review of anything written in the meantime, before this project leaves beta. Any principle or rubric content written during this period is unreviewed and must say so.
+As of 2026-08-08, this project does not gate `principles/` or `rubric/` changes on a project-level theological reviewer's sign-off (see `CONTRIBUTING.md` "Beta status"); ordinary technical review applies, and substantive changes are still dated and logged in `docs/theological-review-log.md`. In place of a one-time project-level sign-off, every report the tool generates recommends review by the using parish's own pastor or someone else there well versed in Catholic theology before a finding is acted on. Content written before and after this change is equally unreviewed in the sense of "no named theologian has checked it" and must say so wherever it's shown.
 
 ## Grounding
 
@@ -93,8 +93,8 @@ This project's outputs are advisory findings about *a described AI use or an aud
 ```
 cst-finding/
 ├── README.md                    # this file
-├── CONTRIBUTING.md              # theological + technical review process
-├── CODEOWNERS                   # named theological reviewer + technical maintainer
+├── CONTRIBUTING.md              # review process for principles/rubric vs. eval/integrations
+├── CODEOWNERS                   # technical maintainer for all of the above
 ├── CHANGELOG.md                 # versioned against magisterial developments, not sprints
 ├── CHECKLIST.md                 # this project's go-live checklist, extending the repo default
 ├── Makefile                     # setup, test, lint
@@ -145,7 +145,7 @@ cst-finding/
 - [ ] `principles/non-negotiables.yaml` reviewed and confirmed as the complete, correctly-scoped bright-line list
 - [ ] A known-tensions library with at least three worked hard cases
 - [ ] `eval/assessment.py` and the `cst-finding` skill run against at least one real described use, and at least one real audited prompt/response pair, and produce a report artifact for each
-- [ ] A named theological reviewer listed in `CODEOWNERS` with at least one completed review logged in `docs/theological-review-log.md`
+- [ ] Every generated report recommends parish-level pastoral/theological review, and at least one substantive `principles/`/`rubric/` change is logged in `docs/theological-review-log.md`
 - [ ] A dry run against 2–3 real use cases with results good enough to present publicly
 
 The principle and non-negotiables content is drafted and the assessment tool runs — but nothing above is checked yet, because nothing has had theological review.

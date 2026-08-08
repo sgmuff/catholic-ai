@@ -4,16 +4,13 @@ This project has two kinds of change, reviewed differently, per `CODEOWNERS`.
 
 ## Beta status
 
-As of 2026-08-07, the theological-reviewer sign-off requirement below is **paused** for this project's beta phase — see the corresponding entry in `docs/theological-review-log.md`. This is a deliberate, temporary exception, not a retraction of the requirement: it exists specifically to keep the "who has interpretive authority" question from being quietly answered by whoever happens to write the code.
+Content written into `principles/` or `rubric/` is **unreviewed** by a named theological reviewer, and must say so plainly wherever it's presented — in the file itself and in anything (a README, a demo, a talk, or a generated report) that shows it to someone else. It is a working interpretation of CST for iterating on shape and coverage, not a canonical or magisterially-approved one.
 
-While paused:
-- Content written into `principles/` or `rubric/` is **unreviewed**, and must say so plainly wherever it's presented — in the file itself and in anything (a README, a demo, a talk) that shows it to someone else.
-- It is a working draft for iterating on shape and coverage during beta, not a working interpretation of CST in the sense the rest of this project's docs use that phrase.
-- Before this project can claim `active` status (per `CHECKLIST.md`) or be presented as anything other than beta, the sign-off requirement must be reimposed: a named reviewer confirmed in `CODEOWNERS`, and everything written during beta reviewed retroactively and logged.
+As of 2026-08-08, this project does not gate `principles/` or `rubric/` changes on sign-off from a named theological reviewer (see `docs/theological-review-log.md`'s corresponding entry, and the retired requirement it replaces). Instead, the tool itself carries that caveat forward to whoever uses it: every generated report states plainly that it's unreviewed and recommends review by the using parish's own pastor or someone else there well versed in Catholic theology before a finding is acted on. That per-use review is the mechanism, not a one-time project-level sign-off.
 
 ## Changing `principles/` or `rubric/`
 
-Anything that changes what a principle means, how it's cited, what counts as a tension, or what a scenario tests requires sign-off from the named theological reviewer in `CODEOWNERS` — not just a technical maintainer's approval (suspended during beta; see above). This mirrors how a contract change needs a lawyer's sign-off, not an engineer's. Every such review gets a dated entry in `docs/theological-review-log.md`: what changed, who reviewed it, and what they said.
+Ordinary technical review applies, the same as `eval/` or `integrations/` — see `CODEOWNERS`. What's different about this content isn't who signs off, it's the accuracy bar: anything that changes what a principle means, how it's cited, what counts as a tension, or what a scenario tests still gets a dated entry in `docs/theological-review-log.md` (what changed and why), so the reasoning behind the current content stays traceable even without a standing named reviewer.
 
 Citations must be checked against the primary source (*Magnifica Humanitas*, the Compendium of the Social Doctrine of the Church, the relevant encyclical) before a principle file merges — never reconstructed from memory or from a secondary summary.
 
