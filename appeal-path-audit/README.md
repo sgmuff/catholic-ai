@@ -14,7 +14,7 @@ Any organization running automated decisioning that produces consequential outco
 
 ## Status
 
-`draft`. Both halves run end to end against fixtures and stub channels (`make setup lint test`, 41 tests, 97% coverage); the rule corpus is a first draft (7 rules across two frameworks) and hasn't been checked by anyone with legal expertise in either framework.
+`draft`. Both halves run end to end against fixtures and stub channels (`make setup lint test`, 41 tests, 97% coverage); the rule corpus is a first draft (7 rules across two frameworks) and hasn't been checked by anyone with legal expertise in either framework. [`rules/REVIEW.md`](rules/REVIEW.md) is a non-expert technical read flagging citation and check-logic questions for that reviewer to close out — not a substitute for the review itself.
 
 ## Grounding
 
@@ -24,7 +24,7 @@ Two recognized frameworks anchor the notice-disclosure rules: GDPR Art. 22(3), w
 
 ## Stack
 
-Python 3.12, `src/` layout. One runtime dependency: `pyyaml`, for loading `rules/*.yaml` and channel configs. No LLM is called anywhere in this project — every check here is either a text-pattern match or an HTTP status check.
+Python 3.12, `src/` layout. One runtime dependency: `pyyaml`, for loading `rules/*.yaml` and channel configs (SMTP/IMAP for the email channel are stdlib). No LLM is called anywhere in this project — every check here is a text-pattern match or a reachability check (HTTP status, or an email reply arriving within a bounded poll window).
 
 ## Setup
 
@@ -63,9 +63,10 @@ Probing a real appeal channel — **only run this against a channel you own or a
   --out-dir reports
 ```
 
-`channel.yaml` describes the test request:
+`channel.yaml` describes the test request. `channel_type` picks the shape (`http`, the default, or `email`):
 
 ```yaml
+# HTTP form/API appeal channel
 id: loan-appeal-channel
 url: https://your-own-system.example.com/api/appeals
 payload:
@@ -76,11 +77,37 @@ expected_status_max: 299
 confirmation_marker: "ticket_id"
 ```
 
+```yaml
+# Email appeal channel — sends the request, then polls a mailbox for a
+# reply within poll_timeout_s. Passwords are never stored in the config:
+# password_env names an environment variable to read them from at run time.
+channel_type: email
+id: loan-appeal-email
+to_addr: appeals@your-own-system.example.com
+subject: "Requesting human review of automated decision"
+body: "applicant TEST-0001 requests review of an automated denial"
+poll_timeout_s: 300
+poll_interval_s: 15
+confirmation_marker: "ticket"
+smtp:
+  host: smtp.your-own-system.example.com
+  port: 587
+  username: prober@your-own-system.example.com
+  password_env: APPEAL_PROBE_SMTP_PASSWORD
+imap:
+  host: imap.your-own-system.example.com
+  port: 993
+  username: prober@your-own-system.example.com
+  password_env: APPEAL_PROBE_IMAP_PASSWORD
+```
+
+For the email channel, a synthetic marker is stitched into the outgoing subject line and the poll searches for a reply carrying it — this doesn't rely on In-Reply-To/References threading, which an auto-responder isn't guaranteed to set. `status_code` in the resulting finding is synthetic (200 = a reply arrived within the window, 0 = it didn't), since email has no HTTP status of its own; set `expected_status_min`/`expected_status_max` to `200`/`200` (the default for this channel type) to key reachability on that.
+
 Inspect the generated report in `reports/` (gitignored) and its running `reports/INDEX.md`.
 
 ## Security & privacy notes
 
-Channel-probe payloads must be synthetic test data — a fabricated applicant id, never a real person's application or personal information. Notice files being audited are an organization's own template text, not records about a specific person, so no real personal data should ever need to appear in either input. Generated reports (`reports/`, gitignored except `.gitkeep`) can contain a live system's actual response body, so they're treated as internal artifacts, not committed. Every `needs_review` finding is a deliberate refusal to render an automated verdict on whether a human genuinely reconsidered a case — that judgment stays with a person, on purpose, every time.
+Channel-probe payloads must be synthetic test data — a fabricated applicant id, never a real person's application or personal information. The email channel never stores a password in `channel.yaml` — `password_env` names an environment variable the credential is read from at run time, so a committed or shared config file can't leak one. Notice files being audited are an organization's own template text, not records about a specific person, so no real personal data should ever need to appear in either input. Generated reports (`reports/`, gitignored except `.gitkeep`) can contain a live system's actual response body, so they're treated as internal artifacts, not committed. Every `needs_review` finding is a deliberate refusal to render an automated verdict on whether a human genuinely reconsidered a case — that judgment stays with a person, on purpose, every time.
 
 ## Skills used or provided
 

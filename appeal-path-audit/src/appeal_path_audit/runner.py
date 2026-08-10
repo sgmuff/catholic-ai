@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 from typing import Protocol
 
-from appeal_path_audit.channels import Channel, HttpFormChannel, load_channel_config
+from appeal_path_audit.channels import Channel, ChannelConfig, build_channel, load_channel_config
 from appeal_path_audit.checks import CHECKS
 from appeal_path_audit.notices import load_notices
 from appeal_path_audit.report import Finding, write_report
@@ -104,9 +104,7 @@ def _run_probe_channel(args: argparse.Namespace) -> int:
         print(f"Could not load channel config: {exc}", file=sys.stderr)
         return 1
 
-    channel = args.channel_factory(
-        url=config.url, payload=config.payload, method=config.method, headers=config.headers
-    )
+    channel = args.channel_factory(config)
     try:
         findings = probe_channel(
             config.id,
@@ -125,12 +123,10 @@ def _run_probe_channel(args: argparse.Namespace) -> int:
 
 
 class ChannelFactory(Protocol):
-    def __call__(
-        self, url: str, payload: dict[str, object], method: str, headers: dict[str, str] | None
-    ) -> Channel: ...
+    def __call__(self, config: ChannelConfig) -> Channel: ...
 
 
-def main(argv: list[str] | None = None, channel_factory: ChannelFactory = HttpFormChannel) -> int:
+def main(argv: list[str] | None = None, channel_factory: ChannelFactory = build_channel) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
 

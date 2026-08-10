@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 
-from appeal_path_audit.channels import ChannelResponse
+from appeal_path_audit.channels import ChannelConfig, ChannelResponse
 from appeal_path_audit.runner import audit_notices, main, probe_channel
 
 
@@ -166,9 +166,7 @@ class _FakeChannel:
         return ChannelResponse(status_code=202, body='{"ticket_id": "T-1"}')
 
 
-def _fake_channel_factory(
-    url: str, payload: dict[str, object], method: str, headers: dict[str, str] | None
-) -> _FakeChannel:
+def _fake_channel_factory(config: ChannelConfig) -> _FakeChannel:
     return _FakeChannel()
 
 
