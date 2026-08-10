@@ -1,5 +1,7 @@
 # Catholic AI
 
+*An emerging open-source toolkit for helping institutions govern and test AI according to Catholic principles.*
+
 ## Purpose
 
 Every technology carries within it a judgment about what human beings are for, and artificial intelligence is no exception. This repository exists to articulate and defend a distinctly Catholic account of that judgment; it refuses to treat intelligence, work, and dignity as commodities to be optimized, and insists instead that the human person, made in the image of God, the *imago dei*, is never merely a means to efficiency.
@@ -8,7 +10,7 @@ The starting point for this work is *Magnifica Humanitas*, in which Pope Leo XIV
 
 This project holds, with the whole of Catholic Social Teaching, that the measure of any technology is the human good it serves — not merely the wealth it generates or the convenience it offers. Subsidiarity teaches that decisions belong as close as possible to the people they affect, a principle too easily forgotten when systems are built to centralize judgment in code that few can see and fewer still can question. Solidarity teaches that the benefits of innovation cannot be hoarded by the few who build it while its costs fall on the many who did not choose it. And the dignity of the human person — prior to any market, any state, and any machine — remains the fixed point against which every application of artificial intelligence must be tested, and by which it must, if necessary, be refused.
 
-None of this is written in opposition to the tools themselves. The Church has never been a stranger to craft, and intelligence rightly ordered can serve the poor, extend the reach of the healer and the teacher, and free human beings for the work that only they can do. But a tool rightly used is a tool understood, and understanding it rightly requires more than an engineer's fluency — it requires the wisdom of a tradition that has spent two thousand years asking what human flourishing actually demands. That is the work undertaken here: to think clearly, and in fidelity to the Church, about what we are building, and to what end.
+None of this is written in opposition to the tools themselves. The Church has never been a stranger to craft, and intelligence rightly ordered can serve the poor, extend the reach of the healer and the teacher, and free human beings for the work that only they can do. But a tool rightly used is a tool understood, and understanding it rightly requires more than an engineer's fluency — it requires the wisdom of a tradition that has spent two thousand years asking what human flourishing actually demands. That is the work undertaken here: to think clearly, and in fidelity to the Church, about what we are building, and to what end — and, project by project, to build the toolkit an institution needs to put that thinking into practice.
 
 ## How this repository works
 
