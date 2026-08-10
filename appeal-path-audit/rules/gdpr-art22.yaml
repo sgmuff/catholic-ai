@@ -1,0 +1,58 @@
+# Article 22(3) of the GDPR requires that a data subject be given
+# information about, and a way to contest, a decision based solely on
+# automated processing that produces legal or similarly significant effects.
+items:
+  - id: gdpr-art22-automation-disclosure
+    framework: "GDPR Art. 22(3)"
+    description: >
+      The notice must disclose that the decision was made by automated
+      processing, not a person.
+    severity: high
+    check: keyword_presence
+    check_args:
+      required_substrings:
+        - "automated"
+        - "automatically"
+        - "algorithm"
+
+  - id: gdpr-art22-human-review-right
+    framework: "GDPR Art. 22(3)"
+    description: >
+      The notice must state the right to obtain human intervention and to
+      contest the decision.
+    severity: high
+    check: keyword_presence
+    check_args:
+      required_substrings:
+        - "human review"
+        - "human intervention"
+        - "request a review"
+        - "contest this decision"
+
+  - id: gdpr-art22-contact-method
+    framework: "GDPR Art. 22(3)"
+    description: >
+      The notice must give a specific way to actually exercise that right —
+      a contact address, form, or channel, not just a general statement
+      that the right exists.
+    severity: high
+    check: keyword_presence
+    check_args:
+      required_substrings:
+        - "contact us at"
+        - "submit a request"
+        - "appeal by"
+        - "reach out to"
+
+  - id: gdpr-art22-not-final-language
+    framework: "GDPR Art. 22(3)"
+    description: >
+      The notice must not describe the automated decision as final or
+      unappealable — that would misstate the data subject's actual right.
+    severity: high
+    check: keyword_absence
+    check_args:
+      forbidden_substrings:
+        - "final and unappealable"
+        - "this decision is final"
+        - "no further review is available"

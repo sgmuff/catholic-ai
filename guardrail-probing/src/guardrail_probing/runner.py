@@ -1,9 +1,8 @@
 """Orchestrates a run: load the probe corpus, send each probe's turns to a
 target, score the response with its detector, and collect the results as
-`Finding`s. `main` is the CLI entry point — mirrors `cst-finding`'s
-`eval/assessment.py::main` shape: validate everything up front, exit 1 with
-a clear message on anything that doesn't check out, never partially write a
-report.
+`Finding`s. `main` is the CLI entry point: validate everything up front,
+exit 1 with a clear message on anything that doesn't check out, never
+partially write a report.
 """
 
 from __future__ import annotations

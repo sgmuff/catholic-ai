@@ -3,8 +3,7 @@ runs against a target. Each file is one category; each entry is one probe,
 given either as a single-turn `prompt` or a multi-turn `turns` list (used by
 the prompt-injection category to simulate attacker-controlled content
 arriving as a tool result) — exactly one of the two, never both, never
-neither, the same "exactly one shape" discipline `cst-finding`'s
-`eval/assessment.py::_validate_subject` uses for its own two-shape subject.
+neither.
 """
 
 from __future__ import annotations

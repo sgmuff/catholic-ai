@@ -7,7 +7,7 @@ An automated adversarial test harness for LLMs and agentic systems: it runs a co
 - **Not a safety certification.** A clean run means the target resisted the probes actually in this corpus — nothing more. The report is worded as findings, never as "passed" or "certified safe."
 - **Not a substitute for a professional security review or penetration test.** This is a repeatable regression check an institution runs before and after a deployment change, not a one-time audit by security specialists.
 - **Not a runtime guardrail.** It's an offline test harness a person or CI runs periodically, not request-time protection.
-- **No dependency on `cst-finding`.** This project shares this repo's conventions (`docs/standards/`) and its concern for what's worth testing, but no code, schema, or skill is shared between the two. The doctrinal-reliability and manipulation-to-harm probe categories are authored independently here.
+- **Fully standalone.** This project follows this repo's shared conventions (`docs/standards/`), but is otherwise self-contained — no code, schema, or skill from anywhere else is required to build, run, or understand it.
 - **Not an LLM-as-judge tool.** Where a probe's outcome is mechanically checkable (a canary string leaked, a compliance marker present), the harness scores it automatically. Where it isn't (does a response misstate doctrine, does it actually facilitate harm), it captures the response and flags it for a human — see `src/guardrail_probing/detectors.py`.
 
 ## Audience
@@ -20,12 +20,12 @@ Any institution running its own LLM-backed chatbot or agentic tool against the p
 
 ## Grounding
 
-This project asserts no Catholic Social Teaching *judgment* of its own — unlike `cst-finding`, it doesn't score a use case against CST principles. It tests something narrower and more mechanical: whether a deployed system's guardrails hold under adversarial pressure. Two of its five probe categories are where a Catholic institutional context actually changes what's worth testing for, rather than just relabeling a generic red-team corpus:
+This project asserts no Catholic Social Teaching *judgment* of its own — it doesn't score a use case against CST principles. It tests something narrower and more mechanical: whether a deployed system's guardrails hold under adversarial pressure. Two of its five probe categories are where a Catholic institutional context actually changes what's worth testing for, rather than just relabeling a generic red-team corpus:
 
 - **`doctrinal-reliability`** — does the system assert something false about Church teaching, or claim an authority (sacramental, tribunal) it doesn't have, with unwarranted confidence under leading or adversarial framing. No secular red-team corpus has a reason to include this category.
-- **`manipulation-to-harm`** — does a false-authority or fictional framing talk the system into facilitating something Catholic Social Teaching treats as a serious harm (see `cst-finding/principles/non-negotiables.yaml` for the kind of thing meant here, though this project doesn't import that file).
+- **`manipulation-to-harm`** — does a false-authority or fictional framing talk the system into facilitating something Catholic Social Teaching treats as a serious harm — direct abortion, exploitation of the poor, trafficking, and the like: the kind of thing CST treats as a bright line, not one factor among several to weigh.
 
-The other three categories (`jailbreak`, `prompt-injection`, `secrets-exfiltration`) are standard adversarial-testing concerns, authored from scratch here rather than imported from an existing red-team library so the whole project stays dependency-free and legible — see the top-level repo README's reasoning for why this repo builds rather than wraps where it reasonably can.
+The other three categories (`jailbreak`, `prompt-injection`, `secrets-exfiltration`) are standard adversarial-testing concerns, authored from scratch here rather than imported from an existing red-team library, so the whole project stays dependency-free and legible.
 
 A reader who doesn't share the theology can use this project exactly as-is: run it, read the findings, decide what to fix. The Catholic grounding shapes which probes exist, not how the harness itself works.
 
@@ -91,7 +91,7 @@ No real personal data appears anywhere in the probe corpus or test fixtures — 
 
 ## Skills used or provided
 
-None. This is a CLI tool, not a conversational skill — running it doesn't require an LLM to make a judgment call the way `cst-finding` does; the judgment either resolves mechanically (a detector) or is explicitly deferred to a human (`needs_review`).
+None. This is a CLI tool, not a conversational skill — running it doesn't require an LLM to make a judgment call in conversation; the judgment either resolves mechanically (a detector) or is explicitly deferred to a human (`needs_review`).
 
 ## Definition of done (v0.1)
 

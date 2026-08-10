@@ -3,11 +3,10 @@ checks that can be trusted to run unattended (a canary string leaked, a
 compliance marker present, a refusal phrase absent), and `manual_review`,
 which never renders an automated verdict at all.
 
-This split is deliberate, not a placeholder for a future LLM-judge: this
-repo's other project, `cst-finding`, already rejects LLM-as-judge scoring on
-value-laden output as unreliable (see its rubric/criteria.md Non-Goals).
-Whether a response misstates Church teaching or actually facilitates harm is
-exactly that kind of judgment — this module never pretends otherwise.
+This split is deliberate, not a placeholder for a future LLM-judge:
+LLM-as-judge scoring is unreliable on value-laden output. Whether a response
+misstates Church teaching or actually facilitates harm is exactly that kind
+of judgment — this module never pretends otherwise.
 """
 
 from __future__ import annotations

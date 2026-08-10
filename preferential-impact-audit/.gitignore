@@ -1,0 +1,12 @@
+# Generated run reports are artifacts, not source — keep the directory in
+# git, not its contents.
+reports/*
+!reports/.gitkeep
+
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage

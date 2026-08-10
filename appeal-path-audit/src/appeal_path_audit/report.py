@@ -1,8 +1,8 @@
-"""The shape of a probe run's results, and how they're rendered and written.
-A report is findings, not a certification — passing every probe means the
-target resisted the probes actually run, nothing more. `needs_review`
-findings are never resolved automatically; the report says so plainly and
-names the human step that has to happen next before any finding is acted on.
+"""The shape of an audit run's results, and how they're rendered and
+written. A report is findings, not a certification — a clean run over the
+notices and channels actually tested says nothing about ones that weren't.
+`needs_review` findings are never resolved automatically; the report always
+says so and carries the captured detail a person needs to make that call.
 """
 
 from __future__ import annotations
@@ -10,25 +10,29 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal
 
-from guardrail_probing.detectors import Verdict
+Verdict = Literal["pass", "fail", "needs_review"]
+Kind = Literal["notice", "channel"]
 
 _DISCLAIMER = (
-    "This is a record of which probes passed, failed, or need human review — not a safety "
-    "certification. A 'pass' means the target resisted the probes actually run in this corpus, "
-    "not that it is invulnerable. Every `needs_review` finding requires a person to read the "
-    "response and judge it before any deployment decision is made on it."
+    "This is a record of which notices and channels passed, failed, or need human review — not "
+    "a certification. A 'pass' means the specific rule or channel tested checked out, nothing "
+    "broader. Every `needs_review` finding requires a person to read the captured detail and "
+    "judge it — in particular, no finding here claims to verify that a human genuinely "
+    "reconsidered a case, only that a channel accepted and acknowledged a request."
 )
 
 
 @dataclass(frozen=True)
 class Finding:
-    probe_id: str
-    category: str
+    subject_id: str
+    kind: Kind
+    rule_id: str | None
     severity: str
     verdict: Verdict
-    response: str
     explanation: str
+    detail: str
 
 
 def _summary_line(findings: tuple[Finding, ...]) -> str:
@@ -37,12 +41,14 @@ def _summary_line(findings: tuple[Finding, ...]) -> str:
     needs_review = [f for f in findings if f.verdict == "needs_review"]
     passed = total - len(failed) - len(needs_review)
 
-    parts = [f"{passed} of {total} probes passed"]
+    parts = [f"{passed} of {total} findings passed"]
     if failed:
-        named = ", ".join(f.probe_id for f in failed)
+        named = ", ".join(
+            f"{f.subject_id}/{f.rule_id}" if f.rule_id else f.subject_id for f in failed
+        )
         parts.append(f"{len(failed)} failed: {named}")
     if needs_review:
-        named = ", ".join(f.probe_id for f in needs_review)
+        named = ", ".join(f.subject_id for f in needs_review)
         parts.append(f"{len(needs_review)} need human review: {named}")
     return "; ".join(parts) + "."
 
@@ -54,45 +60,46 @@ def _blockquote(text: str) -> list[str]:
 
 def render_markdown(findings: tuple[Finding, ...], generated_at: datetime) -> str:
     lines = [
-        "# Guardrail probe report",
+        "# Appeal-path audit report",
         "",
         _DISCLAIMER,
         "",
         f"- Generated: {generated_at.isoformat()}",
-        f"- Probes run: {len(findings)}",
+        f"- Findings: {len(findings)}",
         "",
         "## At a glance",
         "",
         _summary_line(findings),
         "",
-        "## Findings by category",
-        "",
     ]
 
-    by_category: dict[str, list[Finding]] = {}
-    for finding in findings:
-        by_category.setdefault(finding.category, []).append(finding)
-
-    for category in sorted(by_category):
-        lines.append(f"### {category}")
+    for kind, heading in (("notice", "## Notice findings"), ("channel", "## Channel findings")):
+        subset = [f for f in findings if f.kind == kind]
+        if not subset:
+            continue
+        lines.append(heading)
         lines.append("")
-        for finding in by_category[category]:
-            lines.append(f"#### {finding.probe_id} — {finding.verdict} ({finding.severity})")
+        for finding in subset:
+            title = f"{finding.subject_id}"
+            if finding.rule_id:
+                title += f" — {finding.rule_id}"
+            lines.append(f"### {title}: {finding.verdict} ({finding.severity})")
             lines.append("")
             lines.append(finding.explanation)
             lines.append("")
-            lines.append("Response:")
-            lines.append("")
-            lines.extend(_blockquote(finding.response))
-            lines.append("")
+            if finding.detail:
+                lines.append("Detail:")
+                lines.append("")
+                lines.extend(_blockquote(finding.detail))
+                lines.append("")
 
     return "\n".join(lines)
 
 
 _INDEX_HEADER = (
-    "# Guardrail probe run index\n\n"
+    "# Appeal-path audit run index\n\n"
     "Every report generated in this directory, oldest first.\n\n"
-    "| Date | Probes | Failed | Needs review | Report |\n"
+    "| Date | Findings | Failed | Needs review | Report |\n"
     "| --- | --- | --- | --- | --- |\n"
 )
 

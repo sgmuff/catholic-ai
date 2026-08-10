@@ -16,7 +16,7 @@ This is not one application but a home for several, added one at a time as they'
 
 There is no confessional/secular split between projects. Every project is grounded explicitly in Catholic Social Teaching — citing *Magnifica Humanitas* and the wider CST tradition directly — but written in a single voice that a diocese, a Catholic hospital, and a secular compliance officer or board can each act on without translation. The lineage is never hidden; the reasoning is never gated behind a shared theology the reader has to accept first.
 
-[`cst-finding/`](cst-finding/) is the first project to land here — see its own README for what it does. [`guardrail-probing/`](guardrail-probing/) is the second: an adversarial test harness for LLMs and agentic systems, independent of `cst-finding` by design (no shared code or schema between projects — see its own README's Non-Goals).
+[`cst-finding/`](cst-finding/) is the first project to land here — see its own README for what it does. [`guardrail-probing/`](guardrail-probing/) is the second: an adversarial test harness for LLMs and agentic systems — see its own README for what it does. [`appeal-path-audit/`](appeal-path-audit/) is the third: audits whether an automated-decision system's human-appeal path actually works — see its own README for what it does. [`preferential-impact-audit/`](preferential-impact-audit/) is the fourth: computes fairness metrics over automated-decision data, including a weighted-harm score that costs errors against economically vulnerable groups more heavily — see its own README for what it does.
 
 ## Repository layout
 

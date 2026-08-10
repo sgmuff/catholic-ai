@@ -1,0 +1,47 @@
+# The EU AI Act's human-oversight requirement for high-risk AI systems
+# (credit scoring, employment screening, and similar consequential
+# decisions fall under Annex III) requires that affected persons be
+# informed and given a meaningful path to oversight — not just a formal
+# disclosure, but a real, actionable one.
+items:
+  - id: eu-ai-act-system-identification
+    framework: "EU AI Act, human-oversight obligations for high-risk systems"
+    description: >
+      The notice must identify that an AI system was involved in producing
+      the decision, using language a non-expert can actually understand.
+    severity: high
+    check: keyword_presence
+    check_args:
+      required_substrings:
+        - "AI system"
+        - "artificial intelligence"
+        - "automated decision-making system"
+
+  - id: eu-ai-act-timeframe-given
+    framework: "EU AI Act, human-oversight obligations for high-risk systems"
+    description: >
+      The notice must give a timeframe within which a review can be
+      requested, so the right to oversight is actionable rather than open
+      to indefinite delay.
+    severity: medium
+    check: keyword_presence
+    check_args:
+      required_substrings:
+        - "within 30 days"
+        - "within 60 days"
+        - "as soon as possible"
+        - "days of this notice"
+
+  - id: eu-ai-act-no-sole-authority-claim
+    framework: "EU AI Act, human-oversight obligations for high-risk systems"
+    description: >
+      The notice must not claim the system's output is authoritative or
+      binding on its own — human oversight has to remain real, not
+      nominal.
+    severity: high
+    check: keyword_absence
+    check_args:
+      forbidden_substrings:
+        - "the system's determination is binding"
+        - "cannot be overridden"
+        - "the algorithm's decision is authoritative"
