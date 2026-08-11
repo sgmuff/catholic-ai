@@ -1,0 +1,125 @@
+id: hipaa
+name: "HIPAA — Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)"
+citation_root: "45 CFR Parts 160, 164"
+source_url: "https://www.law.cornell.edu/cfr/text/45/164.308"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies to "covered entities" (health plans, health care clearinghouses,
+    and health care providers who transmit health information electronically
+    in connection with a covered transaction) and their "business
+    associates" who create, receive, maintain, or transmit protected health
+    information (PHI) on a covered entity's behalf. The Security Rule's risk
+    analysis requirement (45 CFR 164.308(a)(1)(ii)(A)) — the closest HIPAA
+    analog to a DPIA — applies to electronic PHI specifically.
+  jurisdiction:
+    - United States
+
+required_elements:
+  - id: risk-analysis
+    citation: "45 CFR 164.308(a)(1)(ii)(A)"
+    requirement: >
+      A covered entity or business associate must conduct an accurate and
+      thorough assessment of the potential risks and vulnerabilities to the
+      confidentiality, integrity, and availability of electronic protected
+      health information it holds.
+  - id: risk-management
+    citation: "45 CFR 164.308(a)(1)(ii)(B)"
+    requirement: >
+      A covered entity or business associate must implement security
+      measures sufficient to reduce identified risks and vulnerabilities to
+      a reasonable and appropriate level.
+  - id: minimum-necessary
+    citation: "45 CFR 164.502(b), 164.514(d)"
+    requirement: >
+      When using, disclosing, or requesting protected health information, a
+      covered entity or business associate must make reasonable efforts to
+      limit it to the minimum necessary to accomplish the intended purpose,
+      subject to enumerated exceptions (e.g. treatment disclosures,
+      disclosures to the individual, disclosures required by law).
+  - id: technical-safeguards
+    citation: "45 CFR 164.312"
+    requirement: >
+      A covered entity or business associate must implement technical
+      safeguards for electronic PHI, including access controls, audit
+      controls, integrity controls, and transmission security — with
+      encryption addressed as an "addressable" (risk-assessed, not
+      strictly mandatory) implementation specification rather than required
+      outright.
+  - id: notice-of-privacy-practices
+    citation: "45 CFR 164.520"
+    requirement: >
+      A covered entity must provide individuals with a notice describing
+      how it may use and disclose protected health information and the
+      individual's rights with respect to it.
+  - id: right-of-access
+    citation: "45 CFR 164.524"
+    requirement: >
+      An individual has the right to inspect and obtain a copy of
+      protected health information about them in a designated record set,
+      with limited exceptions.
+  - id: access-response-deadline
+    citation: "45 CFR 164.524(b)(2)"
+    requirement: >
+      A covered entity must act on a request for access no later than 30
+      days after receipt. A single extension of up to 30 additional days
+      is available if the entity is unable to meet the original deadline,
+      provided it gives the individual written notice, within the
+      original 30 days, of the reasons for the delay and the date by
+      which it will complete action on the request.
+  - id: right-to-amend
+    citation: "45 CFR 164.526"
+    requirement: >
+      An individual has the right to request amendment of protected health
+      information about them in a designated record set for as long as the
+      information is maintained.
+  - id: accounting-of-disclosures
+    citation: "45 CFR 164.528"
+    requirement: >
+      An individual has the right to receive an accounting of certain
+      disclosures of their protected health information made in the six
+      years prior to the request, subject to enumerated exceptions.
+  - id: breach-notification
+    citation: "45 CFR 164.400-414"
+    requirement: >
+      Following a breach of unsecured protected health information, a
+      covered entity must notify affected individuals without unreasonable
+      delay and no later than 60 days after discovery, and must notify the
+      Secretary of Health and Human Services; business associates must
+      notify the covered entity.
+  - id: workforce-training
+    citation: "45 CFR 164.530(b)"
+    requirement: >
+      A covered entity must train all members of its workforce on its
+      privacy policies and procedures as necessary and appropriate for
+      them to carry out their functions.
+
+terms_of_art:
+  - term: covered entity
+    meaning: >
+      A health plan, health care clearinghouse, or health care provider
+      that transmits health information electronically in connection with
+      a transaction covered by the HIPAA Transactions Rule (45 CFR 160.103).
+  - term: business associate
+    meaning: >
+      A person or entity that creates, receives, maintains, or transmits
+      protected health information on behalf of a covered entity (45 CFR
+      160.103).
+  - term: protected health information (PHI)
+    meaning: >
+      Individually identifiable health information held or transmitted by
+      a covered entity or business associate, in any form or medium
+      (45 CFR 160.103).
+  - term: minimum necessary
+    meaning: >
+      The standard requiring PHI use, disclosure, or requests to be
+      limited to the amount reasonably needed to accomplish the intended
+      purpose (45 CFR 164.502(b)).
+  - term: addressable specification
+    meaning: >
+      A Security Rule implementation specification a covered entity must
+      assess and either implement, implement an equivalent alternative to,
+      or document why it is not reasonable and appropriate to implement —
+      distinct from a "required" specification, which admits no such
+      discretion.

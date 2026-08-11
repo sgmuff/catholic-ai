@@ -1,0 +1,80 @@
+# The authored source of truth for which skills exist in this family, their
+# domain, and their status — see build-plan.md §6.2. The router's own menu
+# is generated from this file by eval/sync_skill_bundle.py, never
+# hand-maintained in the router's SKILL.md.
+#
+# `rubric` is the project-root-relative path to the rubric this skill scores
+# against. Added at build sequence step 11, when a second rubric
+# (rubric/ai-criteria.md) first existed alongside the privacy one — before
+# that, sync_all() assumed every skill shared one rubric, which stopped
+# being true the moment a second domain had a real skill to sync.
+#
+# Flipping a skill from "planned" to "built": build it under
+# .claude/skills/<name>/ first, then flip the status here and re-run the
+# sync. sync_all() raises ManifestDriftError if a "built" entry has no
+# matching folder — the ordering is enforced, not just documented.
+
+skills:
+  # --- privacy domain --------------------------------------------------
+  - name: draft-privacy-impact-assessment
+    domain: privacy
+    status: built
+    rubric: rubric/criteria.md
+    trigger: "starting something new that will collect or process personal data, or asks for a PIA/DPIA by name"
+  - name: triage-privacy-rights-request
+    domain: privacy
+    status: built
+    rubric: null # triage shape (build-plan.md step 12): classification + deadline + gaps, not rubric-scored
+    trigger: "an access, deletion, correction, or portability request came in"
+  - name: triage-privacy-incident
+    domain: privacy
+    status: planned
+    rubric: rubric/criteria.md
+    trigger: "a possible data breach or privacy incident happened"
+  - name: review-vendor-privacy-assessment
+    domain: privacy
+    status: planned
+    rubric: rubric/criteria.md
+    trigger: "reviewing a vendor's privacy questionnaire, DPA, or certifications"
+  - name: review-data-retention-entry
+    domain: privacy
+    status: planned
+    rubric: rubric/criteria.md
+    trigger: "checking whether a data-inventory entry's retention is still justified"
+  - name: map-regulatory-change
+    domain: privacy
+    status: planned
+    rubric: rubric/criteria.md
+    trigger: "a new privacy regulatory development needs to be mapped to existing policies"
+  - name: draft-privacy-notice-update
+    domain: privacy
+    status: built
+    rubric: rubric/criteria.md
+    trigger: "a privacy notice or policy section needs a proposed revision, or asks for a privacy notice update by name"
+
+  # --- ai-governance domain ---------------------------------------------
+  - name: assess-ai-system-risk-tier
+    domain: ai-governance
+    status: built
+    rubric: rubric/ai-criteria.md
+    trigger: "deploying, building, or procuring a new AI system or feature, or asks for a risk-tier classification by name"
+  - name: draft-ai-risk-impact-assessment
+    domain: ai-governance
+    status: planned
+    rubric: rubric/ai-criteria.md
+    trigger: "an AI system needs a structured risk or impact assessment"
+  - name: draft-model-card
+    domain: ai-governance
+    status: planned
+    rubric: rubric/ai-criteria.md
+    trigger: "an AI system or model needs a documentation record"
+  - name: review-ai-vendor-governance
+    domain: ai-governance
+    status: planned
+    rubric: rubric/ai-criteria.md
+    trigger: "reviewing a vendor's or foundation-model provider's AI governance documentation"
+  - name: triage-ai-incident
+    domain: ai-governance
+    status: planned
+    rubric: rubric/ai-criteria.md
+    trigger: "a possible AI safety, bias, or reliability incident happened"

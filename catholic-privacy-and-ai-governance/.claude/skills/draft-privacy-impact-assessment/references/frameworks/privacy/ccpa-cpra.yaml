@@ -1,0 +1,118 @@
+id: ccpa-cpra
+name: "CCPA/CPRA — California Consumer Privacy Act, as amended by the California Privacy Rights Act"
+citation_root: "Cal. Civ. Code § 1798.100 et seq."
+source_url: "https://oag.ca.gov/privacy/ccpa"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies to a for-profit "business" doing business in California that
+    collects California residents' personal information and meets at least
+    one threshold: (a) annual gross revenue over $25 million, (b) buys,
+    sells, or shares the personal information of 100,000 or more California
+    consumers or households annually, or (c) derives 50% or more of annual
+    revenue from selling or sharing California consumers' personal
+    information. Separately, a business whose processing presents
+    significant risk to consumers' privacy or security must conduct and
+    submit a risk assessment under CPPA regulations adopted pursuant to
+    Civ. Code § 1798.185(a)(15) — the closest CCPA/CPRA analog to a DPIA,
+    with regulations taking effect January 1, 2026.
+  jurisdiction:
+    - California
+
+required_elements:
+  - id: right-to-know
+    citation: "Civ. Code §§ 1798.100, 1798.110, 1798.115"
+    requirement: >
+      A consumer has the right to request that a business disclose the
+      categories and/or specific pieces of personal information it has
+      collected about them, the categories of sources, the business or
+      commercial purpose for collecting it, and the categories of third
+      parties it is shared with.
+  - id: right-to-delete
+    citation: "Civ. Code § 1798.105"
+    requirement: >
+      A consumer has the right to request that a business delete personal
+      information it has collected from them, subject to enumerated
+      exceptions.
+  - id: right-to-correct
+    citation: "Civ. Code § 1798.106"
+    requirement: >
+      A consumer has the right to request that a business correct
+      inaccurate personal information it maintains about them.
+  - id: right-to-opt-out-of-sale-sharing
+    citation: "Civ. Code § 1798.120"
+    requirement: >
+      A consumer has the right to direct a business that sells or shares
+      their personal information to third parties to stop doing so, and a
+      business must provide a clear and conspicuous mechanism to exercise
+      this right.
+  - id: right-to-limit-sensitive-personal-information
+    citation: "Civ. Code § 1798.121"
+    requirement: >
+      A consumer has the right to direct a business to limit its use of the
+      consumer's sensitive personal information to what is necessary to
+      perform the services or provide the goods reasonably expected by an
+      average consumer.
+  - id: right-to-non-discrimination
+    citation: "Civ. Code § 1798.125"
+    requirement: >
+      A business must not discriminate against a consumer for exercising
+      any right under this title, including by denying goods or services,
+      charging different prices, or providing a different level of quality
+      — subject to the exception for financial incentives offered in
+      exchange for data disclosure that are reasonably related to the value
+      of the data.
+  - id: response-deadline
+    citation: "Civ. Code § 1798.130(a)(2)"
+    requirement: >
+      A business must respond to a verifiable consumer request within 45
+      calendar days of receipt. That period may be extended by an
+      additional 45 days (90 days total) where reasonably necessary,
+      provided the business notifies the consumer of the extension and
+      the reason for it within the first 45-day period.
+  - id: risk-assessment
+    citation: "Civ. Code § 1798.185(a)(15)"
+    requirement: >
+      A business whose processing of personal information presents
+      significant risk to consumers' privacy or security must conduct and
+      submit to the California Privacy Protection Agency a risk assessment
+      identifying the benefits and negative impacts of the processing to
+      the business, the consumer, other stakeholders, and the public, and
+      the safeguards applied to address the negative impacts.
+  - id: privacy-notice
+    citation: "Civ. Code § 1798.100(a)"
+    requirement: >
+      A business must inform consumers, at or before the point of
+      collection, of the categories of personal information to be
+      collected and the purposes for which they will be used.
+
+terms_of_art:
+  - term: business
+    meaning: >
+      A for-profit legal entity that does business in California, collects
+      California consumers' personal information, and meets at least one of
+      the statutory thresholds (Civ. Code § 1798.140(d)).
+  - term: consumer
+    meaning: >
+      A natural person who is a California resident (Civ. Code § 1798.140(i)).
+  - term: personal information
+    meaning: >
+      Information that identifies, relates to, describes, is reasonably
+      capable of being associated with, or could reasonably be linked,
+      directly or indirectly, with a particular consumer or household
+      (Civ. Code § 1798.140(v)(1)).
+  - term: sensitive personal information
+    meaning: >
+      A specific subset of personal information including government
+      identifiers, precise geolocation, account/financial credentials,
+      contents of mail/email/text messages, genetic data, biometric
+      information used to identify a consumer, health information, sex
+      life or sexual orientation data, and racial/ethnic origin, religious,
+      or union-membership information (Civ. Code § 1798.140(ae)).
+  - term: sell / share
+    meaning: >
+      "Sell" is disclosing personal information to a third party for
+      monetary or other valuable consideration; "share" extends this to
+      disclosure for cross-context behavioral advertising, whether or not
+      for consideration (Civ. Code § 1798.140(ad), (ah)).

@@ -1,0 +1,5 @@
+{
+  "name": "catholic-privacy-and-ai-governance",
+  "description": "Front door to the Catholic Privacy and AI Governance skill family. Routes a generic privacy or AI-governance request to the right specialist skill rather than performing any assessment itself.",
+  "version": "0.1.0"
+}

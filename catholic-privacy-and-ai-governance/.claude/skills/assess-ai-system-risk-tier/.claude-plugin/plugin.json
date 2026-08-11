@@ -1,0 +1,5 @@
+{
+  "name": "assess-ai-system-risk-tier",
+  "description": "Classifies an AI system against the EU AI Act's risk tiers and NIST AI RMF's functions, then scores it against a seven-dimension AI-governance rubric covering risk classification, governance, data governance, transparency, robustness, bias/fairness, and human oversight.",
+  "version": "0.1.0"
+}

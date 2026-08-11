@@ -1,0 +1,191 @@
+import datetime
+from pathlib import Path
+
+from privacy_and_ai_governance.report import (
+    render_markdown,
+    render_triage_markdown,
+    slugify,
+    write_report,
+)
+
+
+def _assessment() -> dict:
+    return {
+        "title": "Parish Bulletin Sign-Up Form",
+        "subject": {
+            "description": "A web form collecting email addresses for a weekly bulletin.",
+            "personal_data": ["email address", "first name"],
+            "purpose": "Sending the weekly parish bulletin.",
+            "systems": ["Mailchimp"],
+            "recipients": ["parish office staff", "Mailchimp (processor)"],
+            "retention": "Kept until the parishioner unsubscribes.",
+            "institution_context": "A parish",
+        },
+        "frameworks_considered": [
+            {
+                "id": "gdpr-dpia",
+                "applicable": True,
+                "basis": "Parish serves EU-resident parishioners.",
+            }
+        ],
+        "ratings": [
+            {
+                "dimension_id": "retention",
+                "score": 3,
+                "rationale": "No automated deletion trigger beyond unsubscribe.",
+                "mitigation": "Add an annual re-confirmation with automatic removal on non-response.",
+                "ideal": "A defined retention window enforced by a scheduled job.",
+                "contested": False,
+            },
+            {
+                "dimension_id": "human-oversight",
+                "score": 5,
+                "rationale": "No automated decision-making is involved in this activity.",
+                "mitigation": None,
+                "ideal": "Already at the ceiling — no automated decision exists to oversee.",
+                "contested": False,
+            },
+        ],
+        "compliance": "Under GDPR Art. 35(7)(d), retention must be bounded and enforced.",
+        "cst_reflection": "This keeps the parishioner's data tied to an active relationship.",
+    }
+
+
+class TestRenderMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_markdown(_assessment())
+        assert markdown.startswith("# Parish Bulletin Sign-Up Form")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_markdown(_assessment())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_compliance_text_is_included_verbatim(self) -> None:
+        markdown = render_markdown(_assessment())
+        assert "Under GDPR Art. 35(7)(d), retention must be bounded and enforced." in markdown
+
+    def test_cst_reflection_text_is_included_verbatim(self) -> None:
+        markdown = render_markdown(_assessment())
+        assert "This keeps the parishioner's data tied to an active relationship." in markdown
+
+    def test_every_rating_appears_with_its_score(self) -> None:
+        markdown = render_markdown(_assessment())
+        assert "retention" in markdown
+        assert "3/5" in markdown
+        assert "human-oversight" in markdown
+        assert "5/5" in markdown
+
+    def test_mitigation_appears_only_when_present(self) -> None:
+        markdown = render_markdown(_assessment())
+        assert "Add an annual re-confirmation" in markdown
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        # Deliberately generic — not "DPO" or another privacy-specific title
+        # — since report.py is shared, byte-for-byte, across every domain's
+        # skills (build sequence step 11 made this explicit).
+        markdown = render_markdown(_assessment())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+def _triage() -> dict:
+    return {
+        "title": "Access request from a returning parishioner",
+        "request": {
+            "description": "A parishioner emailed asking for a copy of all data held.",
+            "request_type": "access",
+            "channel": "email",
+            "received_date": "2026-08-01",
+            "requester_context": "The data subject themselves.",
+        },
+        "frameworks_considered": [
+            {
+                "id": "gdpr-data-subject-rights",
+                "applicable": True,
+                "basis": "The parishioner is an EU resident.",
+            }
+        ],
+        "governing_deadline": {
+            "framework_id": "gdpr-data-subject-rights",
+            "citation": "Art. 12(3)",
+            "response_due": "2026-09-01",
+            "basis": "One month from the 2026-08-01 receipt date, per Art. 12(3).",
+        },
+        "gaps": [
+            {
+                "id": "identity",
+                "description": "Identity not yet verified against parish records.",
+                "blocking": True,
+            }
+        ],
+        "compliance": "Under Art. 15, the parish must provide confirmation of "
+        "processing and a copy of the personal data held.",
+        "cst_reflection": "Responding promptly treats the request as owed, not optional.",
+    }
+
+
+class TestRenderTriageMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_triage_markdown(_triage())
+        assert markdown.startswith("# Access request from a returning parishioner")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_triage_markdown(_triage())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_governing_deadline_is_prominently_rendered(self) -> None:
+        markdown = render_triage_markdown(_triage())
+        assert "2026-09-01" in markdown
+        assert "Art. 12(3)" in markdown
+
+    def test_blocking_gap_is_rendered(self) -> None:
+        markdown = render_triage_markdown(_triage())
+        assert "Identity not yet verified against parish records." in markdown
+
+    def test_no_gaps_renders_a_clean_statement_not_an_empty_section(self) -> None:
+        triage = _triage()
+        triage["gaps"] = []
+        markdown = render_triage_markdown(triage)
+        assert "no outstanding" in markdown.lower() or "none identified" in markdown.lower()
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        markdown = render_triage_markdown(_triage())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+class TestSlugify:
+    def test_title_becomes_hyphenated_slug(self) -> None:
+        assert slugify("Parish Bulletin Sign-Up Form") == "Parish-Bulletin-Sign-Up-Form"
+
+    def test_strips_characters_outside_letters_numbers_and_hyphens(self) -> None:
+        assert slugify("A/B Test: Signup?") == "A-B-Test-Signup"
+
+
+class TestWriteReport:
+    def test_writes_a_dated_slugified_file_and_returns_its_path(self, tmp_path: Path) -> None:
+        out_dir = tmp_path / "reports"
+        written = write_report(_assessment(), out_dir, today=datetime.date(2026, 8, 11))
+        assert written.parent == out_dir
+        assert written.name == "2026-08-11-Parish-Bulletin-Sign-Up-Form.md"
+        assert written.read_text().startswith("# Parish Bulletin Sign-Up Form")
+
+    def test_creates_out_dir_if_missing(self, tmp_path: Path) -> None:
+        out_dir = tmp_path / "does" / "not" / "exist" / "yet"
+        written = write_report(_assessment(), out_dir, today=datetime.date(2026, 8, 11))
+        assert written.exists()
+
+    def test_render_fn_selects_which_renderer_writes_the_report(self, tmp_path: Path) -> None:
+        out_dir = tmp_path / "reports"
+        written = write_report(
+            _triage(),
+            out_dir,
+            render_fn=render_triage_markdown,
+            today=datetime.date(2026, 8, 11),
+        )
+        assert written.name == "2026-08-11-Access-request-from-a-returning-parishioner.md"
+        assert "Art. 12(3)" in written.read_text()

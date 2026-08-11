@@ -1,0 +1,81 @@
+# The registry: the only file that has to change to add or retire a
+# framework anywhere in this project. See build-plan.md §3.
+#
+# Adding a framework: author <domain>/<id>.yaml against schema.yaml, add one
+# entry here, run the sync (build sequence step 5 onward).
+# Retiring one: flip status to "retired" — never delete the entry or its file,
+# so the registry stays an audit record of what was ever in scope.
+
+frameworks:
+  - id: gdpr-dpia
+    name: "GDPR Art. 35 — Data Protection Impact Assessment"
+    type: law                # law | standard
+    domain: privacy           # privacy | ai-governance
+    file: privacy/gdpr-dpia.yaml
+    version: "Regulation (EU) 2016/679, as amended"
+    last_reviewed: 2026-08-11
+    status: active            # active | retired
+  - id: gdpr-data-subject-rights
+    name: "GDPR Chapter III — Rights of the Data Subject"
+    type: law
+    domain: privacy
+    file: privacy/gdpr-data-subject-rights.yaml
+    version: "Regulation (EU) 2016/679, as amended"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: ccpa-cpra
+    name: "CCPA/CPRA — California Consumer Privacy Act, as amended by the California Privacy Rights Act"
+    type: law
+    domain: privacy
+    file: privacy/ccpa-cpra.yaml
+    version: "Cal. Civ. Code § 1798.100 et seq., as amended by Prop 24 (2020)"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: hipaa
+    name: "HIPAA — Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)"
+    type: law
+    domain: privacy
+    file: privacy/hipaa.yaml
+    version: "45 CFR Parts 160, 164"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: ferpa
+    name: "FERPA — Family Educational Rights and Privacy Act"
+    type: law
+    domain: privacy
+    file: privacy/ferpa.yaml
+    version: "20 U.S.C. § 1232g; 34 CFR Part 99"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: iso-27701
+    name: "ISO/IEC 27701:2019 — Privacy Information Management System (PIMS)"
+    type: standard
+    domain: privacy
+    file: privacy/iso-27701.yaml
+    version: "2019"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: nist-privacy-framework
+    name: "NIST Privacy Framework v1.0"
+    type: standard
+    domain: privacy
+    file: privacy/nist-privacy-framework.yaml
+    version: "1.0"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: eu-ai-act
+    name: "EU AI Act — Risk Tiers & Obligations"
+    type: law
+    domain: ai-governance
+    file: ai-governance/eu-ai-act.yaml
+    version: "Regulation (EU) 2024/1689"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: nist-ai-rmf
+    name: "NIST AI Risk Management Framework (AI RMF) 1.0"
+    type: standard
+    domain: ai-governance
+    file: ai-governance/nist-ai-rmf.yaml
+    version: "1.0"
+    last_reviewed: 2026-08-11
+    status: active

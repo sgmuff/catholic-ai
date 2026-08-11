@@ -1,0 +1,156 @@
+id: eu-ai-act
+name: "EU AI Act — Risk Tiers & Obligations"
+citation_root: "Regulation (EU) 2024/1689"
+source_url: "https://artificialintelligenceact.eu/"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies to providers placing an AI system on the market or putting it
+    into service in the EU, and to deployers of AI systems located in the
+    EU — with extraterritorial reach to a provider or deployer outside the
+    EU whose AI system's output is used within the EU (Art. 2). The
+    obligations that attach depend entirely on which risk tier the system
+    falls into: a prohibited practice under Art. 5 may not be placed on the
+    market at all; a high-risk system under Art. 6 and Annex III triggers
+    the full Chapter III obligation set; a system covered by Art. 50
+    triggers transparency-only obligations; everything else is minimal-risk
+    with no tier-specific obligations under this Act.
+  jurisdiction:
+    - European Union
+    - European Economic Area
+    - Providers or deployers outside the EU/EEA whose AI system's output is
+      used within the EU/EEA (extraterritorial scope, Art. 2)
+
+required_elements:
+  - id: prohibited-practices
+    citation: "Art. 5"
+    requirement: >
+      An AI system may not be placed on the market, put into service, or
+      used if it falls into a prohibited category: subliminal or
+      purposefully manipulative/deceptive techniques that materially
+      distort behavior and cause significant harm; exploiting a person's
+      age, disability, or socioeconomic vulnerability to materially distort
+      their behavior harmfully; social scoring leading to unjustified
+      detrimental treatment in unrelated contexts; assessing the risk of a
+      person committing a criminal offense based solely on profiling or
+      personality-trait assessment; untargeted scraping of facial images
+      from the internet or CCTV to build or expand a facial recognition
+      database; inferring emotions in the workplace or in education (except
+      for medical or safety purposes); biometric categorization to deduce
+      race, political opinion, trade union membership, religious belief, or
+      sexual orientation; and real-time remote biometric identification by
+      law enforcement in publicly accessible spaces, except under narrow,
+      judicially authorized exceptions.
+  - id: high-risk-classification
+    citation: "Art. 6, Annex III"
+    requirement: >
+      An AI system is high-risk if it falls into one of eight Annex III
+      categories: biometric identification/categorization/emotion
+      recognition; management of critical infrastructure (digital
+      infrastructure, road traffic, utilities); education and vocational
+      training (admission, evaluation, monitoring); employment (recruitment,
+      candidate evaluation, performance monitoring); access to essential
+      services (public benefits eligibility, creditworthiness, insurance
+      risk, emergency-call triage); law enforcement (risk assessment,
+      polygraphs, evidence reliability, profiling); migration, asylum, and
+      border control; and the administration of justice and democratic
+      processes (judicial decision support, election-outcome influence).
+  - id: risk-management-system
+    citation: "Art. 9"
+    requirement: >
+      A provider of a high-risk AI system must establish, implement,
+      document, and maintain a risk management system as a continuous
+      iterative process throughout the system's lifecycle, identifying and
+      analyzing foreseeable risks, evaluating risks arising from
+      post-market monitoring data, and adopting suitable risk-mitigation
+      measures.
+  - id: data-governance
+    citation: "Art. 10"
+    requirement: >
+      Training, validation, and testing data sets for a high-risk AI system
+      must be subject to data governance practices appropriate to their
+      intended purpose, including examination for possible biases and
+      measures to detect, prevent, and mitigate them, and must be relevant,
+      sufficiently representative, and, to the best extent possible, free
+      of errors.
+  - id: technical-documentation
+    citation: "Art. 11"
+    requirement: >
+      A provider must draw up technical documentation before a high-risk
+      AI system is placed on the market, demonstrating compliance with
+      Chapter III's requirements and providing authorities with the
+      information needed to assess that compliance.
+  - id: record-keeping
+    citation: "Art. 12"
+    requirement: >
+      A high-risk AI system must technically allow for the automatic
+      recording of events (logs) over its lifetime, at a level enabling the
+      system's operation to be traced back and supporting post-market
+      monitoring.
+  - id: transparency-to-deployers
+    citation: "Art. 13"
+    requirement: >
+      A high-risk AI system must be designed to ensure its operation is
+      sufficiently transparent for deployers to interpret its output and
+      use it appropriately, accompanied by instructions for use including
+      its intended purpose, level of accuracy, and known limitations.
+  - id: human-oversight
+    citation: "Art. 14"
+    requirement: >
+      A high-risk AI system must be designed to enable effective oversight
+      by natural persons during the period it is in use, through measures
+      identified by the provider or implemented by the deployer,
+      appropriate to the risks, level of autonomy, and context of use.
+  - id: accuracy-robustness-cybersecurity
+    citation: "Art. 15"
+    requirement: >
+      A high-risk AI system must be designed to achieve an appropriate
+      level of accuracy, robustness, and cybersecurity, and to perform
+      consistently in those respects throughout its lifecycle, including
+      resilience against attempts to alter its use, outputs, or performance
+      by exploiting system vulnerabilities.
+  - id: transparency-to-individuals
+    citation: "Art. 50"
+    requirement: >
+      Providers and deployers of certain AI systems must disclose AI
+      involvement to the people affected: a person must be informed they
+      are interacting with an AI system unless this is obvious;
+      AI-generated synthetic audio, image, video, or text must be marked as
+      artificially generated or manipulated; a person exposed to an
+      emotion-recognition or biometric-categorization system must be
+      informed; and deepfake content, or AI-generated text published on
+      matters of public interest, must be disclosed as such, subject to
+      narrow exceptions.
+
+terms_of_art:
+  - term: AI system
+    meaning: >
+      A machine-based system designed to operate with varying levels of
+      autonomy, that may exhibit adaptiveness after deployment, and that
+      infers from the input it receives how to generate outputs — such as
+      predictions, content, recommendations, or decisions — that can
+      influence physical or virtual environments (Art. 3(1)).
+  - term: provider
+    meaning: >
+      A natural or legal person, public authority, agency, or other body
+      that develops an AI system (or has one developed) and places it on
+      the market or puts it into service under its own name or trademark.
+  - term: deployer
+    meaning: >
+      A natural or legal person, public authority, agency, or other body
+      using an AI system under its authority, other than for purely
+      personal, non-professional use.
+  - term: high-risk AI system
+    meaning: >
+      An AI system falling within an Annex III use-case category (or
+      serving as a safety component of a product already subject to
+      third-party conformity assessment), unless it falls within a
+      narrow carve-out (e.g. performing a purely preparatory task or not
+      materially influencing the outcome of a decision).
+  - term: prohibited AI practice
+    meaning: >
+      One of the eight practices enumerated in Art. 5 that may not be
+      placed on the market, put into service, or used at all, regardless
+      of risk-mitigation measures — distinct from a high-risk system,
+      which may be used if its Chapter III obligations are met.

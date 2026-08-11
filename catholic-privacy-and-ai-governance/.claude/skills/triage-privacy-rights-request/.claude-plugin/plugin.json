@@ -1,0 +1,5 @@
+{
+  "name": "triage-privacy-rights-request",
+  "description": "Triages an incoming data-subject rights request (access, deletion, correction, portability, restriction, or objection) against the current framework registry (GDPR, CCPA/CPRA, HIPAA, FERPA), calculates the governing response deadline, and flags outstanding gaps before a response is sent.",
+  "version": "0.1.0"
+}

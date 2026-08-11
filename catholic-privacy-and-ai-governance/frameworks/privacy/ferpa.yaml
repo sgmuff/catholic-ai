@@ -1,0 +1,112 @@
+id: ferpa
+name: "FERPA — Family Educational Rights and Privacy Act"
+citation_root: "20 U.S.C. § 1232g; 34 CFR Part 99"
+source_url: "https://www.law.cornell.edu/cfr/text/34/99.31"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies to any educational agency or institution that receives funding
+    under a program administered by the U.S. Department of Education —
+    covering most U.S. schools, school districts, and postsecondary
+    institutions (including a Catholic university, college, or K-12 school
+    participating in federal funding or student aid programs). Governs
+    "education records": records directly related to a student and
+    maintained by the institution or a party acting for it. FERPA has no
+    DPIA-style impact-assessment requirement of its own; the closest
+    functional analog here is the disclosure-exception analysis under
+    34 CFR 99.31 — whether a planned disclosure fits a recognized exception
+    or requires consent.
+  jurisdiction:
+    - United States
+
+required_elements:
+  - id: consent-required-for-disclosure
+    citation: "34 CFR 99.30"
+    requirement: >
+      An educational agency or institution must obtain written consent
+      from a parent or eligible student before disclosing personally
+      identifiable information from education records, unless a specific
+      exception in 34 CFR 99.31 applies.
+  - id: disclosure-exceptions
+    citation: "34 CFR 99.31"
+    requirement: >
+      Education records may be disclosed without consent only under
+      enumerated exceptions — including to school officials with a
+      legitimate educational interest, to officials at a school where the
+      student seeks to enroll, for financial aid determination, to
+      authorized government/accrediting representatives, pursuant to a
+      lawful subpoena or court order, in a health or safety emergency, and
+      as directory information under 99.37. A planned disclosure must be
+      matched to a specific exception, not assumed to qualify.
+  - id: right-to-inspect
+    citation: "34 CFR 99.10"
+    requirement: >
+      A parent or eligible student must be given the opportunity to inspect
+      and review the student's education records, and the institution must
+      comply with a request within a reasonable time and not more than 45
+      days after receiving it.
+  - id: right-to-seek-amendment
+    citation: "34 CFR 99.20"
+    requirement: >
+      A parent or eligible student has the right to request amendment of an
+      education record they believe is inaccurate, misleading, or in
+      violation of the student's privacy rights, and the institution must
+      decide whether to amend it within a reasonable time.
+  - id: directory-information-designation
+    citation: "34 CFR 99.37"
+    requirement: >
+      An institution may disclose "directory information" without consent
+      only if it has given public notice of the categories it has
+      designated as directory information and provided a parent or
+      eligible student a reasonable opportunity to opt out of that
+      disclosure.
+  - id: annual-notification
+    citation: "34 CFR 99.7"
+    requirement: >
+      An educational agency or institution must annually notify parents
+      and eligible students of their rights under FERPA, including the
+      right to inspect records, seek amendment, consent to disclosures,
+      and file a complaint with the Department of Education.
+  - id: recordkeeping-of-disclosures
+    citation: "34 CFR 99.32"
+    requirement: >
+      An institution must maintain a record of each request for access to
+      and each disclosure of personally identifiable information from a
+      student's education records, with limited exceptions (e.g. disclosures
+      to the parent/eligible student, or under a properly designated
+      directory-information disclosure).
+
+terms_of_art:
+  - term: education records
+    meaning: >
+      Records directly related to a student and maintained by an
+      educational agency or institution, or by a party acting for the
+      agency or institution — with specific statutory exclusions (e.g. sole
+      possession notes, law enforcement unit records, employment records
+      unrelated to student status) (34 CFR 99.3).
+  - term: eligible student
+    meaning: >
+      A student who has reached 18 years of age or is attending an
+      institution of postsecondary education — at which point FERPA's
+      rights transfer from the parent to the student (34 CFR 99.3, 99.5).
+  - term: personally identifiable information
+    meaning: >
+      Information that would allow a reasonable person in the school
+      community to identify the student with reasonable certainty,
+      including direct identifiers, indirect identifiers, and biometric
+      records (34 CFR 99.3).
+  - term: school official
+    meaning: >
+      An individual (including a contractor, consultant, or volunteer) an
+      institution uses to perform an institutional service or function it
+      would otherwise perform with employees, who is under the
+      institution's direct control regarding the use of education records,
+      and who has a legitimate educational interest.
+  - term: directory information
+    meaning: >
+      Information in a student's education record that would generally
+      not be considered harmful or an invasion of privacy if disclosed
+      (e.g. name, address, phone, dates of attendance) — disclosable
+      without consent only if properly designated and an opt-out
+      opportunity was given.

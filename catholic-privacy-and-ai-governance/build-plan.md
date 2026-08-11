@@ -1,0 +1,1114 @@
+# catholic-privacy-and-ai-governance — build plan
+
+This is a planning document, not a build. Nothing here is final — edit any section,
+delete what you don't want, and this becomes the spec I build from once you say go.
+
+**Naming note:** this project doesn't personify itself — no persona, no title,
+no office-holder standing in for the skill family. Its name, and every skill's
+own name, describes the task, not a role. Step 1 of the build sequence (§11) is
+done: the directory has moved, and `README.md`, `CHECKLIST.md`, `Makefile`,
+`pyproject.toml`, and an empty `src/privacy_and_ai_governance/` + `tests/`
+skeleton exist. Nothing beyond that scaffold is built yet — step 2 onward is
+still ahead.
+
+Sources consulted: [agentskills.io](https://agentskills.io) (specification,
+best-practices, and description-optimization pages), and this repo's own
+[`docs/standards/skills.md`](../docs/standards/skills.md),
+[`docs/standards/architecture.md`](../docs/standards/architecture.md), and
+[`docs/standards/security-and-privacy.md`](../docs/standards/security-and-privacy.md).
+This project is designed and built independently of every other project in this
+repository — see §4. `jobduties.md` and `ai-gov-duties.md` (both in this
+directory) are the source material for scope, one per domain.
+
+---
+
+## 1. Scope and shape
+
+This project now covers two duty domains instead of one:
+
+- **Privacy** — `jobduties.md`, eleven areas covering program management,
+  regulatory monitoring, assessments, rights requests, incident response, vendor
+  management, policy drafting, privacy-by-design, training, executive reporting,
+  and administration.
+- **AI governance** — `ai-gov-duties.md` (drafted alongside this plan, grounded in
+  NIST AI RMF's four functions — Govern, Map, Measure, Manage — ISO/IEC 42001, and
+  the EU AI Act's risk tiers), covering the parallel set: system inventory and
+  risk classification, risk and impact assessments, model documentation, testing
+  and monitoring, vendor AI governance, incident management, and the same
+  regulatory-monitoring/policy/training/reporting/admin shape as the privacy side.
+  This isn't a detour from repo convention — `docs/standards/architecture.md`
+  already names exactly these three frameworks as the reference frameworks a
+  project should map against; this is the first project here to build directly on
+  top of that guidance rather than citing it in passing.
+
+A Claude Skill is stateless and single-conversation: it activates, does one bounded
+piece of work grounded in bundled reference material, and hands back a result. It
+cannot maintain a live compliance calendar, poll regulatory feeds, send scheduled
+reminders, or track ticket state across sessions — that's an application with a
+datastore, not a skill. So each duty document splits the same way:
+
+- **Judgment-and-drafting tasks** — given a described situation, assess it against
+  a rubric or set of requirements and produce a structured, reviewable artifact
+  (a PIA, a risk-tier classification, a model card, an incident triage note). This
+  is bounded, judgment-based work that produces one artifact per run — exactly
+  what a skill does well.
+- **Program-administration tasks** — maintaining registers, monitoring external
+  sources, tracking deadlines over time, sending notifications, reconciling
+  records across systems. No skill in this repo does this today, and one skill
+  built once wouldn't either. Out of scope for this endeavor as currently planned,
+  in both domains.
+
+**Recommendation, unchanged from the original plan:** build this as a *project*
+housing a small **family of standalone skills** — now two sibling sub-families,
+one per domain — plus a **router skill**, named after the project itself, as the
+front door for a generic invocation ("use catholic-privacy-and-ai-governance," or
+a generic request for privacy or AI-governance help). See §6 for the router and
+§8 for both domains' skill tables.
+
+---
+
+## 2. Hard rules for every skill in this family
+
+Two rules govern every skill in this family, permanently, across **both**
+domains, and apply at all times — neither gets revisited or relaxed per-skill,
+and neither is a style preference. They're folded together here as subsections
+of one section, rather than each claiming its own top-level number, specifically
+so a future rule like this slots in as §2.3 without forcing a renumber of
+everything below it.
+
+### 2.1 Catholic language is additive, never substitutive
+
+**The compliance/regulatory content this family produces is never translated,
+softened, reframed, or diluted into Catholic vocabulary. Catholic Social Teaching
+language is layered alongside the compliance content, never used in place of it.**
+Whatever a regulator, opposing counsel, or an auditor would need to see — the exact
+term of art, the citation, the statutory verb — stays exactly as they'd expect to
+find it, unedited by the theological framing sitting next to it. This applies
+identically whether the "compliance content" is a GDPR finding or an EU AI Act
+risk-tier determination — the AI-governance skills don't get a lighter version of
+this rule just because the field is newer.
+
+Why this is non-negotiable rather than a preference: the whole reason this family
+is useful to an actual DPO, AI governance lead, general counsel, or compliance
+team is that its output has to survive being read by someone who does not
+share — and doesn't need to share — the theology underneath it. The moment a
+report says "rightly ordered stewardship of information" where a regulator expects
+"lawful basis," or "solidarity with the vulnerable" where an EU AI Act conformity
+file expects "high-risk system," the artifact stops being usable as what it
+actually is: a real compliance work product, not a devotional gloss on one.
+`docs/standards/architecture.md` already states this relationship for the whole
+repo — a project "argues from what the foundation implies... rather than from the
+foundation itself" for a secular audience. This rule is that principle made
+concrete and mechanical for a project where the cost of getting it wrong isn't a
+bad essay, it's a document a lawyer can't cite.
+
+### How this gets enforced, not just stated
+
+A written instruction alone isn't reliable enough — instructions get deprioritized
+in a long `SKILL.md`, or drift as skills get edited over time. So this is enforced
+structurally — by the schema and a validator, not by hoping the model remembers
+on every run:
+
+- **Every report this family produces has two structurally separate parts**, never
+  interleaved: a `compliance` (or `regulatory_findings`) section, written strictly
+  in the regulatory register — the exact terms of art, citations (article/section
+  or clause numbers), and statutory verbs (`must`, `shall`, `required`) the
+  applicable framework itself uses — followed by a clearly separate
+  `cst_reflection` section carrying the Catholic grounding (principle citations,
+  magisterial sources, the dignity-of-the-person framing). A reader who wants only
+  the compliance content can act on the first section in full without reading the
+  second at all.
+- **The compliance section is never paraphrased into CST vocabulary or softened in
+  register.** It's authored the same way `CONTRIBUTING.md`'s citation-integrity
+  rule already requires for this whole repo — quoted and cited accurately from the
+  primary source, not reconstructed from what it "usually means."
+  `frameworks/**/*.yaml` (§3) is the single authored place regulatory/standards
+  language lives; skills read it and cite it, they don't re-word it into
+  something else.
+- **A validator blocklist.** The shared validator (`scripts/assessment.py` in each
+  skill, backed by `src/privacy_and_ai_governance/` in the owning project) rejects an
+  assessment if CST-only vocabulary — a maintained list starting with
+  `personalism`, `solidarity`, `subsidiarity`, `common good`, `Magnifica
+  Humanitas`, `imago dei`, `dignity of the human person` — appears inside the
+  `compliance` field. This is the same validate-then-render split used everywhere
+  in this family: the model does the judgment, the script catches the specific
+  failure mode of language bleeding across the boundary.
+- **Applies to every skill in the family, including the router** (§6) and every
+  future specialist skill in either domain's table in §8 — it's part of what a
+  skill in this family *is*, not a one-off requirement scoped to the flagship.
+  It's a go-live item in `CHECKLIST.md`, alongside citation integrity, before any
+  skill in this family ships.
+
+### 2.2 Minimum sufficient documentation, not maximum coverage
+
+This rule governs volume, not register: every artifact this family produces — a
+rendered report, a rationale, a mitigation, a CST reflection, the router's own
+conversational replies — is as long as the specific task actually requires and no
+longer.
+
+Why this matters as more than a style nicety: the audience for this family's
+output is a professional — a DPO, general counsel, an AI governance lead — who
+reads a lot of real compliance documents and can tell padding from substance
+immediately. A twelve-page DPIA that buries three load-bearing findings in
+restated context and boilerplate is worse than a tight one, and it actively works
+against §2.1: a compliance section that isn't scannable in a few minutes stops
+being usable by the person it's for. It's also the same discipline
+agentskills.io's best-practice guidance already applies to a skill's own
+instructions ("add what the agent lacks, omit what it knows"), moved up one
+level to what the *generated report* tells its reader — don't restate what the
+reader already supplied at intake, and don't re-explain a framework concept a
+compliance-literate reader already knows.
+
+**This is not permission to skip required coverage.** Every rubric dimension is
+still scored, every applicable framework is still addressed, every mitigation
+below threshold is still written — §2.2 never overrides what §7 (or a future
+skill's own procedure) requires to be present. What gets cut is the padding
+*around* each required element: a restated rubric description, a redundant
+transition sentence, a boilerplate disclaimer repeated per-principle instead of
+stated once. Completeness and concision are separate axes; this rule targets only
+the second, and a future contributor should never read "be concise" as license to
+drop something the rubric requires.
+
+#### How this gets enforced
+
+- **Field-level guidance, written once and shared across every skill's
+  `SKILL.md`** (the same "write once, paste into each skill" pattern as the Human
+  Escalation paragraph in §8): a rationale or mitigation states the specific fact
+  that drove the finding and the specific fix, in one to three sentences — never
+  restates the rubric criterion's own description back at the reader, never opens
+  with a throat-clearing sentence before getting to the point.
+- **A framework that doesn't apply gets one line** in the report ("Not
+  applicable: `<the specific disqualifying fact>`"), not a full subsection
+  explaining why at length.
+- **A tighten-before-render pass**, added as a step between drafting the
+  assessment JSON and rendering it: reread each field once and cut anything that
+  repeats something already stated elsewhere in the same report — the same
+  validate-then-fix discipline agentskills.io recommends for correctness,
+  applied here to concision instead.
+- **A non-fatal verbosity lint** in the shared validator, matching the freshness
+  check's "nudge, not hard fail" pattern from §3: flags, without blocking, any
+  field well past a generous length for what it is, or a total report length
+  unusually long relative to how many dimensions and frameworks were actually in
+  scope. A signal to reconsider before finalizing, not automatic truncation —
+  auto-cutting a compliance document risks removing something genuinely needed,
+  which is a worse failure than a slightly long one.
+- **Applies to the router's own conversational replies too**, not only rendered
+  reports: the urgency triage and the single clarifying question in §6.3 are
+  meant to stay short; this rule is what makes that a standing constraint rather
+  than an incidental choice.
+- A go-live item in `CHECKLIST.md`, alongside §2.1's: a sampled report reads as
+  tight, not merely correct.
+
+---
+
+## 3. Pluggable frameworks: how laws and standards get added or removed
+
+This is the fix the original plan needed before more got built on top of it. As
+drafted, the flagship skill named GDPR/CCPA/HIPAA/FERPA directly inside its own
+`SKILL.md` — adding ISO/IEC 27701 or the NIST Privacy Framework later would have
+meant hand-editing that file, and the same problem would repeat for every
+AI-governance skill added against NIST AI RMF/ISO 42001/EU AI Act. The fix reuses
+a pattern this plan already established for the router's own menu (§6.2):
+a synced, tested manifest, never framework names hard-coded into skill prose.
+
+### Structure
+
+```
+frameworks/
+├── index.yaml                       # AUTHORED — the only file that has to change
+│                                     #   to add or retire a framework anywhere
+├── schema.yaml                      # the shape every framework file must conform to
+├── privacy/
+│   ├── gdpr-dpia.yaml
+│   ├── ccpa-cpra.yaml
+│   ├── hipaa.yaml
+│   ├── ferpa.yaml
+│   ├── iso-27701.yaml               # voluntary standard, not a law
+│   └── nist-privacy-framework.yaml  # voluntary framework, not a law
+├── ai-governance/
+│   ├── eu-ai-act.yaml
+│   ├── nist-ai-rmf.yaml
+│   └── iso-42001.yaml
+└── known-conflicts.md               # cross-framework tensions — see below
+```
+
+`index.yaml` is a flat registry, one entry per framework file:
+
+```yaml
+frameworks:
+  - id: gdpr-dpia
+    name: "GDPR Art. 35 — Data Protection Impact Assessment"
+    type: law                # law | standard — see below
+    domain: privacy          # privacy | ai-governance
+    file: privacy/gdpr-dpia.yaml
+    version: "2016/679, as amended"
+    last_reviewed: 2026-08-11
+    status: active           # active | retired
+  - id: iso-27701
+    name: "ISO/IEC 27701 — Privacy Information Management"
+    type: standard
+    domain: privacy
+    file: privacy/iso-27701.yaml
+    version: "2019"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: eu-ai-act
+    name: "EU AI Act — Risk Tiers & Obligations"
+    type: law
+    domain: ai-governance
+    file: ai-governance/eu-ai-act.yaml
+    version: "2024/1689"
+    last_reviewed: 2026-08-11
+    status: active
+```
+
+### Why `type: law | standard` matters, not just bookkeeping
+
+A law is binding and jurisdiction-triggered — the applicability question is "do
+the facts (data handled, jurisdiction, sector) bring this into scope." A standard
+like ISO/IEC 27701 or the NIST Privacy Framework is voluntary and conformance-
+based — the applicability question is "does the institution want to be assessed
+against this." These get asked differently in every skill's intake step, and per
+§2.1 they get *written up* differently too: a law's finding uses regulatory verbs
+(`must`, `shall`, `required`); a standard's finding uses conformance language
+("satisfies," "partially satisfies," or "does not satisfy" clause X) — different
+registers, but both still exact terms of art from the source, never CST
+vocabulary.
+
+### How a skill actually consumes this
+
+Every specialist skill's `SKILL.md` reads generically — never naming a fixed
+framework list — something like:
+
+> Read `references/frameworks/index.md`. For every entry where `domain` matches
+> this skill's domain and `status: active`: if `type: law`, ask or infer whether
+> the triggering jurisdiction or facts apply; if `type: standard`, ask whether the
+> user wants to be assessed against it. Then read the specific file(s) that apply
+> in full before scoring — don't score from memory of what a framework "usually"
+> requires.
+
+Adding ISO/IEC 27701 becomes: author `privacy/iso-27701.yaml` against
+`schema.yaml`, add one line to `index.yaml`, run the sync. No `SKILL.md` in either
+domain needs to change. Retiring a framework is `status: retired` in `index.yaml`
+— the file stays as an audit record, but the sync stops offering it, and a test
+asserts every skill's bundled index reflects `status`, not just file presence.
+
+This is also what makes the AI-governance domain a clean addition rather than a
+second architecture: the AI-governance flagship skill planned in §8 consumes the
+exact same `index.yaml`, filtered to `domain: ai-governance`. Same mechanism, new
+data — nothing about the pattern changes to support a second domain.
+
+### Freshness and cross-framework conflicts
+
+- `last_reviewed` on every entry, checked by a `make check-framework-freshness`
+  target that lists anything past a threshold (18 months is a reasonable
+  default). This is a nudge for a periodic human review, not a hard CI failure —
+  a framework not changing isn't itself an error, but it's worth eyeballing on a
+  cadence rather than trusting a file indefinitely.
+- `frameworks/known-conflicts.md` documents cases where two frameworks in the
+  registry pull in different directions for the same fact pattern (a retention
+  mandate under one regime against a minimization mandate under another; an EU AI
+  Act transparency obligation against a trade-secret protection elsewhere) — same
+  `contested: true`, route-to-a-person discipline `rubric/known-tensions.md`
+  already gives CST-principle tensions. A skill that finds a genuine conflict
+  flags it as a finding requiring human resolution, not something to silently
+  average away.
+
+---
+
+## 4. What "standalone" means here, concretely
+
+You asked that this not reference other projects in the repo, and that these
+projects not relate to one another at all — not as a runtime dependency, not as a
+design precedent, not as a comparison. Concretely, that means:
+
+- No skill here reads, imports, or cites files from any other project in this
+  repository, even where subject matter legitimately overlaps with something
+  built elsewhere. If a skill here needs a specific legal citation (e.g. GDPR
+  Art. 22), it's authored fresh, independently, inside this project's own
+  `frameworks/` — never pointed at another project's copy of the same citation.
+- Every skill's own directory never reaches outside itself at judgment or run
+  time, per `docs/standards/skills.md` § "Distributing a skill outside this
+  repo." Grounding content lives in this project's own authored source
+  directories (`frameworks/`, `rubric/`) and gets synced into each skill's own
+  `references/`.
+- This applies to the *router* too, and it's the one place the constraint bites:
+  the router's job is to point at its sibling skills, but if someone installs only
+  the router (a standalone plugin install or a Claude.ai zip of just that one
+  folder), those siblings may not be present. §6.3 covers the fallback.
+- The project's README, when written, won't compare itself to or name any other
+  project in the repo (matches your existing standing preference on this).
+
+---
+
+## 5. Project structure
+
+Following `docs/standards/architecture.md`'s code-project layout, with the
+skill-distribution mechanics from `docs/standards/skills.md`:
+
+```
+catholic-privacy-and-ai-governance/
+├── README.md                          # filled from docs/project-template/README.template.md
+├── Makefile                           # setup, test, lint, sync-skill-bundle, check-framework-freshness
+├── pyproject.toml
+├── CHECKLIST.md                       # go-live checklist, extended per §2 and this project's data-handling nature
+├── jobduties.md                       # privacy duty source — kept as-is
+├── ai-gov-duties.md                   # AI-governance duty source
+├── family-manifest.yaml               # AUTHORED: which skills exist, one-line trigger, status, domain — see §6.2
+├── frameworks/                        # AUTHORED: see §3 in full
+│   ├── index.yaml
+│   ├── schema.yaml
+│   ├── known-conflicts.md
+│   ├── privacy/
+│   │   ├── gdpr-dpia.yaml
+│   │   ├── ccpa-cpra.yaml
+│   │   ├── hipaa.yaml
+│   │   ├── ferpa.yaml
+│   │   ├── iso-27701.yaml
+│   │   └── nist-privacy-framework.yaml
+│   └── ai-governance/
+│       ├── eu-ai-act.yaml
+│       ├── nist-ai-rmf.yaml
+│       └── iso-42001.yaml
+├── rubric/                            # AUTHORED: the privacy-by-design scoring rubric (v1 domain),
+│   │                                   #   rubric-only by design — no bright-line gate, see §7.2
+│   ├── criteria.md                    #   the dimensions scored (see §7) and how to score them
+│   └── known-tensions.md              #   worked cases where two good privacy goods conflict
+├── src/privacy_and_ai_governance/      # shared validation/report-rendering logic, stdlib-only —
+│                                       #   includes the §2.1 compliance/CST-language boundary check,
+│                                       #   the §2.2 verbosity lint, and the §3 framework-index consumer,
+│                                       #   all shared by both domains
+├── eval/
+│   └── sync_skill_bundle.py           # generates every skill's references/ from frameworks/, rubric/,
+│                                       #   and family-manifest.yaml
+├── tests/                             # TDD: schema validation, rubric logic, sync-bundle drift,
+│                                       #   manifest-accuracy, framework-index drift, the §2.1 language
+│                                       #   test, and the §2.2 verbosity-lint test
+└── .claude/skills/
+    ├── catholic-privacy-and-ai-governance/  # the router — see §6
+    │   ├── SKILL.md
+    │   ├── .claude-plugin/plugin.json
+    │   └── references/family-manifest.md
+    ├── draft-privacy-impact-assessment/     # v1 flagship, privacy domain — see §7
+    │   ├── SKILL.md
+    │   ├── .claude-plugin/plugin.json
+    │   ├── references/                       # synced: rubric/ + frameworks/ filtered to domain: privacy
+    │   └── scripts/
+    └── (later: assess-ai-system-risk-tier/, triage-privacy-rights-request/, ...)
+```
+
+`eval/sync_skill_bundle.py` generates every skill's `references/` (and
+`scripts/`, where applicable) from this project's own authored source, including
+`frameworks/index.yaml` (filtered per skill's domain) and `family-manifest.yaml`
+(into the router) alongside `rubric/`. A test in `tests/`
+regenerates every skill's bundle and asserts it matches what's committed, so CI
+fails the moment someone edits `frameworks/`, `rubric/`, or `family-manifest.yaml`
+without re-syncing.
+
+In-repo (or in any full checkout), all family members sit as sibling folders under
+`catholic-privacy-and-ai-governance/.claude/skills/` and Claude Code discovers them
+together — the router always has its siblings available in that context. Register
+each skill, including the router, as its own entry in the repo-root
+`.claude-plugin/marketplace.json` — one marketplace, several plugins, so the
+whole family is one `/plugin marketplace add` away, while each skill stays
+independently installable per the spec.
+
+---
+
+## 6. The router skill: `catholic-privacy-and-ai-governance`
+
+Named identically to the project itself: project name → skill folder name →
+skill `name` field, all identical. That's deliberate: it's what makes "use
+catholic-privacy-and-ai-governance" resolve to
+something real by name, not just by description-matching. Its description
+triggers on the task — a generic request for privacy or AI-governance help —
+not on a persona: this project doesn't present itself as a person holding an
+office, so nothing in its trigger language should either.
+
+### 6.1 Frontmatter (draft)
+
+```yaml
+---
+name: catholic-privacy-and-ai-governance
+description: >
+  Acts as the front door to the Catholic Privacy and AI Governance skill family.
+  Use when someone invokes this project by name, or asks for privacy or
+  AI-governance help generically, without enough detail to identify which
+  specific task they need — or describes a situation (a new project touching
+  personal data, a new AI system or feature, a rights request, a breach, a
+  vendor review) broadly enough that it's unclear which specialized skill or
+  domain applies. Asks one or two questions to identify the right task and
+  domain, then hands off to the matching skill (e.g.
+  draft-privacy-impact-assessment, assess-ai-system-risk-tier) rather than
+  performing the specialized assessment itself. Do not use this for a request
+  that already clearly names a specific privacy or AI-governance task — the
+  matching specialized skill should trigger directly instead.
+---
+```
+
+The last sentence matters as much as the rest: without it, the router risks
+false-triggering ahead of a specialist skill even when the user's first message is
+already specific enough (agentskills.io's description-optimization guidance calls
+this out directly — a should-not-trigger case is only a useful test when it's a
+near-miss, and a router that eats every request is exactly that kind of near-miss
+risk for its own siblings).
+
+### 6.2 The manifest, so the menu can't drift
+
+`family-manifest.yaml` at the project root is the authored source of truth, now
+carrying a `domain` field so the router can also disambiguate *which half* of the
+family a vague request belongs to:
+
+```yaml
+skills:
+  - name: draft-privacy-impact-assessment
+    domain: privacy
+    status: built
+    trigger: "starting something new that will collect or process personal data"
+  - name: assess-ai-system-risk-tier
+    domain: ai-governance
+    status: planned
+    trigger: "deploying, building, or procuring a new AI system or feature"
+  - name: triage-privacy-rights-request
+    domain: privacy
+    status: planned
+    trigger: "an access, deletion, correction, or portability request came in"
+  # ... one entry per row in either table in §8
+```
+
+`eval/sync_skill_bundle.py` renders this into the router's own
+`references/family-manifest.md`, and a test asserts every `status: built` entry has
+a matching folder under `.claude/skills/` — so the router's menu is generated, not
+maintained by memory, and CI catches the day someone builds a new skill and forgets
+to flip its status.
+
+### 6.3 Procedure
+
+1. **Check if routing is even needed.** If the first message already names a
+   specific task clearly enough that a specialist skill's own description would
+   match it, don't interpose — say so briefly and let that skill trigger (or invoke
+   it directly if you're already certain which one applies).
+2. **Triage urgency first, menu second.** If intake suggests something
+   time-sensitive — an active breach or AI-safety incident, a regulator inquiry, a
+   legal notice, a request nearing its statutory deadline — say so and prioritize
+   it plainly, rather than treating it as a routine menu selection.
+3. **If genuinely ambiguous**, read `references/family-manifest.md`, present the
+   `built` entries as options (mention a `planned` one only if the user's need
+   clearly matches it, and say plainly it isn't built yet rather than attempting it
+   yourself), and ask one clarifying question — including, where relevant, which
+   domain the need falls under.
+4. **Hand off.** Once the task is identified, invoke the matching skill by name
+   rather than attempting the specialized task yourself — the rubric/framework
+   rigor lives in that skill's own bundled references, not in the router's head.
+   If the target skill isn't available in the current environment (the standalone-
+   install edge case from §4), say so plainly, name what it would have done from
+   the manifest's `trigger` line, and point the user to install it — don't improvise
+   the task from general knowledge as a substitute.
+5. **If the need spans multiple duty areas or both domains** (e.g. a new feature
+   that's both an AI system and a new personal-data processing activity), name the
+   order, invoke the first, and note the rest as follow-up rather than trying to
+   do both in one pass.
+
+The same standing "Human Escalation & Control" paragraph referenced in §8 belongs
+in the router's `SKILL.md` too — it may be the first point of contact for something
+urgent, and should flag that immediately rather than only after a specialist skill
+gets involved. It also carries §2.1's discipline whenever it relays a specialist
+skill's finding in its own words: it doesn't get to loosen the compliance/CST
+boundary just because it's summarizing rather than drafting. And per §2.2, its
+own replies stay short on their own terms — a routing conversation is not the
+place for a restated explanation of what the target skill is about to do.
+
+---
+
+## 7. The v1 flagship skill: `draft-privacy-impact-assessment`
+
+Chosen as the first specialist skill to build because it produces one bounded,
+structured advisory finding per run, it maps to a real legal requirement in
+multiple jurisdictions (so it's judgeable,
+not vague), and it covers the *Privacy Assessments & Data Governance* section of
+`jobduties.md`, which is arguably the highest-value single duty area — most other
+privacy work (rights requests, vendor review, incident response) ultimately gets
+measured against whether the underlying processing was properly assessed in the
+first place. It's also the router's only real target until a second skill lands
+(see §11's build sequence for why the router is still worth building at that
+point) — and it's the skill that proves out §3's pluggable-framework mechanism
+before the AI-governance domain reuses it.
+
+### 7.1 Frontmatter (draft, tune per §"Description quality" in `docs/standards/skills.md`)
+
+```yaml
+---
+name: draft-privacy-impact-assessment
+description: >
+  Drafts a structured Data Protection/Privacy Impact Assessment (DPIA/PIA) for a
+  described data-processing activity, new project, product, vendor relationship, or
+  AI/technology use. Identifies which frameworks apply from the current registry
+  (GDPR Art. 35, CCPA/CPRA, HIPAA, FERPA, or a voluntary standard like ISO/IEC
+  27701, plus whatever else is registered), scores the activity against a
+  privacy-by-design rubric — necessity and proportionality, data minimization,
+  lawful basis and consent, retention, security controls, third-party sharing, and
+  human oversight of automated decisions. Produces a report that requires DPO
+  or legal review before being relied on. Use when someone is starting
+  something that will collect or
+  process personal data and wants the privacy risk assessed, or asks for a
+  PIA/DPIA/privacy impact assessment by name.
+---
+```
+
+### 7.2 Procedure
+
+1. **Intake the processing activity.** Ask what's being built or changed, what
+   personal data it collects or touches, who it's about, the purpose, which systems
+   are involved, who receives the data (internal teams, vendors, other
+   institutions), where it's stored, and how long it's kept. Stop asking once
+   there's enough to reason about every rubric dimension — not a fixed
+   questionnaire run to exhaustion.
+2. **Identify applicable frameworks — generically, per §3.** Read
+   `references/frameworks/index.md`, filtered to `domain: privacy` entries. For
+   each `type: law` entry, ask or infer whether the triggering jurisdiction/facts
+   apply (a diocese handling EU parishioner data → GDPR; a US Catholic hospital →
+   HIPAA; a university housing or enrollment system → FERPA; a business serving
+   California residents → CCPA/CPRA). For each `type: standard` entry, ask whether
+   the user wants to be assessed against it. Read the matching file(s) in full
+   before scoring — don't score from memory of what a framework "usually" requires,
+   and never hard-code a framework name into this procedure itself.
+3. **Score the rubric.** Read `references/rubric/criteria.md` in full and score
+   each dimension: a real rationale grounded in what the activity actually does, a
+   concrete mitigation for anything below the passing threshold, an `ideal` beyond
+   the floor, and a `contested` flag for genuine value tensions (e.g. minimization
+   vs. fraud-prevention retention, or a cross-framework conflict from
+   `frameworks/known-conflicts.md`) rather than averaging them away. This skill is
+   rubric-only, deliberately — no bright-line gate that short-circuits scoring for
+   a fixed list of disqualifying uses. Every activity gets scored on its own facts.
+4. **Write the assessment and render the report**, via
+   `scripts/assessment.py --input <json> --out-dir <reports-dir>`: the model does
+   the judgment, the script only checks the judgment is internally consistent (real
+   framework ids drawn from the current index, no missing mitigation below
+   threshold, retention field non-empty) **and enforces §2.1**: the `compliance`
+   field holds the regulatory findings in regulatory register only, the
+   `cst_reflection` field holds the Catholic grounding separately, and the script
+   rejects the assessment if CST vocabulary has leaked into `compliance`. Before
+   rendering, run the §2.2 tighten-before-render pass and the verbosity lint — cut
+   anything restated, flag anything unusually long for a reviewer to double-check.
+   Then it renders Markdown with the two sections clearly separated, compliance
+   first.
+5. **Report back in plain language, briefly**: this is an advisory draft grounded
+   in a working interpretation of the named frameworks, not a legal opinion, and
+   requires DPO or legal review before the underlying activity proceeds — matching
+   `jobduties.md`'s own instruction to "route material risks for human review."
+   Per §2.2, this summary states the verdict and what's weakest, not a restatement
+   of the full report. Flag anything that met a high-risk threshold
+   (special-category data, children's data, large-scale profiling, automated
+   decisions with legal or similarly significant effect) as needing escalation
+   before proceeding, not just noted in the report.
+
+### 7.3 Grounding
+
+- **CST:** personalism and the dignity of the human person as the ground for
+  informational self-determination — a person's data is an extension of the
+  person, not a resource to be optimized; subsidiarity, applied concretely as
+  keeping data-handling decisions and consent as close as possible to the person
+  concerned; solidarity, protecting those least able to contest how their data is
+  used. *Magnifica Humanitas*'s claim about the primacy of human judgment over
+  automated determination — already load-bearing in
+  `docs/standards/security-and-privacy.md`'s "human oversight of consequential
+  decisions" requirement — grounds the automated-decision dimension of the rubric
+  directly, and will do the same double duty for the AI-governance domain's own
+  human-oversight requirements.
+- **Secular frameworks:** whatever is `active` and `domain: privacy` in
+  `frameworks/index.yaml` — GDPR Art. 35, CCPA/CPRA, HIPAA, FERPA, ISO/IEC 27701,
+  and the NIST Privacy Framework to start (§3). Extend the registry as real use
+  surfaces more, rather than front-loading every framework that might someday be
+  relevant.
+- Note the direction of travel required by §2.1: the rubric dimensions above
+  (minimization, lawful basis, retention, security, third-party sharing, human
+  oversight) are themselves already the regulatory terms of art, on purpose. CST
+  grounding explains *why* each dimension matters and sits in the `cst_reflection`
+  section; it is never what the `compliance` section is scored or written in.
+
+---
+
+## 8. The rest of the family — both domains, for later
+
+Each row is a candidate specialist skill, same architecture as §7
+(rubric/framework-grounded via §3's registry, schema-validated, report-rendering,
+and bound by §2's hard rules the same way), and a future entry in
+the router's `family-manifest.yaml`. None of these are built in v1; listing them
+here so both duty documents' full scope has a landing spot and nothing gets lost.
+
+### Privacy domain — from `jobduties.md`
+
+| Skill name | `jobduties.md` section | What it does |
+|---|---|---|
+| `triage-privacy-rights-request` | Privacy Rights Requests | Classifies an incoming DSAR by type/jurisdiction, calculates the statutory deadline, and drafts an intake record plus a checklist of missing information or identity-verification gaps. |
+| `triage-privacy-incident` | Privacy Incident Management | Intakes a reported incident, runs a preliminary impact assessment against defined severity criteria, flags applicable notification triggers (which jurisdictions/contracts require notice and by when), and states plainly whether it meets the threshold for escalation. |
+| `review-vendor-privacy-assessment` | Third-Party Privacy Management | Reviews a vendor's privacy questionnaire/DPA/certifications against a baseline requirement set and flags missing documentation or control gaps. |
+| `review-data-retention-entry` | Privacy Assessments & Data Governance | Checks one data-inventory entry against the retention baseline and flags whether it needs deletion, review, or an updated retention justification. |
+| `map-regulatory-change` | Regulatory Monitoring | Given a regulatory development pasted in by the user (this project doesn't monitor feeds itself), summarizes it and maps which existing policies/controls it likely affects. |
+| `draft-privacy-notice-update` | Policy & Documentation Management | Drafts a proposed revision to a privacy notice or policy section given a stated change in practice, checked against the same rubric as §7. |
+
+### AI-governance domain — from `ai-gov-duties.md`
+
+| Skill name | `ai-gov-duties.md` section | What it does |
+|---|---|---|
+| `assess-ai-system-risk-tier` | AI System Inventory & Risk Classification | The AI-governance flagship, recommended as the first skill built once the privacy flagship proves out §3: classifies a described AI system against the EU AI Act's risk tiers, maps it to NIST AI RMF's Govern/Map/Measure/Manage functions, and flags which obligations attach — same shape as §7, different registry filter. |
+| `draft-ai-risk-impact-assessment` | AI Risk & Impact Assessments | Drafts a structured algorithmic impact assessment for a described AI system — bias/fairness, explainability, robustness, and human-oversight design — the AI-governance analog to the flagship DPIA skill. |
+| `draft-model-card` | Model & System Documentation | Produces a model/system documentation record grounded in ISO/IEC 42001's documented-information requirements and the EU AI Act's Annex IV technical documentation — name matches the example already given in `docs/standards/skills.md`. |
+| `review-ai-vendor-governance` | Third-Party & Vendor AI Governance | Reviews a vendor's or foundation-model provider's AI governance documentation against a baseline requirement set and flags missing documentation or control gaps. |
+| `triage-ai-incident` | AI Incident Management | Intakes a reported AI safety, bias, or reliability incident, runs a preliminary impact assessment, and flags applicable notification thresholds — the AI-governance sibling of `triage-privacy-incident`. |
+
+Explicitly **not planned** as skills, in either domain, because they're
+program-administration work a stateless skill can't do (see §1): the compliance
+calendar, recurring-task scheduling, training-completion tracking, sending
+notifications, and reconciling records across systems from *Administrative &
+Operational Tasks*, *Training & Awareness*, and *Reporting & Executive Support* in
+both duty documents. If any of these become worth solving later, it'd be as an
+actual application (a CLI + a datastore, in this repo's usual Python-project
+shape) that a skill could optionally sit in front of — not as a skill by itself.
+
+*Human Escalation & Control* (the last section of both duty documents) isn't a
+skill at all in either domain — it's a standing behavioral contract that belongs
+in every skill in this family, including the router (see §6.3): never send a
+legally significant communication, never make a final compliance or
+risk-classification determination, always require human approval for exceptions,
+and always document rationale and disposition for material decisions. Recommend
+writing this once as a short shared paragraph and pasting it into each skill's
+`SKILL.md` as its standing disclosure — and note that this paragraph, too, is
+compliance-critical language under §2.1: it stays in precise
+regulatory/procedural register, not folded into CST phrasing — and under §2.2,
+it stays a paragraph, not a page.
+
+---
+
+## 9. Testing & CI
+
+Following `docs/standards/architecture.md` and `docs/standards/python.md`:
+
+- TDD throughout: schema validation, rubric-scoring logic, framework-file parsing,
+  the sync-bundle drift check, and both §2 checks are all written test-first.
+- `tests/test_skill_bundle_sync.py` regenerates every skill's `references/`
+  (and `scripts/`, where applicable) from
+  `frameworks/`, `rubric/`, `family-manifest.yaml`, and `src/`, and asserts no
+  drift — including the check from §6.2 that every `built` manifest entry has a
+  real skill folder, and the check from §3 that every skill's bundled framework
+  index matches `frameworks/index.yaml` filtered to that skill's own domain.
+- `tests/test_language.py` and `tests/test_assessment.py`'s
+  `TestValidateAssessmentComplianceBoundary` (backing §2.1): feed the
+  validator a clean assessment and a deliberately-poisoned one (CST
+  vocabulary injected into `compliance`) and assert the second is rejected.
+- `tests/test_concision.py` (backing §2.2): asserts the verbosity lint fires
+  on a deliberately padded assessment (restated rubric text, a repeated
+  disclaimer) and stays quiet on a tight one.
+- `make check-framework-freshness` (backing §3, via
+  `tests/test_frameworks.py`'s `TestStaleFrameworks` and
+  `eval/check_framework_freshness.py`): non-fatal report of any framework
+  entry whose `last_reviewed` exceeds the staleness threshold — a
+  periodic-review nudge, run manually or on a schedule, not a
+  merge-blocking check.
+- `agentskills validate ./.claude/skills/<name>` (the CLI the `skills-ref`
+  package installs — see step 6) for every skill in the family before
+  merge, and picked up automatically by `.github/workflows/ci.yml`.
+- `Makefile` exposes `setup`, `test`, `lint` so CI picks the project up with no
+  special-casing, per `docs/standards/architecture.md`.
+
+---
+
+## 10. Security & privacy notes (for the eventual README)
+
+This project's own conduct has to model exactly what it prescribes — the standard
+already states this explicitly for anything with this project's profile
+("a governance project that is careless with data protection in its own
+recommendations has no standing to prescribe it to anyone else"). The
+AI-governance domain doesn't get a lighter version of this: a project telling
+institutions to govern their AI systems responsibly has to be equally careful
+about how it documents and reasons about the (fabricated, per below) AI systems in
+its own examples and tests.
+
+- **Test fixtures:** every example processing activity, DSAR, incident, or AI
+  system described in tests or documentation is fabricated — no real person's data
+  and no real institution's actual deployed system, ever, per
+  `docs/standards/security-and-privacy.md`. Worth being extra careful here given
+  the subject matter is literally personal-data and AI-system governance.
+- **Data minimization / lawful basis / retention / human oversight:** the privacy
+  domain's own work product (§7) exists specifically to make institutions address
+  these four things for *their* processing — the README should say so and point at
+  §7 rather than restate it. The AI-governance domain's human-oversight
+  requirement is the same claim applied to automated decisions specifically — see
+  §7.3's note on `Magnifica Humanitas` doing double duty across both domains.
+- **Compliance-language integrity:** see §2. This is also a README-worthy point —
+  it's the specific thing that lets this project's output be handed to a lawyer,
+  regulator, or auditor as-is, not just a design detail buried in this plan.
+- **No secrets, dependencies pinned, CI least-privilege:** same baseline as every
+  other project in this repo.
+
+---
+
+## 11. Build sequence
+
+1. ~~**Rename the directory** and scaffold per §5~~ — **done.** The directory
+   moved (carrying `jobduties.md`, `ai-gov-duties.md`, and this plan file with
+   it), and `README.md`, `CHECKLIST.md`, `Makefile`, `pyproject.toml`, and an
+   empty `src/privacy_and_ai_governance/` + `tests/` skeleton are in place, matching
+   `docs/project-template/python-starter/`.
+2. ~~**Author `frameworks/schema.yaml` and `frameworks/index.yaml`** with a
+   single entry~~ — **done.** `frameworks/schema.yaml` (the shape every
+   framework file must validate against), `frameworks/index.yaml` (one entry:
+   `gdpr-dpia`), and `frameworks/privacy/gdpr-dpia.yaml` (the authored
+   content — GDPR Art. 35's trigger, ten required elements, nine terms of
+   art, each with a citation) are in place. Content is verified against a
+   secondary source but marked `review_status: unreviewed` — it still needs a
+   real GDPR-competent legal check before this skill ships (§ Testing & CI,
+   CHECKLIST.md's citation item). The rest of the registry (CCPA/CPRA, HIPAA,
+   FERPA, ISO/IEC 27701, NIST Privacy Framework) waits for step 7.
+3. ~~**Author `rubric/criteria.md`**~~ — **done.** Seven framework-agnostic
+   dimensions (necessity-and-proportionality, data-minimization,
+   lawful-basis-and-consent, retention, security-controls,
+   third-party-sharing, human-oversight), each with a 5/3/1 scoring anchor, a
+   CST rationale, and mitigation/`ideal` guidance stated once in the shared
+   scoring instructions rather than repeated per dimension. Rubric-only, no
+   bright-line gate. `rubric/known-tensions.md` stays a forward reference
+   until a real contested case surfaces one worth recording.
+4. ~~**Write `src/privacy_and_ai_governance/` validation + rendering logic,
+   test-first**~~ — **done.** Six modules, 66 tests, 97% coverage, clean
+   under `ruff` and `mypy --strict`: `frameworks.py` (§3 — loads and
+   validates the registry against `schema.yaml`, a small stdlib-only
+   JSON-Schema-subset validator, no `jsonschema` dependency), `rubric.py`
+   (reads dimension ids and the passing threshold straight out of
+   `rubric/criteria.md` rather than duplicating them as a Python constant),
+   `language.py` (§2.1 — the CST-vocabulary blocklist check),
+   `concision.py` (§2.2 — the non-fatal verbosity lint, thresholds scaled by
+   how many frameworks/dimensions are actually in scope), `assessment.py`
+   (ties the above together to validate a full DPIA assessment JSON — real
+   framework ids, complete rubric coverage, mitigation required below
+   threshold, the compliance/CST boundary enforced), and `report.py`
+   (renders Markdown with compliance before the CST reflection, per §2.1).
+   Needed a Python 3.12 interpreter found separately from the machine's
+   default `python3` (3.9) — `README.md`'s Setup section now says so.
+5. ~~**Write `eval/sync_skill_bundle.py` and the drift test**~~ — **done.**
+   A real sequencing wrinkle surfaced here: the plan's design has
+   `family-manifest.yaml` (step 9) as the source of which skill has which
+   domain, but a single skill needs syncing as soon as it exists (step 6) —
+   before the manifest does. Resolved with two entry points rather than one:
+   `sync_skill_references(skill_dir, domain, ...)` syncs one skill directly
+   given its domain explicitly (what step 6 uses), and `sync_all(...)` reads
+   `family-manifest.yaml` and bulk-syncs every `status: built` entry plus the
+   router (what step 9 onward, and CI, use) — tested now against synthetic
+   fixtures rather than waiting on the manifest to exist for real. Both are
+   proven against the real `frameworks/` and `rubric/` content, not just
+   fixtures. 11 more tests (77 total), still 97% coverage, clean under
+   `ruff` and `mypy --strict`. `make sync-skill-bundle` now runs it; run
+   against the real project today, it correctly does nothing (no manifest
+   yet). Added a `py.typed` marker to the package so `eval/`'s own imports
+   from `src/` type-check too, even though `make lint` only enforces
+   `mypy src` per the repo standard.
+6. ~~**Write `.claude/skills/draft-privacy-impact-assessment/SKILL.md`, run
+   the sync, validate**~~ — **done.** A second real constraint surfaced
+   here, on top of step 5's sequencing one: `docs/standards/skills.md`
+   requires a skill's own `scripts/` to be dependency-free stdlib-only, but
+   `src/`'s modules use PyYAML for everything that touches the framework
+   registry. Resolved by checking which src/ modules actually need PyYAML —
+   only `frameworks.py` (and `assessment.py`, which imports it) — so
+   `sync_skill_bundle.py` now also copies `concision.py`, `language.py`,
+   `report.py`, and `rubric.py` byte-for-byte into a skill's `scripts/`
+   (they were already stdlib-only) and writes a new
+   `references/frameworks/index.json` (machine-readable, stdlib `json`-
+   loadable) alongside the existing Markdown index. Only `scripts/
+   assessment.py` needed a genuinely separate implementation, hand-authored
+   directly in the skill (not synced, since nothing upstream renders it) —
+   it reads that JSON instead of parsing YAML, and is otherwise the same
+   validation logic as `src/assessment.py`.
+
+   Proved this actually works, not just in theory: ran the skill's own
+   `scripts/assessment.py` against a fabricated parish bulletin sign-up
+   scenario using a bare `python3.12` interpreter with no packages
+   installed at all (not the project's own venv) — full DPIA report
+   rendered correctly, compliance section before the CST reflection, both
+   failure paths (empty `retention`, CST vocabulary leaked into
+   `compliance`) rejected with every problem listed at once. Added an
+   automated static check (`tests/test_flagship_skill.py`) that parses every
+   file in `scripts/` with `ast` and asserts no import falls outside the
+   standard library or a sibling script — so "dependency-free" is a tested
+   property of this skill, not a claim about it. 90 tests total, still 97%
+   coverage.
+
+   `skills-ref` (the PyPI package name) installs a CLI called `agentskills`,
+   not `skills-ref` — `docs/standards/skills.md`'s own command name is the
+   package, not the binary. `agentskills validate
+   .claude/skills/draft-privacy-impact-assessment` passes. Added `skills-ref`
+   to this project's own dev dependencies so `make setup` provides it going
+   forward, for this skill and every one after it.
+7. ~~**Add the remaining privacy frameworks**~~ — **done.** Four laws
+   (CCPA/CPRA, HIPAA, FERPA) plus GDPR already registered, and two voluntary
+   standards (ISO/IEC 27701, the NIST Privacy Framework), six total. Each
+   citation verified against a primary or authoritative secondary source
+   before writing it down — Cornell LII for HIPAA and FERPA's CFR text
+   (HHS.gov and eCFR both blocked the fetch), the CA AG's site plus general
+   knowledge for CCPA/CPRA's statutory sections, NIST's own published Core.
+   ISO/IEC 27701 is the one real exception: it's a paywalled commercial
+   standard, not a public legal text, so that file carries a stronger
+   caveat than this project's usual "unreviewed" status — its clause
+   citations are indicative, authored from the standard's well-documented
+   public structure, not a fetch of the purchased text, and it says so
+   directly in the file.
+
+   Confirmed the pluggability claim in §3 is real, not aspirational: each
+   framework was added to `frameworks/index.yaml` and re-synced
+   individually, and `SKILL.md` never needed a single edit across all five
+   additions — only `references/frameworks/` grew. Proved the flagship
+   skill actually reasons correctly over the larger registry, not just that
+   the files exist: ran `scripts/assessment.py` with the bare
+   dependency-free interpreter again, this time on a fabricated hospital
+   patient-portal scenario citing HIPAA and explicitly recording GDPR as
+   *considered but inapplicable* — exactly the `frameworks_considered`
+   discipline §7.2 step 2 requires. Found and fixed two tests that had
+   quietly hardcoded "exactly one framework" from step 2's original state;
+   both now assert against the registry by id rather than by count, so they
+   won't need touching again as the registry keeps growing. 91 tests, still
+   97% coverage, clean under `ruff`, `mypy --strict`, and `agentskills
+   validate`.
+8. ~~**Dry-run the flagship skill on fabricated scenarios and refine from
+   what goes wrong**~~ — **done.** Ran all three planned scenarios for real —
+   fabricated intake, real applicability reasoning, all seven dimensions
+   scored, assessment JSON validated and rendered with the bare
+   dependency-free interpreter each time — not just structurally exercised.
+
+   One scenario each did a different job. The biometric dormitory-access
+   scenario surfaced a genuine rubric gap: `human-oversight`'s wording
+   assumed a *pre-decision* review point ("before that decision is acted
+   on"), which fits a scored recommendation but not a real-time system
+   where the decision and the action are the same instant — a biometric
+   lock either opens or doesn't. Scoring it required stretching the
+   dimension rather than applying it directly, so `rubric/criteria.md` §7
+   now explicitly covers both shapes: a pre-action review where that's
+   possible, or a genuinely reachable human fallback immediately after for
+   a real-time system — with the 5/3/1 anchors updated to match. Re-synced
+   and re-rendered the same scenario against the updated wording to confirm
+   nothing broke. The parish-bulletin scenario (deliberately low-risk, and
+   testing whether the skill correctly reasons about CCPA's nonprofit
+   exclusion under Civ. Code 1798.140(d)) surfaced no gaps — a useful
+   negative result: the skill doesn't invent problems where a well-run,
+   already-compliant activity doesn't have any, and produces an
+   appropriately short report when nothing applies. The hospital
+   scheduling/AI-triage scenario stress-tested a sub-processor chain and
+   the CCPA/HIPAA PHI exemption (Civ. Code 1798.145(c)) and found the
+   existing rubric wording already handled it well — no change needed
+   there.
+
+   All three reports read clean by eye against both hard rules: no CST
+   vocabulary drift into `compliance` in any of them, and no field ran long
+   enough to trip the concision lint — a signal the §2.2 thresholds are
+   calibrated reasonably, not just theoretically. 91 tests still pass, 97%
+   coverage, clean under `ruff`, `mypy --strict`, and `agentskills
+   validate` after the rubric change.
+9. ~~**Write `family-manifest.yaml`, build the router skill, test
+   routing**~~ — **mostly done, one honest gap.** `family-manifest.yaml`
+   has all twelve skills from §8's tables: `draft-privacy-impact-assessment`
+   `built`, the other eleven `planned`. The router skill
+   (`.claude/skills/catholic-privacy-and-ai-governance/`) is built per §6 —
+   frontmatter, `.claude-plugin/plugin.json`, and a `SKILL.md` under the
+   repo's 500-line size discipline. Ran `sync_all` against the real project
+   for the first time (it only existed against synthetic fixtures before,
+   since the manifest didn't exist yet) — it synced the router's
+   `references/family-manifest.md` and re-synced the flagship in one pass,
+   with no `ManifestDriftError`. `agentskills validate` passes on both
+   skills. 100 tests, 97% coverage, clean under `ruff` and `mypy --strict`.
+
+   The gap: "test that a bare invocation routes correctly and an
+   already-specific DPIA request skips the router" is a property of a live
+   agent reading the description and deciding whether to invoke the Skill
+   tool — not something a unit test can mechanically prove, and not
+   something checkable in *this* session either, since a newly-created
+   skill isn't picked up until a fresh scan (the same reason `cst-finding`
+   was only ever available here because it was indexed at this session's
+   start, before any of this build's own edits). What's actually
+   achievable now: the description follows agentskills.io's
+   description-optimization guidance directly (imperative "use when," and
+   the explicit "do not use this for a request that already clearly names
+   a specific task" near-miss guard), and `tests/test_router_skill.py`
+   asserts that guard clause is actually present in the shipped
+   frontmatter, not just in this plan's draft. Real triggering behavior
+   needs a fresh Claude Code session pointed at this project — try, once
+   one's available: "use catholic-privacy-and-ai-governance" or "I need
+   help with privacy" (should route), "draft a DPIA for a new email
+   sign-up form" (should skip straight to the flagship), and something
+   unrelated (should trigger neither).
+10. ~~**Register both skills, work through `CHECKLIST.md`, flip status**~~ —
+    **done, with one deliberate deviation from the literal instruction.**
+    Both skills are registered in the repo-root `.claude-plugin/marketplace.json`
+    alongside the existing `cst-finding` entry. Working through
+    `CHECKLIST.md` honestly surfaced two real gaps that got fixed rather
+    than glossed over:
+    - `make check-framework-freshness` was specified back in §3 but never
+      actually built — implemented now (`stale_frameworks()` in
+      `frameworks.py`, `eval/check_framework_freshness.py`, a Makefile
+      target, and tests), confirmed via a real run against the registry.
+    - §9's own text referenced test filenames
+      (`test_compliance_language_boundary.py`, `test_report_concision.py`)
+      that were never what actually got written — corrected to the real
+      names (`test_language.py`, `test_assessment.py`'s compliance-boundary
+      test class, `test_concision.py`).
+
+    The deviation: **README status stays `draft`, not `active`.** The
+    checklist's citation-integrity item can't honestly be checked — every
+    framework file is explicitly `review_status: unreviewed`, and ISO/IEC
+    27701 more so, since it's a paywalled standard whose text was never
+    directly fetched. That item is also not "not applicable" (citations
+    obviously apply here), so per the checklist's own rule — active only
+    once every item is checked *or* explicitly marked not applicable — this
+    project doesn't yet qualify, regardless of how much else works. Rather
+    than flip the status anyway to match this step's literal wording, or
+    silently leave it as the stale scaffold-era "draft" with no
+    explanation, the README's Status section now says specifically what's
+    done, what the one open item is, and what closes it — a real legal or
+    standards expert reviewing `frameworks/*/*.yaml` and flipping each
+    `review_status`. 105 tests, 97% coverage, clean under `ruff`,
+    `mypy --strict`, and `agentskills validate` for both skills.
+11. ~~**v1.1 — prove the second domain**~~ — **done, with one honest
+    exception to the "don't touch anything outside frameworks/, rubric/,
+    and one SKILL.md" test this step set for itself.**
+
+    `frameworks/ai-governance/eu-ai-act.yaml` and `nist-ai-rmf.yaml` are
+    registered (EU AI Act verified against artificialintelligenceact.eu's
+    article/annex text directly — Art. 5 prohibited practices, Annex III's
+    eight high-risk categories, Articles 9-15's obligations, Art. 50
+    transparency; NIST AI RMF's four function names confirmed against
+    NIST's own site, though its knowledge-base pages and PDF were
+    unreachable for more than that, same honest-gap pattern as HIPAA/FERPA
+    before it). `rubric/ai-criteria.md` has its own seven dimensions —
+    risk classification, governance and accountability, data governance,
+    transparency and documentation, accuracy/robustness/security, bias and
+    fairness, human oversight — genuinely different content from the
+    privacy rubric, not a renamed copy, with the EU AI Act risk-tier
+    determination deliberately kept out of the JSON schema as a separate
+    structured field and folded into `compliance` instead, exactly where a
+    regulatory finding belongs. `assess-ai-system-risk-tier` is built,
+    registered, and validated.
+
+    The exception: `eval/sync_skill_bundle.py`'s `sync_all` assumed every
+    skill shared one global rubric path — true when there was only one
+    skill, false the moment a second rubric existed. Fixed by adding a
+    `rubric` field to each `family-manifest.yaml` entry (the natural place,
+    since it's already the single source of truth for what a skill needs)
+    and reading it per-entry, falling back to the old global default for
+    any entry that doesn't specify one. This is exactly the kind of gap the
+    plan's own warning was designed to catch — a real, narrow, well-
+    motivated fix to the bulk-sync convenience wrapper's unstated
+    assumption, not a sign the underlying pluggable-framework architecture
+    itself wasn't domain-agnostic. Everything else genuinely required zero
+    changes: `frameworks.py`, `assessment.py`, `language.py`,
+    `concision.py`, `report.py`, and `rubric.py` in `src/` never needed to
+    know a second domain existed.
+
+    Two more real findings, both fixed: `scripts/assessment.py` hardcoded
+    `"criteria.md"` as its rubric filename — harmless with one skill,
+    wrong with two. Generalized to discover its rubric file by name
+    (`references/rubric/*.md`, expects exactly one), and a test now asserts
+    the two skills' `assessment.py` files are structurally identical
+    (`ast`-normalized) except for the domain-naming strings — proving the
+    genericization actually took, not just asserting it. Separately,
+    `report.py`'s standing disclosure hardcoded "DPO," accurate for privacy
+    but domain-mismatched for AI governance; made generic ("an accountable
+    person") since `report.py` is shared, byte-for-byte, across every
+    domain's skills — the domain-specific role name belongs in each skill's
+    own `SKILL.md` prose, not in shared code.
+
+    Proved both flagships work end-to-end with the bare dependency-free
+    interpreter on fresh fabricated scenarios (a diocesan volunteer
+    background-check risk-scoring tool, for this domain), and that the new
+    skill's validator genuinely rejects the other domain's dimension and
+    framework ids rather than silently accepting them. 118 tests, 97%
+    coverage, clean under `ruff`, `mypy --strict`, and `agentskills
+    validate` for all three skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match.
+12. From there: pick the next specialist skill from either table in §8 — building
+    one mostly means adding a framework entry, a rubric, a manifest row, and a
+    `SKILL.md`; the shared machinery already exists by this point.
+
+    **First one built: `draft-privacy-notice-update`** — chosen deliberately
+    as the lowest-risk next pick, since §8's own table describes it as
+    reusing "the same rubric as §7": zero new framework research, zero new
+    rubric authoring, just a new `SKILL.md` whose only genuinely new
+    procedural step (step 5: drafting the actual notice language) happens
+    directly in conversation and is never written into or validated by
+    `scripts/assessment.py` — a notice is prose for a person to approve,
+    not a structured record with a schema to enforce, so it deliberately
+    stays outside the hard-rule-enforced JSON contract.
+
+    This proved the one thing not yet tested: two `built` skills in the
+    *same* domain sharing the *exact same* rubric and framework set via
+    `family-manifest.yaml`'s per-entry `rubric` field, with no
+    special-casing anywhere in `sync_all`. It held up completely —
+    `draft-privacy-notice-update`'s bundled rubric, framework registry,
+    and `scripts/assessment.py` are byte-for-byte identical to its
+    sibling's own copies, confirmed by tests, not just assumed. 127 tests,
+    97% coverage, clean under `ruff`, `mypy --strict`, and `agentskills
+    validate` for all four skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match. Next: any of the remaining eight backlog skills in
+    §8 — `triage-privacy-rights-request` and `triage-privacy-incident` in
+    particular will be the first real test of a task shape that doesn't
+    fit "assess an ongoing activity/system" as naturally (a point-in-time
+    incident or a request doesn't map onto `subject.purpose` and
+    `subject.retention` the way a processing activity or an AI system
+    does) — worth designing deliberately rather than force-fitting the
+    existing schema when that day comes.
+13. **Built `triage-privacy-rights-request` — the first genuinely different
+    task shape.** As step 12 flagged, a rights request doesn't map onto
+    "score seven ongoing-quality dimensions" — designed a separate shape
+    instead of stretching the existing one: `src/privacy_and_ai_governance/
+    triage.py` validates `title`, `request` (description, type, a real
+    ISO `received_date`), `frameworks_considered` (same discipline as the
+    assessment shape — every framework considered, including inapplicable
+    ones, each with a stated basis), a single `governing_deadline`
+    (framework id must be marked applicable, `response_due` calculated
+    from `received_date`, never earlier than it), a `gaps` checklist (each
+    with a `blocking` boolean), `compliance`, and `cst_reflection`.
+    `concision.lint_triage` and `report.render_triage_markdown` are new;
+    `report.write_report` was generalized to take a `render_fn` parameter
+    (default `render_markdown`, so every existing call site is unchanged)
+    rather than duplicating the file-writing logic for a second shape.
+
+    Added GDPR's own data-subject-rights framework
+    (`frameworks/privacy/gdpr-data-subject-rights.yaml`, Arts. 12-22,
+    verified against gdpr-info.eu's article text directly) — distinct from
+    `gdpr-dpia`, since Art. 35's impact-assessment duty and Chapter III's
+    response obligations are genuinely different duties, and a request
+    should never cite the DPIA entry. Added a `response-deadline`
+    required element to the existing `ccpa-cpra.yaml` (Civ. Code §
+    1798.130(a)(2), 45+45 days) and `hipaa.yaml` (45 CFR 164.524(b)(2),
+    30+30 days) — both already registered, both missing their own
+    response-deadline citation until this step needed one.
+
+    The one new piece of plumbing this shape required: a rubric-less
+    skill. `sync_skill_references`'s `rubric_path` parameter is now
+    `Path | None`, skipping the rubric-sync block entirely when `None`;
+    `sync_all` now distinguishes three states per manifest entry — an
+    explicit string path (sync it), no `rubric` key at all (fall back to
+    the project default, unchanged behavior for every existing entry), and
+    an explicit `rubric: null` (sync no rubric — this skill).
+    `sync_skill_scripts` gained an optional `modules` parameter so
+    `sync_all` can exclude `rubric.py` for a rubric-less entry — copying a
+    parser for a file that doesn't exist would misleadingly suggest the
+    skill scores something. `family-manifest.yaml`'s
+    `triage-privacy-rights-request` entry is `rubric: null`, with a comment
+    explaining why, and now flipped to `status: built`.
+
+    `scripts/triage.py` is hand-authored, dependency-free, and structurally
+    the same validation logic as `src/privacy_and_ai_governance/triage.py`
+    (same pattern as `scripts/assessment.py`'s relationship to its own
+    `src/` counterpart) — it reads `references/frameworks/index.json`
+    instead of parsing YAML, and has no `rubric.py` sibling or
+    `references/rubric/` directory to read, since there's nothing here to
+    parse. Proved end-to-end with the bare dependency-free `python3.12`
+    interpreter (no venv, no site-packages) on a fabricated former-employee
+    deletion request citing CCPA/CPRA's 45-day deadline with a payroll-
+    retention gap flagged as blocking — rendered correctly, governing
+    deadline stated prominently, compliance before the CST reflection.
+
+    177 tests, 97% coverage, clean under `ruff`, `mypy --strict`, and
+    `agentskills validate` for all five skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match. Next: any of the remaining seven backlog skills in
+    §8 — `triage-privacy-incident` can now reuse this same triage shape
+    directly rather than designing a third one.

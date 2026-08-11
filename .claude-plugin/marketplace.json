@@ -8,6 +8,36 @@
       "source": "./cst-finding/.claude/skills/cst-finding",
       "description": "Rates an AI use case or an audited prompt/response pair against Catholic Social Teaching.",
       "category": "productivity"
+    },
+    {
+      "name": "catholic-privacy-and-ai-governance",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/catholic-privacy-and-ai-governance",
+      "description": "Front door to the Catholic Privacy and AI Governance skill family; routes a generic privacy or AI-governance request to the right specialist skill.",
+      "category": "productivity"
+    },
+    {
+      "name": "draft-privacy-impact-assessment",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/draft-privacy-impact-assessment",
+      "description": "Drafts a structured Data Protection/Privacy Impact Assessment (DPIA/PIA) against a pluggable registry of laws and standards and a seven-dimension privacy-by-design rubric.",
+      "category": "productivity"
+    },
+    {
+      "name": "assess-ai-system-risk-tier",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/assess-ai-system-risk-tier",
+      "description": "Classifies an AI system against the EU AI Act's risk tiers and NIST AI RMF's functions, then scores it against a seven-dimension AI-governance rubric.",
+      "category": "productivity"
+    },
+    {
+      "name": "draft-privacy-notice-update",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/draft-privacy-notice-update",
+      "description": "Drafts a proposed privacy notice or policy revision for a changed data-processing practice, grounded in a full assessment against the same rubric draft-privacy-impact-assessment uses.",
+      "category": "productivity"
+    },
+    {
+      "name": "triage-privacy-rights-request",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/triage-privacy-rights-request",
+      "description": "Triages an incoming data-subject rights request against a pluggable registry of laws, calculates the governing response deadline, and flags outstanding gaps before a response is sent.",
+      "category": "productivity"
     }
   ]
 }

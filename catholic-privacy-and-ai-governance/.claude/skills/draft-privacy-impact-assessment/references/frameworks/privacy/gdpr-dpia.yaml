@@ -1,0 +1,140 @@
+id: gdpr-dpia
+name: "GDPR Art. 35 — Data Protection Impact Assessment"
+citation_root: "GDPR Art. 35"
+source_url: "https://gdpr-info.eu/art-35-gdpr/"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    A DPIA is required before processing begins whenever a type of
+    processing — particularly one using new technologies, and given its
+    nature, scope, context, and purposes — is likely to result in a high
+    risk to the rights and freedoms of natural persons (Art. 35(1)). Three
+    specific cases are always in scope regardless of that general judgment
+    (Art. 35(3)): automated decision-making or profiling that produces legal
+    or similarly significant effects, large-scale processing of special
+    categories of data, and large-scale systematic monitoring of a publicly
+    accessible area.
+  jurisdiction:
+    - European Union
+    - European Economic Area
+    - Any controller or processor outside the EU/EEA processing EU/EEA data
+      subjects' personal data under GDPR's extraterritorial scope (Art. 3)
+
+required_elements:
+  - id: high-risk-trigger
+    citation: "Art. 35(1)"
+    requirement: >
+      Where a type of processing, in particular using new technologies, and
+      taking into account the nature, scope, context and purposes of the
+      processing, is likely to result in a high risk to the rights and
+      freedoms of natural persons, the controller shall, prior to the
+      processing, carry out an assessment of the impact of the envisaged
+      processing operations on the protection of personal data.
+  - id: automated-decision-profiling
+    citation: "Art. 35(3)(a)"
+    requirement: >
+      A DPIA is required for a systematic and extensive evaluation of
+      personal aspects relating to natural persons which is based on
+      automated processing, including profiling, and on which decisions are
+      based that produce legal effects concerning the natural person or
+      similarly significantly affect the natural person.
+  - id: large-scale-special-category
+    citation: "Art. 35(3)(b)"
+    requirement: >
+      A DPIA is required for processing on a large scale of special
+      categories of data referred to in Article 9(1), or of personal data
+      relating to criminal convictions and offences referred to in Article
+      10.
+  - id: large-scale-public-monitoring
+    citation: "Art. 35(3)(c)"
+    requirement: >
+      A DPIA is required for systematic monitoring of a publicly accessible
+      area on a large scale.
+  - id: dpo-consultation
+    citation: "Art. 35(2)"
+    requirement: >
+      The controller shall seek the advice of the data protection officer,
+      where designated, when carrying out a data protection impact
+      assessment.
+  - id: assessment-description
+    citation: "Art. 35(7)(a)"
+    requirement: >
+      The assessment shall contain at least a systematic description of the
+      envisaged processing operations and the purposes of the processing,
+      including, where applicable, the legitimate interest pursued by the
+      controller.
+  - id: necessity-proportionality
+    citation: "Art. 35(7)(b)"
+    requirement: >
+      The assessment shall contain at least an assessment of the necessity
+      and proportionality of the processing operations in relation to the
+      purposes.
+  - id: risk-assessment
+    citation: "Art. 35(7)(c)"
+    requirement: >
+      The assessment shall contain at least an assessment of the risks to
+      the rights and freedoms of data subjects.
+  - id: mitigating-measures
+    citation: "Art. 35(7)(d)"
+    requirement: >
+      The assessment shall contain at least the measures envisaged to
+      address the risks, including safeguards, security measures and
+      mechanisms to ensure the protection of personal data and to
+      demonstrate compliance with the Regulation.
+  - id: periodic-review
+    citation: "Art. 35(11)"
+    requirement: >
+      Where necessary, the controller shall carry out a review to assess if
+      processing is performed in accordance with the data protection impact
+      assessment, at least when there is a change of the risk represented by
+      processing operations.
+
+terms_of_art:
+  - term: controller
+    meaning: >
+      The natural or legal person, public authority, agency, or other body
+      which, alone or jointly with others, determines the purposes and means
+      of the processing of personal data (Art. 4(7)).
+  - term: processor
+    meaning: >
+      A natural or legal person, public authority, agency, or other body
+      which processes personal data on behalf of the controller (Art. 4(8)).
+  - term: personal data
+    meaning: >
+      Any information relating to an identified or identifiable natural
+      person (Art. 4(1)).
+  - term: data subject
+    meaning: >
+      The identified or identifiable natural person to whom personal data
+      relates.
+  - term: high risk
+    meaning: >
+      The operative standard Art. 35(1) uses to trigger the DPIA
+      requirement. GDPR does not define it with a fixed test — it is
+      assessed against the nature, scope, context, and purposes of the
+      specific processing, which is exactly why the three bright-line cases
+      in Art. 35(3) exist as a floor beneath that judgment call.
+  - term: special categories of data
+    meaning: >
+      Data revealing racial or ethnic origin, political opinions, religious
+      or philosophical beliefs, or trade union membership, and genetic data,
+      biometric data processed to uniquely identify a natural person, data
+      concerning health, or data concerning a natural person's sex life or
+      sexual orientation (Art. 9(1)).
+  - term: profiling
+    meaning: >
+      Any form of automated processing of personal data consisting of the
+      use of personal data to evaluate certain personal aspects relating to
+      a natural person, in particular to analyse or predict aspects
+      concerning that natural person's performance at work, economic
+      situation, health, personal preferences, interests, reliability,
+      behaviour, location, or movements (Art. 4(4)).
+  - term: supervisory authority
+    meaning: >
+      An independent public authority established by a Member State to
+      monitor the application of the Regulation (Art. 4(21)).
+  - term: data protection officer
+    meaning: >
+      The role designated under Art. 37 to advise on and monitor compliance;
+      consulted under Art. 35(2) whenever a DPIA is carried out.

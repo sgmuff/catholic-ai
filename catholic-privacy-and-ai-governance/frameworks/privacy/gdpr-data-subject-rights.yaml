@@ -1,0 +1,103 @@
+id: gdpr-data-subject-rights
+name: "GDPR Chapter III — Rights of the Data Subject"
+citation_root: "GDPR Arts. 12-22"
+source_url: "https://gdpr-info.eu/chapter-3/"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies whenever a controller receives a request from a data subject
+    to exercise a right under GDPR Chapter III, regarding personal data the
+    controller processes about them. Distinct from `gdpr-dpia` in this
+    registry, which covers Art. 35's impact-assessment obligation, not the
+    data-subject-rights response obligations here — a request-triage task
+    should cite this entry, not that one.
+  jurisdiction:
+    - European Union
+    - European Economic Area
+    - Any controller or processor outside the EU/EEA processing EU/EEA data
+      subjects' personal data under GDPR's extraterritorial scope (Art. 3)
+
+required_elements:
+  - id: response-deadline
+    citation: "Art. 12(3)"
+    requirement: >
+      The controller shall provide information on action taken on a
+      request without undue delay and in any event within one month of
+      receipt of the request. That period may be extended by two further
+      months where necessary, taking into account the complexity and
+      number of requests, provided the controller informs the data
+      subject of the extension, with reasons, within one month of receipt
+      of the original request.
+  - id: right-of-access
+    citation: "Art. 15"
+    requirement: >
+      A data subject has the right to obtain confirmation of whether
+      their personal data is being processed, and where it is, access to
+      the data and specified information about the processing (purposes,
+      categories of data, recipients, retention period, and the source of
+      the data where not collected from the data subject).
+  - id: right-to-rectification
+    citation: "Art. 16"
+    requirement: >
+      A data subject has the right to obtain rectification of inaccurate
+      personal data concerning them without undue delay, and to have
+      incomplete personal data completed.
+  - id: right-to-erasure
+    citation: "Art. 17"
+    requirement: >
+      A data subject has the right to obtain erasure of personal data
+      concerning them without undue delay where one of the specified
+      grounds applies (e.g. the data is no longer necessary for its
+      original purpose, consent is withdrawn, or the data subject
+      objects), subject to enumerated exceptions (e.g. compliance with a
+      legal obligation, exercise of legal claims).
+  - id: right-to-restriction
+    citation: "Art. 18"
+    requirement: >
+      A data subject has the right to obtain restriction of processing
+      in specified circumstances (e.g. while the accuracy of the data is
+      contested, or where processing is unlawful but the data subject
+      opposes erasure) — restricted data may only be stored, not
+      otherwise processed, without the data subject's consent or another
+      specified basis.
+  - id: right-to-portability
+    citation: "Art. 20"
+    requirement: >
+      A data subject has the right to receive personal data concerning
+      them, which they provided to a controller, in a structured,
+      commonly used, machine-readable format, and to transmit it to
+      another controller, where processing is based on consent or
+      contract and carried out by automated means.
+  - id: right-to-object
+    citation: "Art. 21"
+    requirement: >
+      A data subject has the right to object, on grounds relating to
+      their particular situation, to processing based on legitimate
+      interest or the performance of a task in the public interest,
+      including profiling based on those grounds — the controller must
+      then stop unless it demonstrates compelling legitimate grounds
+      overriding the data subject's interests.
+  - id: no-fee-generally
+    citation: "Art. 12(5)"
+    requirement: >
+      Information provided under Articles 13-22 shall be provided free of
+      charge, except that a controller may charge a reasonable fee or
+      refuse to act where a request is manifestly unfounded or excessive,
+      in particular because of its repetitive character.
+
+terms_of_art:
+  - term: data subject
+    meaning: >
+      The identified or identifiable natural person to whom personal data
+      relates (Art. 4(1)).
+  - term: controller
+    meaning: >
+      The natural or legal person, public authority, agency, or other body
+      which, alone or jointly with others, determines the purposes and
+      means of the processing of personal data (Art. 4(7)).
+  - term: manifestly unfounded or excessive request
+    meaning: >
+      The Art. 12(5) standard permitting a controller to charge a
+      reasonable fee or refuse a request — a high bar, not a general
+      escape valve for an inconvenient or large request.

@@ -1,0 +1,5 @@
+{
+  "name": "draft-privacy-impact-assessment",
+  "description": "Drafts a structured Data Protection/Privacy Impact Assessment (DPIA/PIA) for a described data-processing activity against the current framework registry (GDPR, CCPA/CPRA, HIPAA, FERPA, and any registered voluntary standard) and a seven-dimension privacy-by-design rubric.",
+  "version": "0.1.0"
+}

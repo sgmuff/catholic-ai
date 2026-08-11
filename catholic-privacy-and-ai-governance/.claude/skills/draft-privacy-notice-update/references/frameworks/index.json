@@ -1,0 +1,592 @@
+[
+  {
+    "id": "gdpr-dpia",
+    "name": "GDPR Art. 35 \u2014 Data Protection Impact Assessment",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/gdpr-dpia.yaml",
+    "version": "Regulation (EU) 2016/679, as amended",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "GDPR Art. 35",
+    "source_url": "https://gdpr-info.eu/art-35-gdpr/",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "A DPIA is required before processing begins whenever a type of processing \u2014 particularly one using new technologies, and given its nature, scope, context, and purposes \u2014 is likely to result in a high risk to the rights and freedoms of natural persons (Art. 35(1)). Three specific cases are always in scope regardless of that general judgment (Art. 35(3)): automated decision-making or profiling that produces legal or similarly significant effects, large-scale processing of special categories of data, and large-scale systematic monitoring of a publicly accessible area.\n",
+      "jurisdiction": [
+        "European Union",
+        "European Economic Area",
+        "Any controller or processor outside the EU/EEA processing EU/EEA data subjects' personal data under GDPR's extraterritorial scope (Art. 3)"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "high-risk-trigger",
+        "citation": "Art. 35(1)",
+        "requirement": "Where a type of processing, in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.\n"
+      },
+      {
+        "id": "automated-decision-profiling",
+        "citation": "Art. 35(3)(a)",
+        "requirement": "A DPIA is required for a systematic and extensive evaluation of personal aspects relating to natural persons which is based on automated processing, including profiling, and on which decisions are based that produce legal effects concerning the natural person or similarly significantly affect the natural person.\n"
+      },
+      {
+        "id": "large-scale-special-category",
+        "citation": "Art. 35(3)(b)",
+        "requirement": "A DPIA is required for processing on a large scale of special categories of data referred to in Article 9(1), or of personal data relating to criminal convictions and offences referred to in Article 10.\n"
+      },
+      {
+        "id": "large-scale-public-monitoring",
+        "citation": "Art. 35(3)(c)",
+        "requirement": "A DPIA is required for systematic monitoring of a publicly accessible area on a large scale.\n"
+      },
+      {
+        "id": "dpo-consultation",
+        "citation": "Art. 35(2)",
+        "requirement": "The controller shall seek the advice of the data protection officer, where designated, when carrying out a data protection impact assessment.\n"
+      },
+      {
+        "id": "assessment-description",
+        "citation": "Art. 35(7)(a)",
+        "requirement": "The assessment shall contain at least a systematic description of the envisaged processing operations and the purposes of the processing, including, where applicable, the legitimate interest pursued by the controller.\n"
+      },
+      {
+        "id": "necessity-proportionality",
+        "citation": "Art. 35(7)(b)",
+        "requirement": "The assessment shall contain at least an assessment of the necessity and proportionality of the processing operations in relation to the purposes.\n"
+      },
+      {
+        "id": "risk-assessment",
+        "citation": "Art. 35(7)(c)",
+        "requirement": "The assessment shall contain at least an assessment of the risks to the rights and freedoms of data subjects.\n"
+      },
+      {
+        "id": "mitigating-measures",
+        "citation": "Art. 35(7)(d)",
+        "requirement": "The assessment shall contain at least the measures envisaged to address the risks, including safeguards, security measures and mechanisms to ensure the protection of personal data and to demonstrate compliance with the Regulation.\n"
+      },
+      {
+        "id": "periodic-review",
+        "citation": "Art. 35(11)",
+        "requirement": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment, at least when there is a change of the risk represented by processing operations.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "controller",
+        "meaning": "The natural or legal person, public authority, agency, or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data (Art. 4(7)).\n"
+      },
+      {
+        "term": "processor",
+        "meaning": "A natural or legal person, public authority, agency, or other body which processes personal data on behalf of the controller (Art. 4(8)).\n"
+      },
+      {
+        "term": "personal data",
+        "meaning": "Any information relating to an identified or identifiable natural person (Art. 4(1)).\n"
+      },
+      {
+        "term": "data subject",
+        "meaning": "The identified or identifiable natural person to whom personal data relates.\n"
+      },
+      {
+        "term": "high risk",
+        "meaning": "The operative standard Art. 35(1) uses to trigger the DPIA requirement. GDPR does not define it with a fixed test \u2014 it is assessed against the nature, scope, context, and purposes of the specific processing, which is exactly why the three bright-line cases in Art. 35(3) exist as a floor beneath that judgment call.\n"
+      },
+      {
+        "term": "special categories of data",
+        "meaning": "Data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and genetic data, biometric data processed to uniquely identify a natural person, data concerning health, or data concerning a natural person's sex life or sexual orientation (Art. 9(1)).\n"
+      },
+      {
+        "term": "profiling",
+        "meaning": "Any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person, in particular to analyse or predict aspects concerning that natural person's performance at work, economic situation, health, personal preferences, interests, reliability, behaviour, location, or movements (Art. 4(4)).\n"
+      },
+      {
+        "term": "supervisory authority",
+        "meaning": "An independent public authority established by a Member State to monitor the application of the Regulation (Art. 4(21)).\n"
+      },
+      {
+        "term": "data protection officer",
+        "meaning": "The role designated under Art. 37 to advise on and monitor compliance; consulted under Art. 35(2) whenever a DPIA is carried out.\n"
+      }
+    ]
+  },
+  {
+    "id": "gdpr-data-subject-rights",
+    "name": "GDPR Chapter III \u2014 Rights of the Data Subject",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/gdpr-data-subject-rights.yaml",
+    "version": "Regulation (EU) 2016/679, as amended",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "GDPR Arts. 12-22",
+    "source_url": "https://gdpr-info.eu/chapter-3/",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies whenever a controller receives a request from a data subject to exercise a right under GDPR Chapter III, regarding personal data the controller processes about them. Distinct from `gdpr-dpia` in this registry, which covers Art. 35's impact-assessment obligation, not the data-subject-rights response obligations here \u2014 a request-triage task should cite this entry, not that one.\n",
+      "jurisdiction": [
+        "European Union",
+        "European Economic Area",
+        "Any controller or processor outside the EU/EEA processing EU/EEA data subjects' personal data under GDPR's extraterritorial scope (Art. 3)"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "response-deadline",
+        "citation": "Art. 12(3)",
+        "requirement": "The controller shall provide information on action taken on a request without undue delay and in any event within one month of receipt of the request. That period may be extended by two further months where necessary, taking into account the complexity and number of requests, provided the controller informs the data subject of the extension, with reasons, within one month of receipt of the original request.\n"
+      },
+      {
+        "id": "right-of-access",
+        "citation": "Art. 15",
+        "requirement": "A data subject has the right to obtain confirmation of whether their personal data is being processed, and where it is, access to the data and specified information about the processing (purposes, categories of data, recipients, retention period, and the source of the data where not collected from the data subject).\n"
+      },
+      {
+        "id": "right-to-rectification",
+        "citation": "Art. 16",
+        "requirement": "A data subject has the right to obtain rectification of inaccurate personal data concerning them without undue delay, and to have incomplete personal data completed.\n"
+      },
+      {
+        "id": "right-to-erasure",
+        "citation": "Art. 17",
+        "requirement": "A data subject has the right to obtain erasure of personal data concerning them without undue delay where one of the specified grounds applies (e.g. the data is no longer necessary for its original purpose, consent is withdrawn, or the data subject objects), subject to enumerated exceptions (e.g. compliance with a legal obligation, exercise of legal claims).\n"
+      },
+      {
+        "id": "right-to-restriction",
+        "citation": "Art. 18",
+        "requirement": "A data subject has the right to obtain restriction of processing in specified circumstances (e.g. while the accuracy of the data is contested, or where processing is unlawful but the data subject opposes erasure) \u2014 restricted data may only be stored, not otherwise processed, without the data subject's consent or another specified basis.\n"
+      },
+      {
+        "id": "right-to-portability",
+        "citation": "Art. 20",
+        "requirement": "A data subject has the right to receive personal data concerning them, which they provided to a controller, in a structured, commonly used, machine-readable format, and to transmit it to another controller, where processing is based on consent or contract and carried out by automated means.\n"
+      },
+      {
+        "id": "right-to-object",
+        "citation": "Art. 21",
+        "requirement": "A data subject has the right to object, on grounds relating to their particular situation, to processing based on legitimate interest or the performance of a task in the public interest, including profiling based on those grounds \u2014 the controller must then stop unless it demonstrates compelling legitimate grounds overriding the data subject's interests.\n"
+      },
+      {
+        "id": "no-fee-generally",
+        "citation": "Art. 12(5)",
+        "requirement": "Information provided under Articles 13-22 shall be provided free of charge, except that a controller may charge a reasonable fee or refuse to act where a request is manifestly unfounded or excessive, in particular because of its repetitive character.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "data subject",
+        "meaning": "The identified or identifiable natural person to whom personal data relates (Art. 4(1)).\n"
+      },
+      {
+        "term": "controller",
+        "meaning": "The natural or legal person, public authority, agency, or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data (Art. 4(7)).\n"
+      },
+      {
+        "term": "manifestly unfounded or excessive request",
+        "meaning": "The Art. 12(5) standard permitting a controller to charge a reasonable fee or refuse a request \u2014 a high bar, not a general escape valve for an inconvenient or large request.\n"
+      }
+    ]
+  },
+  {
+    "id": "ccpa-cpra",
+    "name": "CCPA/CPRA \u2014 California Consumer Privacy Act, as amended by the California Privacy Rights Act",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/ccpa-cpra.yaml",
+    "version": "Cal. Civ. Code \u00a7 1798.100 et seq., as amended by Prop 24 (2020)",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "Cal. Civ. Code \u00a7 1798.100 et seq.",
+    "source_url": "https://oag.ca.gov/privacy/ccpa",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies to a for-profit \"business\" doing business in California that collects California residents' personal information and meets at least one threshold: (a) annual gross revenue over $25 million, (b) buys, sells, or shares the personal information of 100,000 or more California consumers or households annually, or (c) derives 50% or more of annual revenue from selling or sharing California consumers' personal information. Separately, a business whose processing presents significant risk to consumers' privacy or security must conduct and submit a risk assessment under CPPA regulations adopted pursuant to Civ. Code \u00a7 1798.185(a)(15) \u2014 the closest CCPA/CPRA analog to a DPIA, with regulations taking effect January 1, 2026.\n",
+      "jurisdiction": [
+        "California"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "right-to-know",
+        "citation": "Civ. Code \u00a7\u00a7 1798.100, 1798.110, 1798.115",
+        "requirement": "A consumer has the right to request that a business disclose the categories and/or specific pieces of personal information it has collected about them, the categories of sources, the business or commercial purpose for collecting it, and the categories of third parties it is shared with.\n"
+      },
+      {
+        "id": "right-to-delete",
+        "citation": "Civ. Code \u00a7 1798.105",
+        "requirement": "A consumer has the right to request that a business delete personal information it has collected from them, subject to enumerated exceptions.\n"
+      },
+      {
+        "id": "right-to-correct",
+        "citation": "Civ. Code \u00a7 1798.106",
+        "requirement": "A consumer has the right to request that a business correct inaccurate personal information it maintains about them.\n"
+      },
+      {
+        "id": "right-to-opt-out-of-sale-sharing",
+        "citation": "Civ. Code \u00a7 1798.120",
+        "requirement": "A consumer has the right to direct a business that sells or shares their personal information to third parties to stop doing so, and a business must provide a clear and conspicuous mechanism to exercise this right.\n"
+      },
+      {
+        "id": "right-to-limit-sensitive-personal-information",
+        "citation": "Civ. Code \u00a7 1798.121",
+        "requirement": "A consumer has the right to direct a business to limit its use of the consumer's sensitive personal information to what is necessary to perform the services or provide the goods reasonably expected by an average consumer.\n"
+      },
+      {
+        "id": "right-to-non-discrimination",
+        "citation": "Civ. Code \u00a7 1798.125",
+        "requirement": "A business must not discriminate against a consumer for exercising any right under this title, including by denying goods or services, charging different prices, or providing a different level of quality \u2014 subject to the exception for financial incentives offered in exchange for data disclosure that are reasonably related to the value of the data.\n"
+      },
+      {
+        "id": "response-deadline",
+        "citation": "Civ. Code \u00a7 1798.130(a)(2)",
+        "requirement": "A business must respond to a verifiable consumer request within 45 calendar days of receipt. That period may be extended by an additional 45 days (90 days total) where reasonably necessary, provided the business notifies the consumer of the extension and the reason for it within the first 45-day period.\n"
+      },
+      {
+        "id": "risk-assessment",
+        "citation": "Civ. Code \u00a7 1798.185(a)(15)",
+        "requirement": "A business whose processing of personal information presents significant risk to consumers' privacy or security must conduct and submit to the California Privacy Protection Agency a risk assessment identifying the benefits and negative impacts of the processing to the business, the consumer, other stakeholders, and the public, and the safeguards applied to address the negative impacts.\n"
+      },
+      {
+        "id": "privacy-notice",
+        "citation": "Civ. Code \u00a7 1798.100(a)",
+        "requirement": "A business must inform consumers, at or before the point of collection, of the categories of personal information to be collected and the purposes for which they will be used.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "business",
+        "meaning": "A for-profit legal entity that does business in California, collects California consumers' personal information, and meets at least one of the statutory thresholds (Civ. Code \u00a7 1798.140(d)).\n"
+      },
+      {
+        "term": "consumer",
+        "meaning": "A natural person who is a California resident (Civ. Code \u00a7 1798.140(i)).\n"
+      },
+      {
+        "term": "personal information",
+        "meaning": "Information that identifies, relates to, describes, is reasonably capable of being associated with, or could reasonably be linked, directly or indirectly, with a particular consumer or household (Civ. Code \u00a7 1798.140(v)(1)).\n"
+      },
+      {
+        "term": "sensitive personal information",
+        "meaning": "A specific subset of personal information including government identifiers, precise geolocation, account/financial credentials, contents of mail/email/text messages, genetic data, biometric information used to identify a consumer, health information, sex life or sexual orientation data, and racial/ethnic origin, religious, or union-membership information (Civ. Code \u00a7 1798.140(ae)).\n"
+      },
+      {
+        "term": "sell / share",
+        "meaning": "\"Sell\" is disclosing personal information to a third party for monetary or other valuable consideration; \"share\" extends this to disclosure for cross-context behavioral advertising, whether or not for consideration (Civ. Code \u00a7 1798.140(ad), (ah)).\n"
+      }
+    ]
+  },
+  {
+    "id": "hipaa",
+    "name": "HIPAA \u2014 Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/hipaa.yaml",
+    "version": "45 CFR Parts 160, 164",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "45 CFR Parts 160, 164",
+    "source_url": "https://www.law.cornell.edu/cfr/text/45/164.308",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies to \"covered entities\" (health plans, health care clearinghouses, and health care providers who transmit health information electronically in connection with a covered transaction) and their \"business associates\" who create, receive, maintain, or transmit protected health information (PHI) on a covered entity's behalf. The Security Rule's risk analysis requirement (45 CFR 164.308(a)(1)(ii)(A)) \u2014 the closest HIPAA analog to a DPIA \u2014 applies to electronic PHI specifically.\n",
+      "jurisdiction": [
+        "United States"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "risk-analysis",
+        "citation": "45 CFR 164.308(a)(1)(ii)(A)",
+        "requirement": "A covered entity or business associate must conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic protected health information it holds.\n"
+      },
+      {
+        "id": "risk-management",
+        "citation": "45 CFR 164.308(a)(1)(ii)(B)",
+        "requirement": "A covered entity or business associate must implement security measures sufficient to reduce identified risks and vulnerabilities to a reasonable and appropriate level.\n"
+      },
+      {
+        "id": "minimum-necessary",
+        "citation": "45 CFR 164.502(b), 164.514(d)",
+        "requirement": "When using, disclosing, or requesting protected health information, a covered entity or business associate must make reasonable efforts to limit it to the minimum necessary to accomplish the intended purpose, subject to enumerated exceptions (e.g. treatment disclosures, disclosures to the individual, disclosures required by law).\n"
+      },
+      {
+        "id": "technical-safeguards",
+        "citation": "45 CFR 164.312",
+        "requirement": "A covered entity or business associate must implement technical safeguards for electronic PHI, including access controls, audit controls, integrity controls, and transmission security \u2014 with encryption addressed as an \"addressable\" (risk-assessed, not strictly mandatory) implementation specification rather than required outright.\n"
+      },
+      {
+        "id": "notice-of-privacy-practices",
+        "citation": "45 CFR 164.520",
+        "requirement": "A covered entity must provide individuals with a notice describing how it may use and disclose protected health information and the individual's rights with respect to it.\n"
+      },
+      {
+        "id": "right-of-access",
+        "citation": "45 CFR 164.524",
+        "requirement": "An individual has the right to inspect and obtain a copy of protected health information about them in a designated record set, with limited exceptions.\n"
+      },
+      {
+        "id": "access-response-deadline",
+        "citation": "45 CFR 164.524(b)(2)",
+        "requirement": "A covered entity must act on a request for access no later than 30 days after receipt. A single extension of up to 30 additional days is available if the entity is unable to meet the original deadline, provided it gives the individual written notice, within the original 30 days, of the reasons for the delay and the date by which it will complete action on the request.\n"
+      },
+      {
+        "id": "right-to-amend",
+        "citation": "45 CFR 164.526",
+        "requirement": "An individual has the right to request amendment of protected health information about them in a designated record set for as long as the information is maintained.\n"
+      },
+      {
+        "id": "accounting-of-disclosures",
+        "citation": "45 CFR 164.528",
+        "requirement": "An individual has the right to receive an accounting of certain disclosures of their protected health information made in the six years prior to the request, subject to enumerated exceptions.\n"
+      },
+      {
+        "id": "breach-notification",
+        "citation": "45 CFR 164.400-414",
+        "requirement": "Following a breach of unsecured protected health information, a covered entity must notify affected individuals without unreasonable delay and no later than 60 days after discovery, and must notify the Secretary of Health and Human Services; business associates must notify the covered entity.\n"
+      },
+      {
+        "id": "workforce-training",
+        "citation": "45 CFR 164.530(b)",
+        "requirement": "A covered entity must train all members of its workforce on its privacy policies and procedures as necessary and appropriate for them to carry out their functions.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "covered entity",
+        "meaning": "A health plan, health care clearinghouse, or health care provider that transmits health information electronically in connection with a transaction covered by the HIPAA Transactions Rule (45 CFR 160.103).\n"
+      },
+      {
+        "term": "business associate",
+        "meaning": "A person or entity that creates, receives, maintains, or transmits protected health information on behalf of a covered entity (45 CFR 160.103).\n"
+      },
+      {
+        "term": "protected health information (PHI)",
+        "meaning": "Individually identifiable health information held or transmitted by a covered entity or business associate, in any form or medium (45 CFR 160.103).\n"
+      },
+      {
+        "term": "minimum necessary",
+        "meaning": "The standard requiring PHI use, disclosure, or requests to be limited to the amount reasonably needed to accomplish the intended purpose (45 CFR 164.502(b)).\n"
+      },
+      {
+        "term": "addressable specification",
+        "meaning": "A Security Rule implementation specification a covered entity must assess and either implement, implement an equivalent alternative to, or document why it is not reasonable and appropriate to implement \u2014 distinct from a \"required\" specification, which admits no such discretion.\n"
+      }
+    ]
+  },
+  {
+    "id": "ferpa",
+    "name": "FERPA \u2014 Family Educational Rights and Privacy Act",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/ferpa.yaml",
+    "version": "20 U.S.C. \u00a7 1232g; 34 CFR Part 99",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "20 U.S.C. \u00a7 1232g; 34 CFR Part 99",
+    "source_url": "https://www.law.cornell.edu/cfr/text/34/99.31",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies to any educational agency or institution that receives funding under a program administered by the U.S. Department of Education \u2014 covering most U.S. schools, school districts, and postsecondary institutions (including a Catholic university, college, or K-12 school participating in federal funding or student aid programs). Governs \"education records\": records directly related to a student and maintained by the institution or a party acting for it. FERPA has no DPIA-style impact-assessment requirement of its own; the closest functional analog here is the disclosure-exception analysis under 34 CFR 99.31 \u2014 whether a planned disclosure fits a recognized exception or requires consent.\n",
+      "jurisdiction": [
+        "United States"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "consent-required-for-disclosure",
+        "citation": "34 CFR 99.30",
+        "requirement": "An educational agency or institution must obtain written consent from a parent or eligible student before disclosing personally identifiable information from education records, unless a specific exception in 34 CFR 99.31 applies.\n"
+      },
+      {
+        "id": "disclosure-exceptions",
+        "citation": "34 CFR 99.31",
+        "requirement": "Education records may be disclosed without consent only under enumerated exceptions \u2014 including to school officials with a legitimate educational interest, to officials at a school where the student seeks to enroll, for financial aid determination, to authorized government/accrediting representatives, pursuant to a lawful subpoena or court order, in a health or safety emergency, and as directory information under 99.37. A planned disclosure must be matched to a specific exception, not assumed to qualify.\n"
+      },
+      {
+        "id": "right-to-inspect",
+        "citation": "34 CFR 99.10",
+        "requirement": "A parent or eligible student must be given the opportunity to inspect and review the student's education records, and the institution must comply with a request within a reasonable time and not more than 45 days after receiving it.\n"
+      },
+      {
+        "id": "right-to-seek-amendment",
+        "citation": "34 CFR 99.20",
+        "requirement": "A parent or eligible student has the right to request amendment of an education record they believe is inaccurate, misleading, or in violation of the student's privacy rights, and the institution must decide whether to amend it within a reasonable time.\n"
+      },
+      {
+        "id": "directory-information-designation",
+        "citation": "34 CFR 99.37",
+        "requirement": "An institution may disclose \"directory information\" without consent only if it has given public notice of the categories it has designated as directory information and provided a parent or eligible student a reasonable opportunity to opt out of that disclosure.\n"
+      },
+      {
+        "id": "annual-notification",
+        "citation": "34 CFR 99.7",
+        "requirement": "An educational agency or institution must annually notify parents and eligible students of their rights under FERPA, including the right to inspect records, seek amendment, consent to disclosures, and file a complaint with the Department of Education.\n"
+      },
+      {
+        "id": "recordkeeping-of-disclosures",
+        "citation": "34 CFR 99.32",
+        "requirement": "An institution must maintain a record of each request for access to and each disclosure of personally identifiable information from a student's education records, with limited exceptions (e.g. disclosures to the parent/eligible student, or under a properly designated directory-information disclosure).\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "education records",
+        "meaning": "Records directly related to a student and maintained by an educational agency or institution, or by a party acting for the agency or institution \u2014 with specific statutory exclusions (e.g. sole possession notes, law enforcement unit records, employment records unrelated to student status) (34 CFR 99.3).\n"
+      },
+      {
+        "term": "eligible student",
+        "meaning": "A student who has reached 18 years of age or is attending an institution of postsecondary education \u2014 at which point FERPA's rights transfer from the parent to the student (34 CFR 99.3, 99.5).\n"
+      },
+      {
+        "term": "personally identifiable information",
+        "meaning": "Information that would allow a reasonable person in the school community to identify the student with reasonable certainty, including direct identifiers, indirect identifiers, and biometric records (34 CFR 99.3).\n"
+      },
+      {
+        "term": "school official",
+        "meaning": "An individual (including a contractor, consultant, or volunteer) an institution uses to perform an institutional service or function it would otherwise perform with employees, who is under the institution's direct control regarding the use of education records, and who has a legitimate educational interest.\n"
+      },
+      {
+        "term": "directory information",
+        "meaning": "Information in a student's education record that would generally not be considered harmful or an invasion of privacy if disclosed (e.g. name, address, phone, dates of attendance) \u2014 disclosable without consent only if properly designated and an opt-out opportunity was given.\n"
+      }
+    ]
+  },
+  {
+    "id": "iso-27701",
+    "name": "ISO/IEC 27701:2019 \u2014 Privacy Information Management System (PIMS)",
+    "type": "standard",
+    "domain": "privacy",
+    "file": "privacy/iso-27701.yaml",
+    "version": "2019",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "ISO/IEC 27701:2019",
+    "source_url": "https://www.iso.org/standard/71670.html",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Voluntary \u2014 an institution opts into assessment against this standard, typically to extend an existing ISO/IEC 27001 information security management system (ISMS) into a full privacy information management system (PIMS), or to demonstrate privacy-by-design maturity to partners, regulators, or auditors. Applies distinctly to PII controllers (Annex A-style requirements) and PII processors (Annex B-style requirements) \u2014 an institution assessed against this standard should state which role, or both, it holds for the activity in scope.\n",
+      "jurisdiction": [
+        "any"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "pims-builds-on-isms",
+        "citation": "Clause 5",
+        "requirement": "An organization implementing a PIMS must extend its existing ISO/IEC 27001 information security management system with privacy-specific requirements \u2014 a PIMS is not a freestanding substitute for an ISMS, but an explicit extension of one.\n"
+      },
+      {
+        "id": "privacy-risk-assessment",
+        "citation": "Clause 5 (extending ISO/IEC 27001 Clause 6.1)",
+        "requirement": "The organization's risk assessment process must be extended to consider privacy risks to PII principals specifically \u2014 not only risks to the organization itself \u2014 when processing PII.\n"
+      },
+      {
+        "id": "pii-controller-obligations",
+        "citation": "Clause 7 / Annex A",
+        "requirement": "An organization acting as a PII controller must address conditions for collection and processing, obligations to PII principals, privacy by design and by default, and PII sharing, transfer, and disclosure \u2014 including determining and documenting a lawful basis before collection.\n"
+      },
+      {
+        "id": "pii-processor-obligations",
+        "citation": "Clause 8 / Annex B",
+        "requirement": "An organization acting as a PII processor must address conditions for collection and processing on the controller's instructions, obligations to controllers (including notifying the controller of any legally binding request for disclosure), and PII sharing, transfer, and disclosure only as instructed or authorized.\n"
+      },
+      {
+        "id": "purpose-limitation",
+        "citation": "Clause 7.2 / 8.2 area",
+        "requirement": "PII must be collected and processed only for specified, explicit, and legitimate purposes, determined and documented before collection begins.\n"
+      },
+      {
+        "id": "pii-minimization",
+        "citation": "Clause 7.4 area",
+        "requirement": "The organization must limit the PII it processes to what is adequate, relevant, and necessary for the identified purposes, and should minimize what is processed through de-identification or similar techniques where the identified purposes can still be achieved.\n"
+      },
+      {
+        "id": "retention-and-disposal",
+        "citation": "Clause 7.4 / 8.4 area",
+        "requirement": "The organization must define and document retention periods for PII and provide for its secure disposal or de-identification once the purpose for processing no longer applies.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "PIMS",
+        "meaning": "Privacy Information Management System \u2014 the set of policies, processes, and controls an organization implements to manage privacy risk, structured as an extension of an ISO/IEC 27001 ISMS.\n"
+      },
+      {
+        "term": "PII controller",
+        "meaning": "The party that determines the purposes and means of processing personally identifiable information \u2014 the ISO/IEC 27701 role corresponding to a GDPR \"controller.\"\n"
+      },
+      {
+        "term": "PII processor",
+        "meaning": "The party that processes personally identifiable information on behalf of, and according to the instructions of, a PII controller \u2014 corresponding to a GDPR \"processor.\"\n"
+      },
+      {
+        "term": "PII principal",
+        "meaning": "The natural person to whom personally identifiable information relates \u2014 corresponding to a GDPR \"data subject.\"\n"
+      }
+    ]
+  },
+  {
+    "id": "nist-privacy-framework",
+    "name": "NIST Privacy Framework v1.0",
+    "type": "standard",
+    "domain": "privacy",
+    "file": "privacy/nist-privacy-framework.yaml",
+    "version": "1.0",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "NIST Privacy Framework v1.0",
+    "source_url": "https://www.nist.gov/privacy-framework/privacy-framework",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Voluntary \u2014 an institution opts into assessment against this framework to structure its privacy risk management using a common vocabulary, often alongside the NIST Cybersecurity Framework. Not a checklist of binding requirements; each Function/Category is a risk-management outcome an institution can adopt, adapt, or explicitly decide not to prioritize, documenting why.\n",
+      "jurisdiction": [
+        "any"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "govern-p",
+        "citation": "Govern-P",
+        "requirement": "The organization's privacy risk management policies, processes, and procedures are understood, established, communicated, and monitored \u2014 including governance structures, risk management strategy, and workforce awareness of privacy responsibilities.\n"
+      },
+      {
+        "id": "identify-p",
+        "citation": "Identify-P",
+        "requirement": "The organization develops the understanding needed to manage privacy risk: cataloging the data processing ecosystem, systems, and PII data actions and flows, and identifying business context and privacy risks arising from them.\n"
+      },
+      {
+        "id": "control-p",
+        "citation": "Control-P",
+        "requirement": "The organization develops and implements appropriate activities to enable itself or individuals to manage data with sufficient granularity to manage privacy risk \u2014 including data-processing management, and disassociating data processing from identified individuals where consistent with the organization's objectives.\n"
+      },
+      {
+        "id": "communicate-p",
+        "citation": "Communicate-P",
+        "requirement": "The organization develops and implements appropriate activities to enable a dialogue about how it processes data and manages privacy risk \u2014 including transparency about data-processing practices, purposes, and choices available to individuals.\n"
+      },
+      {
+        "id": "protect-p",
+        "citation": "Protect-P",
+        "requirement": "The organization develops and implements appropriate data protection safeguards, drawing on cybersecurity practices to support privacy risk management \u2014 including data protection policies, processes, and de-identification techniques.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "PII",
+        "meaning": "Personally identifiable information \u2014 used throughout the NIST Privacy Framework as the general term for information an organization processes about individuals.\n"
+      },
+      {
+        "term": "data action",
+        "meaning": "A system or organizational operation performed on PII, from collection through disposal \u2014 the unit of analysis the Identify-P function catalogs to understand privacy risk.\n"
+      },
+      {
+        "term": "privacy risk",
+        "meaning": "In this framework, the likelihood that individuals will experience problems resulting from data processing, and the impact if they occur \u2014 distinct from security risk, which concerns unauthorized system behavior.\n"
+      },
+      {
+        "term": "profile",
+        "meaning": "A selection of specific Functions, Categories, and Subcategories from the Core that an organization has prioritized to align with its business needs, risk tolerance, and resources \u2014 the framework's mechanism for scoping which outcomes actually apply to a given assessment.\n"
+      }
+    ]
+  }
+]

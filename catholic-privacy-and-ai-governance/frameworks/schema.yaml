@@ -1,0 +1,112 @@
+# The shape every framework content file (e.g. privacy/gdpr-dpia.yaml) must
+# validate against. Bookkeeping fields — version, last_reviewed, status, type,
+# domain — live only in frameworks/index.yaml, not repeated here, so there is
+# exactly one place that data can go stale.
+#
+# This file is documentation today; step 4 of the build sequence turns it into
+# an actual stdlib-only validator in src/privacy_and_ai_governance/.
+
+type: object
+required:
+  - id
+  - name
+  - citation_root
+  - source_url
+  - review_status
+  - applicability
+  - required_elements
+  - terms_of_art
+properties:
+  id:
+    type: string
+    description: >
+      Must match this file's entry id in frameworks/index.yaml exactly.
+
+  name:
+    type: string
+    description: >
+      Human-readable title, matching the index.yaml entry's name.
+
+  citation_root:
+    type: string
+    description: >
+      The top-level citation anchor a reader would look for (e.g.
+      "GDPR Art. 35"). Used verbatim in a rendered report's compliance
+      section — never paraphrased.
+
+  source_url:
+    type: string
+    description: >
+      A public URL to the primary source text. A skill never scores against
+      this file without a human being able to independently check the
+      citation against the source itself.
+
+  review_status:
+    type: string
+    enum: [unreviewed, reviewed]
+    description: >
+      "unreviewed" until someone with legal or standards expertise in this
+      specific framework has checked applicability, required_elements, and
+      terms_of_art against the primary source. A skill reading this file
+      surfaces review_status in its own disclosure to the user, the same way
+      it discloses that a finding is advisory rather than a legal opinion.
+
+  applicability:
+    type: object
+    required: [trigger, jurisdiction]
+    properties:
+      trigger:
+        type: string
+        description: >
+          Plain-language description of the fact pattern that brings this
+          framework into scope (for a law) or that a user might want to be
+          assessed against (for a standard). This is what a skill asks about,
+          or infers from stated facts, during intake.
+      jurisdiction:
+        type: array
+        minItems: 1
+        items:
+          type: string
+        description: >
+          Jurisdictions this applies in, or ["any"] for a
+          jurisdiction-independent standard.
+
+  required_elements:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, citation, requirement]
+      properties:
+        id:
+          type: string
+          description: A short slug, unique within this file.
+        citation:
+          type: string
+          description: >
+            The specific citation for this element (e.g. "Art. 35(7)(a)").
+        requirement:
+          type: string
+          description: >
+            The requirement itself, in the framework's own register — quoted
+            or tightly paraphrased, preserving its exact statutory verb
+            (must/shall/required) or a standard's own conformance language.
+            This text is what a report's compliance section draws from
+            directly; it is never rewritten into different vocabulary at
+            assessment time.
+
+  terms_of_art:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [term, meaning]
+      properties:
+        term:
+          type: string
+        meaning:
+          type: string
+          description: >
+            This framework's own definition, tight enough to keep a skill
+            from substituting a synonym — or a Catholic Social Teaching
+            equivalent — for it.
