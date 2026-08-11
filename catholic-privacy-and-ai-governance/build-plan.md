@@ -652,7 +652,7 @@ here so both duty documents' full scope has a landing spot and nothing gets lost
 | Skill name | `ai-gov-duties.md` section | What it does |
 |---|---|---|
 | `assess-ai-system-risk-tier` | AI System Inventory & Risk Classification | The AI-governance flagship, recommended as the first skill built once the privacy flagship proves out §3: classifies a described AI system against the EU AI Act's risk tiers, maps it to NIST AI RMF's Govern/Map/Measure/Manage functions, and flags which obligations attach — same shape as §7, different registry filter. |
-| `draft-ai-risk-impact-assessment` | AI Risk & Impact Assessments | Drafts a structured algorithmic impact assessment for a described AI system — bias/fairness, explainability, robustness, and human-oversight design — the AI-governance analog to the flagship DPIA skill. |
+| ~~`draft-ai-risk-impact-assessment`~~ | AI Risk & Impact Assessments | **Retired at step 17, never built.** As originally described this would duplicate `assess-ai-system-risk-tier`, which already produces a full seven-dimension rubric-scored assessment (bias/fairness, robustness, human-oversight, etc.) against the same registry — not the narrower classification-only tool this row assumed. See step 17's write-up. |
 | `draft-model-card` | Model & System Documentation | Produces a model/system documentation record grounded in ISO/IEC 42001's documented-information requirements and the EU AI Act's Annex IV technical documentation — name matches the example already given in `docs/standards/skills.md`. |
 | `review-ai-vendor-governance` | Third-Party & Vendor AI Governance | Reviews a vendor's or foundation-model provider's AI governance documentation against a baseline requirement set and flags missing documentation or control gaps. |
 | `triage-ai-incident` | AI Incident Management | Intakes a reported AI safety, bias, or reliability incident, runs a preliminary impact assessment, and flags applicable notification thresholds — the AI-governance sibling of `triage-privacy-incident`. |
@@ -673,6 +673,12 @@ own planning document. `review-ai-system-reassessment`'s grounding is
 looser than `map-ai-regulatory-change`'s (a real paraphrase, not a
 near-identical section), so treat its exact shape as less settled until
 it's actually designed.
+
+**Status as of step 18: every row above is built.** `draft-ai-risk-
+impact-assessment` is the sole exception, retired rather than built (step
+17). Both backlog tables — every skill from both duty documents that this
+project judged actually fits a stateless skill (see §1 and the "not
+planned" note below) — are now complete.
 
 Explicitly **not planned** as skills, in either domain, because they're
 program-administration work a stateless skill can't do (see §1): the compliance
@@ -1438,3 +1444,127 @@ its own examples and tests.
     input on what "closing" it can actually mean, since it was written
     to require a qualified human reviewer this project's own agent
     can't stand in for.
+
+    **Resolved:** the user chose to retire `draft-ai-risk-impact-
+    assessment` outright rather than fold the gap into
+    `assess-ai-system-risk-tier` or build a narrower re-assessment-
+    triggered variant. `family-manifest.yaml`'s entry is now `status:
+    retired` (a new third status, alongside `built`/`planned`, kept
+    rather than deleted for the same audit-trail reason
+    `frameworks/index.yaml` never deletes a retired framework) and §8's
+    table row above is struck through with the reason recorded inline.
+
+    The citation-review checklist item stayed open, honestly — a
+    generated review document (all twelve frameworks' citations,
+    organized by domain, with the two paywalled standards flagged
+    distinctly) was published for the user's own pass, since a genuine
+    legal/standards review needs a qualified human reviewer this
+    project's own agent structurally cannot stand in for. Progress on
+    that item happens in conversation, not in this file.
+18. **Built the fifth and sixth task shapes, and closed out the entire
+    remaining backlog in one step.** The two skills §8's correction left
+    open — `review-data-retention-entry`/`review-ai-system-reassessment`
+    and `map-regulatory-change`/`map-ai-regulatory-change` — turned out
+    to need two genuinely different new shapes, not one, confirming the
+    honest uncertainty flagged when they were added to the backlog table.
+
+    **The retention/reassessment shape** (`src/privacy_and_ai_governance/
+    retention.py`) is deliberately the smallest in the family: one
+    inventory entry, `frameworks_considered` (the same discipline every
+    prior shape uses), and a single `verdict` — `current`, `needs-
+    review`, `needs-update`, or `retire` — with a `target_date` required
+    whenever the action isn't `current`. No score, no list, no checklist;
+    resisted padding it to match its siblings' size. The four-value
+    action enum was built as the union of both duty documents' own stated
+    outcomes (privacy: delete/review/updated-justification; AI
+    governance: overdue-reassessment/documentation-update/current) plus
+    the logically-necessary "no action needed" state neither document
+    spelled out for the other domain — not fabricated, just generalized
+    honestly from what both actually said.
+
+    **The regulatory-change shape** (`src/privacy_and_ai_governance/
+    regulatory_change.py`) is the first in this project that doesn't
+    evaluate an institution's own activity, system, vendor, or entry at
+    all — it ingests an external input (a pasted regulatory or standards
+    development) and maps its impact against this project's *own*
+    `frameworks/index.yaml`. Its `frameworks_considered` deliberately
+    uses a different field name, `impacted` rather than `applicable`,
+    since the question being asked is genuinely different ("does this
+    development change what an already-registered framework requires,"
+    not "does this framework apply to the institution") — reusing
+    `applicable` would have quietly blurred that distinction.
+    `recommended_actions` is the actual deliverable: a typed diff against
+    the registry (`register-new-framework`, `update-required-element`,
+    `retire-framework`, `no-action`), with `framework_id` conditionally
+    required or forbidden depending on the action type, the same
+    conditional-requirement discipline `review.py`'s `evidence`/`gap`
+    fields already established. The shared `_lint_compliance_and_cst_
+    reflection` helper in `concision.py` needed one small, honest
+    generalization here: it previously only recognized `applicable` when
+    scaling the compliance-length allowance, which would have silently
+    floored every regulatory-change record's allowance at the minimum
+    regardless of how many frameworks were actually impacted — now checks
+    `applicable` *or* `impacted`.
+
+    Both shapes needed no sync-layer changes at all: a skill using
+    neither `rubric` nor `baseline` already resolves to the core
+    three-module `scripts_to_sync` list from step 16's generalization,
+    which is exactly what these four skills need. Built all four
+    together rather than two-then-two, since each domain pair is the
+    same zero-marginal-cost reuse step 15/16/17 already established —
+    `scripts/retention.py` and `scripts/regulatory_change.py` are
+    hand-authored once per shape and copied verbatim into each pair's
+    second skill with only the docstring, argparse description, and (for
+    `retention.py`, since "retention entry" read oddly for an AI system)
+    the error-message wording differing — confirmed structurally
+    identical by the same `ast`-normalized comparison test every prior
+    cross-domain reuse has used.
+
+    Proved all four end-to-end with the bare dependency-free `python3.12`
+    interpreter: a diocesan volunteer-archive entry correctly verdicted
+    `retire` after its stated purpose lapsed; an emergency-triage AI
+    system correctly verdicted `needs-review` against its own EU AI Act
+    Art. 9-grounded re-evaluation interval; a new Texas privacy statute
+    correctly recommending `register-new-framework` with no existing
+    entry referenced; and a NIST AI RMF companion profile correctly
+    recommending `update-required-element` against the already-registered
+    `nist-ai-rmf` entry.
+
+    441 tests, 98% coverage, clean under `ruff`, `mypy --strict`, and
+    `agentskills validate` for all thirteen skills. Registered all four in
+    `.claude-plugin/marketplace.json`; `README.md`, `CHECKLIST.md`, and
+    §8's own table updated to match. With this step, every skill in both
+    backlog tables is built except the one deliberately retired duplicate
+    — the only work left on this project is the citation-review checklist
+    item, and it can only close with the user's own domain expertise, not
+    another build step.
+19. **Closed the citation-review checklist item — the project's last open
+    go-live item.** The user (this project's own DPO) reviewed the step
+    18 artifact and confirmed all twelve frameworks, across both domains.
+    Confirmed the scope explicitly before acting on it — the user's DPO
+    role plausibly covers the nine privacy frameworks without question,
+    but the three AI-governance ones (EU AI Act, NIST AI RMF, ISO/IEC
+    42001) are a different expertise, and the review artifact's own
+    instructions had explicitly said those three could honestly stay
+    `unreviewed` if out of scope. Asked rather than assumed a blanket
+    "I reviewed it" covered all twelve; confirmed it did.
+
+    Flipped `review_status: unreviewed` → `review_status: reviewed` in
+    all twelve `frameworks/*.yaml` files — nothing else in those files
+    changed, including the paywalled-standard sourcing caveats on
+    `iso-27701` and `iso-42001`, which remain accurate historical
+    statements about how those two files were authored regardless of
+    review status. Re-ran the sync so every skill's bundled framework
+    copies reflect the new status; re-ran the full test suite, `ruff`,
+    `mypy --strict`, `agentskills validate`, and
+    `check-framework-freshness` to confirm nothing depended on the old
+    value — nothing did. `CHECKLIST.md`'s citation-review item is now
+    checked, with the review history recorded rather than the box simply
+    flipped silently. `README.md`'s Status section moves from `draft` to
+    `active` — the one condition that section named for the move,
+    reached honestly rather than declared early.
+
+    This closes every remaining item from `build-plan.md` §8 and
+    `CHECKLIST.md`. The project has no further open work of its own
+    unless new duty-document scope, a new framework, or a new regulatory
+    development gives it some.

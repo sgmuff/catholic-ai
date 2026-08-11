@@ -27,14 +27,16 @@ def _word_count(text: str) -> int:
 def _lint_compliance_and_cst_reflection(record: dict[str, Any]) -> list[str]:
     """Shared by every shape this project validates: the compliance-length
     allowance scales with how many frameworks were actually marked
-    applicable, and the CST reflection has a flat guideline. Both
-    lint_assessment (the rubric-scored shape) and lint_triage (the
-    triage shape) share this field pair, so the check lives once here.
+    applicable (or, for the regulatory-change shape, `impacted` — a
+    differently-named but equivalent-in-spirit field, see
+    regulatory_change.py), and the CST reflection has a flat guideline.
     """
     warnings: list[str] = []
 
     applicable_count = sum(
-        1 for f in record.get("frameworks_considered", []) if f.get("applicable")
+        1
+        for f in record.get("frameworks_considered", [])
+        if f.get("applicable") or f.get("impacted")
     )
     compliance_limit = COMPLIANCE_BASE_WORDS + COMPLIANCE_WORDS_PER_APPLICABLE_FRAMEWORK * max(
         applicable_count, 1
@@ -200,4 +202,59 @@ def lint_review(review: dict[str, Any]) -> list[str]:
         )
 
     warnings.extend(_lint_compliance_and_cst_reflection(review))
+    return warnings
+
+
+def lint_retention_entry(record: dict[str, Any]) -> list[str]:
+    """Returns a list of non-fatal concision warnings for the retention/
+    reassessment shape (build-plan.md step 18); an empty list means
+    nothing stood out as unusually long.
+    """
+    warnings: list[str] = []
+
+    entry_description = record.get("entry", {}).get("description", "")
+    count = _word_count(entry_description)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"entry.description is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    verdict_rationale = record.get("verdict", {}).get("rationale", "")
+    count = _word_count(verdict_rationale)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"verdict.rationale is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    warnings.extend(_lint_compliance_and_cst_reflection(record))
+    return warnings
+
+
+def lint_regulatory_change(record: dict[str, Any]) -> list[str]:
+    """Returns a list of non-fatal concision warnings for the regulatory-
+    change shape (build-plan.md step 18); an empty list means nothing
+    stood out as unusually long.
+    """
+    warnings: list[str] = []
+
+    summary = record.get("development", {}).get("summary", "")
+    count = _word_count(summary)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"development.summary is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    for action in record.get("recommended_actions", []):
+        action_id = action.get("id", "<unknown action>")
+        count = _word_count(action.get("description", ""))
+        if count > RATING_FIELD_WORD_LIMIT:
+            warnings.append(
+                f"recommended_actions[{action_id}] is {count} words — past the "
+                f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+            )
+
+    warnings.extend(_lint_compliance_and_cst_reflection(record))
     return warnings

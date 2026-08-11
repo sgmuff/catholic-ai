@@ -4,6 +4,8 @@ from pathlib import Path
 from privacy_and_ai_governance.report import (
     render_incident_markdown,
     render_markdown,
+    render_regulatory_change_markdown,
+    render_retention_markdown,
     render_review_markdown,
     render_triage_markdown,
     slugify,
@@ -364,6 +366,123 @@ class TestRenderReviewMarkdown:
 
     def test_advisory_disclosure_is_present(self) -> None:
         markdown = render_review_markdown(_review())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+def _retention_entry() -> dict:
+    return {
+        "title": "Parish bulletin subscriber list",
+        "entry": {
+            "description": "Email addresses and names collected via the sign-up form.",
+            "category": "data element",
+            "purpose": "Sending the weekly parish bulletin.",
+            "last_reviewed_date": "2025-08-01",
+        },
+        "frameworks_considered": [
+            {
+                "id": "gdpr-dpia",
+                "applicable": True,
+                "basis": "Some subscribers are EU residents.",
+            }
+        ],
+        "verdict": {
+            "action": "needs-review",
+            "rationale": "No re-confirmation has happened in over a year.",
+            "target_date": "2026-09-01",
+        },
+        "compliance": "Under GDPR Art. 5(1)(e), retention must be actively justified.",
+        "cst_reflection": "This keeps the review from lapsing into indefinite retention.",
+    }
+
+
+class TestRenderRetentionMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_retention_markdown(_retention_entry())
+        assert markdown.startswith("# Parish bulletin subscriber list")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_retention_markdown(_retention_entry())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_verdict_and_target_date_are_rendered(self) -> None:
+        markdown = render_retention_markdown(_retention_entry())
+        assert "needs-review" in markdown.lower()
+        assert "2026-09-01" in markdown
+
+    def test_current_verdict_with_no_target_date_renders_cleanly(self) -> None:
+        entry = _retention_entry()
+        entry["verdict"] = {
+            "action": "current",
+            "rationale": "Reviewed six months ago and retention remains justified.",
+            "target_date": None,
+        }
+        markdown = render_retention_markdown(entry)
+        assert "current" in markdown.lower()
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        markdown = render_retention_markdown(_retention_entry())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+def _regulatory_change() -> dict:
+    return {
+        "title": "CPPA risk-assessment regulations take effect",
+        "development": {
+            "source": "California Privacy Protection Agency",
+            "citation": "Cal. Code Regs. tit. 11, §§ 7150-7157",
+            "summary": "New regulations requiring a risk assessment before high-risk processing.",
+            "published_date": "2026-01-01",
+        },
+        "frameworks_considered": [
+            {
+                "id": "ccpa-cpra",
+                "impacted": True,
+                "basis": "This registry entry already cites the risk-assessment "
+                "provision the new regulations flesh out.",
+            }
+        ],
+        "recommended_actions": [
+            {
+                "id": "update-risk-assessment-element",
+                "type": "update-required-element",
+                "framework_id": "ccpa-cpra",
+                "description": "Update the risk-assessment required element with the "
+                "regulations' specific content requirements.",
+            }
+        ],
+        "compliance": "Under Cal. Code Regs. tit. 11, § 7152, specified elements must "
+        "be documented in the risk assessment.",
+        "cst_reflection": "Keeping the registry current keeps the assessment honest.",
+    }
+
+
+class TestRenderRegulatoryChangeMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_regulatory_change_markdown(_regulatory_change())
+        assert markdown.startswith("# CPPA risk-assessment regulations take effect")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_regulatory_change_markdown(_regulatory_change())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_development_source_and_citation_are_rendered(self) -> None:
+        markdown = render_regulatory_change_markdown(_regulatory_change())
+        assert "California Privacy Protection Agency" in markdown
+        assert "Cal. Code Regs. tit. 11, §§ 7150-7157" in markdown
+
+    def test_recommended_action_is_rendered(self) -> None:
+        markdown = render_regulatory_change_markdown(_regulatory_change())
+        assert "update-required-element" in markdown.lower()
+        assert "ccpa-cpra" in markdown
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        markdown = render_regulatory_change_markdown(_regulatory_change())
         assert "not a legal opinion" in markdown
         assert "accountable person" in markdown
 

@@ -1,0 +1,5 @@
+{
+  "name": "review-data-retention-entry",
+  "description": "Checks one data-inventory entry against the current framework registry and its own stated review interval, and produces a single verdict — current, needs review, needs an updated justification, or retire — with a target date when action is needed.",
+  "version": "0.1.0"
+}

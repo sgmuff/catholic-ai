@@ -18,6 +18,11 @@
 # .claude/skills/<name>/ first, then flip the status here and re-run the
 # sync. sync_all() raises ManifestDriftError if a "built" entry has no
 # matching folder — the ordering is enforced, not just documented.
+#
+# "retired" (step 17): a planned entry that turned out to duplicate an
+# already-built skill — flip status rather than deleting the entry, the
+# same audit-trail discipline frameworks/index.yaml already applies to a
+# retired framework.
 
 skills:
   # --- privacy domain --------------------------------------------------
@@ -44,13 +49,13 @@ skills:
     trigger: "reviewing a vendor's privacy questionnaire, DPA, or certifications"
   - name: review-data-retention-entry
     domain: privacy
-    status: planned
-    rubric: null # not rubric-scored — shape not yet designed (build-plan.md §8's correction note, step 16)
+    status: built
+    rubric: null # retention/verdict shape (build-plan.md step 18): single entry, single verdict, not rubric-scored
     trigger: "checking whether a data-inventory entry's retention is still justified"
   - name: map-regulatory-change
     domain: privacy
-    status: planned
-    rubric: null # not rubric-scored — shape not yet designed (build-plan.md §8's correction note, step 16)
+    status: built
+    rubric: null # regulatory-change shape (build-plan.md step 18): impact diff against the framework registry, not rubric-scored
     trigger: "a new privacy regulatory development needs to be mapped to existing policies"
   - name: draft-privacy-notice-update
     domain: privacy
@@ -66,8 +71,8 @@ skills:
     trigger: "deploying, building, or procuring a new AI system or feature, or asks for a risk-tier classification by name"
   - name: draft-ai-risk-impact-assessment
     domain: ai-governance
-    status: planned
-    rubric: rubric/ai-criteria.md
+    status: retired # never built — duplicates assess-ai-system-risk-tier's already-built full rubric-scored assessment (build-plan.md step 17)
+    rubric: null
     trigger: "an AI system needs a structured risk or impact assessment"
   - name: draft-model-card
     domain: ai-governance
@@ -87,11 +92,11 @@ skills:
     trigger: "a possible AI safety, bias, or reliability incident happened"
   - name: map-ai-regulatory-change
     domain: ai-governance
-    status: planned
-    rubric: null # not rubric-scored — the AI-governance sibling of map-regulatory-change, added at step 16's correction
+    status: built
+    rubric: null # regulatory-change shape (build-plan.md step 18), reused directly from map-regulatory-change
     trigger: "a new AI-specific regulatory or standards development needs to be mapped to existing controls"
   - name: review-ai-system-reassessment
     domain: ai-governance
-    status: planned
-    rubric: null # not rubric-scored — shape not yet designed, the AI-governance analog of review-data-retention-entry (build-plan.md §8's correction note, step 16)
+    status: built
+    rubric: null # retention/verdict shape (build-plan.md step 18), reused directly from review-data-retention-entry
     trigger: "checking whether an inventoried AI system is overdue for reassessment"

@@ -2,7 +2,7 @@ id: iso-27701
 name: "ISO/IEC 27701:2019 — Privacy Information Management System (PIMS)"
 citation_root: "ISO/IEC 27701:2019"
 source_url: "https://www.iso.org/standard/71670.html"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

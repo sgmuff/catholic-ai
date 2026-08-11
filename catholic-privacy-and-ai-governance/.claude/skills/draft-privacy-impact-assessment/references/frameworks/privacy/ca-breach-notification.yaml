@@ -2,7 +2,7 @@ id: ca-breach-notification
 name: "California data breach notification law"
 citation_root: "Cal. Civ. Code § 1798.82"
 source_url: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.82.&lawCode=CIV"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

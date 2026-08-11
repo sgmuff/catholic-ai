@@ -2,7 +2,7 @@ id: hipaa
 name: "HIPAA — Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)"
 citation_root: "45 CFR Parts 160, 164"
 source_url: "https://www.law.cornell.edu/cfr/text/45/164.308"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

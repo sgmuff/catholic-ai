@@ -27,13 +27,13 @@
 ## review-data-retention-entry
 
 - **Domain:** privacy
-- **Status:** planned
+- **Status:** built
 - **Trigger:** checking whether a data-inventory entry's retention is still justified
 
 ## map-regulatory-change
 
 - **Domain:** privacy
-- **Status:** planned
+- **Status:** built
 - **Trigger:** a new privacy regulatory development needs to be mapped to existing policies
 
 ## draft-privacy-notice-update
@@ -51,7 +51,7 @@
 ## draft-ai-risk-impact-assessment
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** retired
 - **Trigger:** an AI system needs a structured risk or impact assessment
 
 ## draft-model-card
@@ -75,11 +75,11 @@
 ## map-ai-regulatory-change
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** built
 - **Trigger:** a new AI-specific regulatory or standards development needs to be mapped to existing controls
 
 ## review-ai-system-reassessment
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** built
 - **Trigger:** checking whether an inventoried AI system is overdue for reassessment

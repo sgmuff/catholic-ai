@@ -68,6 +68,30 @@
       "source": "./catholic-privacy-and-ai-governance/.claude/skills/draft-model-card",
       "description": "Produces a model or system documentation record for an AI system, grounded in a full assessment against the current framework registry and the same seven-dimension AI-governance rubric assess-ai-system-risk-tier uses.",
       "category": "productivity"
+    },
+    {
+      "name": "review-data-retention-entry",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/review-data-retention-entry",
+      "description": "Checks one data-inventory entry against the current framework registry and its own stated review interval, producing a single verdict — current, needs review, needs an updated justification, or retire.",
+      "category": "productivity"
+    },
+    {
+      "name": "review-ai-system-reassessment",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/review-ai-system-reassessment",
+      "description": "Checks one inventoried AI system against the current framework registry and its own defined re-evaluation interval, producing a single verdict — current, needs review, needs a documentation update, or retire.",
+      "category": "productivity"
+    },
+    {
+      "name": "map-regulatory-change",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/map-regulatory-change",
+      "description": "Given a pasted privacy regulatory or standards development, summarizes it and maps its impact against the current framework registry, recommending whether to register, update, retire, or take no action on a framework entry.",
+      "category": "productivity"
+    },
+    {
+      "name": "map-ai-regulatory-change",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/map-ai-regulatory-change",
+      "description": "Given a pasted AI-specific regulatory or standards development, summarizes it and maps its impact against the current framework registry, recommending whether to register, update, retire, or take no action on a framework entry.",
+      "category": "productivity"
     }
   ]
 }

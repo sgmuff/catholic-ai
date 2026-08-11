@@ -2,7 +2,7 @@ id: nist-ai-rmf
 name: "NIST AI Risk Management Framework (AI RMF) 1.0"
 citation_root: "NIST AI RMF 1.0"
 source_url: "https://www.nist.gov/itl/ai-risk-management-framework"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

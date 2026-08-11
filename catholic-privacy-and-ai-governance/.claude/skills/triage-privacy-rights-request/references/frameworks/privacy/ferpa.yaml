@@ -2,7 +2,7 @@ id: ferpa
 name: "FERPA — Family Educational Rights and Privacy Act"
 citation_root: "20 U.S.C. § 1232g; 34 CFR Part 99"
 source_url: "https://www.law.cornell.edu/cfr/text/34/99.31"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

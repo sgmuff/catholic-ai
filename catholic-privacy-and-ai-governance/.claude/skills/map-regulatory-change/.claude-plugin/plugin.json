@@ -1,0 +1,5 @@
+{
+  "name": "map-regulatory-change",
+  "description": "Given a privacy regulatory or standards development pasted in by the user, summarizes it and maps its impact against the current framework registry, recommending whether to register a new framework, update an existing required element, retire a framework, or take no action.",
+  "version": "0.1.0"
+}

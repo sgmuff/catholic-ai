@@ -1,16 +1,20 @@
-"""Renders a validated assessment, triage, incident, or review record to
-Markdown. Compliance always precedes the Catholic Social Teaching
-reflection, per build-plan.md §2.1 — a reader who wants only the
-compliance content can act on it without reading past it. Four renderers
-live here because four shapes exist (build-plan.md steps 12, 14, and 16):
-render_markdown for the rubric-scored shape (assessment.py),
-render_triage_markdown for the single-governing-deadline classify/
-deadline/gaps shape (triage.py), render_incident_markdown for the shape
-with several independent, simultaneous notification obligations
-(incident.py), and render_review_markdown for the per-item satisfied/
-partial/missing baseline-check shape (review.py). write_report takes the
-renderer as a parameter rather than each shape needing its own copy of
-the file-writing logic.
+"""Renders a validated assessment, triage, incident, review, retention-
+entry, or regulatory-change record to Markdown. Compliance always
+precedes the Catholic Social Teaching reflection, per build-plan.md §2.1
+— a reader who wants only the compliance content can act on it without
+reading past it. Six renderers live here because six shapes exist
+(build-plan.md steps 12, 14, 16, and 18): render_markdown for the
+rubric-scored shape (assessment.py), render_triage_markdown for the
+single-governing-deadline classify/deadline/gaps shape (triage.py),
+render_incident_markdown for the shape with several independent,
+simultaneous notification obligations (incident.py),
+render_review_markdown for the per-item satisfied/partial/missing
+baseline-check shape (review.py), render_retention_markdown for the
+single-verdict inventory-entry shape (retention.py), and
+render_regulatory_change_markdown for the impact-diff-against-the-
+registry shape (regulatory_change.py). write_report takes the renderer
+as a parameter rather than each shape needing its own copy of the
+file-writing logic.
 """
 
 from __future__ import annotations
@@ -322,6 +326,104 @@ def render_review_markdown(review: dict[str, Any]) -> str:
     lines.append("## Catholic Social Teaching reflection")
     lines.append("")
     lines.append(review["cst_reflection"])
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def render_retention_markdown(record: dict[str, Any]) -> str:
+    lines: list[str] = []
+    lines.append(f"# {record['title']}")
+    lines.append("")
+    lines.append(
+        "*Advisory draft, grounded in a working interpretation of the frameworks "
+        "considered below — not a legal opinion. Requires review and approval by "
+        "an accountable person before any action is taken.*"
+    )
+    lines.append("")
+
+    entry = record["entry"]
+    lines.append("## Entry")
+    lines.append("")
+    lines.append(f"- **Description:** {entry['description']}")
+    lines.append(f"- **Category:** {entry['category']}")
+    lines.append(f"- **Purpose:** {entry['purpose']}")
+    lines.append(f"- **Last reviewed:** {entry['last_reviewed_date']}")
+    lines.append("")
+
+    lines.append("## Frameworks considered")
+    lines.append("")
+    for framework in record["frameworks_considered"]:
+        status = "Applicable" if framework.get("applicable") else "Not applicable"
+        lines.append(f"- **{framework['id']}** — {status}: {framework['basis']}")
+    lines.append("")
+
+    verdict = record["verdict"]
+    lines.append("## Verdict")
+    lines.append("")
+    lines.append(f"**{verdict['action']}.** {verdict['rationale']}")
+    if verdict.get("target_date"):
+        lines.append("")
+        lines.append(f"**Target date: {verdict['target_date']}**")
+    lines.append("")
+
+    lines.append("## Compliance")
+    lines.append("")
+    lines.append(record["compliance"])
+    lines.append("")
+
+    lines.append("## Catholic Social Teaching reflection")
+    lines.append("")
+    lines.append(record["cst_reflection"])
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def render_regulatory_change_markdown(record: dict[str, Any]) -> str:
+    lines: list[str] = []
+    lines.append(f"# {record['title']}")
+    lines.append("")
+    lines.append(
+        "*Advisory draft, grounded in a working interpretation of the frameworks "
+        "considered below — not a legal opinion. Requires review and approval by "
+        "an accountable person before any registry change is made.*"
+    )
+    lines.append("")
+
+    development = record["development"]
+    lines.append("## Development")
+    lines.append("")
+    lines.append(f"- **Source:** {development['source']}")
+    if development.get("citation"):
+        lines.append(f"- **Citation:** {development['citation']}")
+    lines.append(f"- **Published:** {development['published_date']}")
+    lines.append("")
+    lines.append(development["summary"])
+    lines.append("")
+
+    lines.append("## Frameworks considered")
+    lines.append("")
+    for framework in record["frameworks_considered"]:
+        status = "Impacted" if framework.get("impacted") else "Not impacted"
+        lines.append(f"- **{framework['id']}** — {status}: {framework['basis']}")
+    lines.append("")
+
+    lines.append("## Compliance")
+    lines.append("")
+    lines.append(record["compliance"])
+    lines.append("")
+
+    lines.append("## Recommended actions")
+    lines.append("")
+    for action in record["recommended_actions"]:
+        target = f" ({action['framework_id']})" if action.get("framework_id") else ""
+        lines.append(f"- **{action['type']}{target}:** {action['description']}")
+    lines.append("")
+
+    lines.append("## Catholic Social Teaching reflection")
+    lines.append("")
+    lines.append(record["cst_reflection"])
     lines.append("")
 
     return "\n".join(lines)

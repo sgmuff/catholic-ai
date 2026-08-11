@@ -2,7 +2,7 @@ id: nist-privacy-framework
 name: "NIST Privacy Framework v1.0"
 citation_root: "NIST Privacy Framework v1.0"
 source_url: "https://www.nist.gov/privacy-framework/privacy-framework"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

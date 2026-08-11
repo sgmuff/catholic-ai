@@ -2,7 +2,7 @@ id: gdpr-data-subject-rights
 name: "GDPR Chapter III — Rights of the Data Subject"
 citation_root: "GDPR Arts. 12-22"
 source_url: "https://gdpr-info.eu/chapter-3/"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

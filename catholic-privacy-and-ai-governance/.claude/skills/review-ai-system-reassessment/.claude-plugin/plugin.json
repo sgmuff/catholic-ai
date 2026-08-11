@@ -1,0 +1,5 @@
+{
+  "name": "review-ai-system-reassessment",
+  "description": "Checks one inventoried AI system against the current framework registry and its own defined re-evaluation interval, and produces a single verdict — current, needs review, needs a documentation update, or retire — with a target date when action is needed.",
+  "version": "0.1.0"
+}

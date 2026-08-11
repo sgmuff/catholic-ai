@@ -2,7 +2,7 @@ id: gdpr-breach-notification
 name: "GDPR Arts. 33-34 — Notification of a Personal Data Breach"
 citation_root: "GDPR Arts. 33-34"
 source_url: "https://gdpr-info.eu/art-33-gdpr/"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

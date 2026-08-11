@@ -57,7 +57,7 @@ class TestFamilyManifest:
     def test_every_entry_has_a_valid_domain_and_status(self) -> None:
         for skill in self._skills():
             assert skill["domain"] in {"privacy", "ai-governance"}
-            assert skill["status"] in {"built", "planned"}
+            assert skill["status"] in {"built", "planned", "retired"}
             assert skill["trigger"].strip()
 
     def test_every_built_entry_has_a_real_skill_folder(self) -> None:
@@ -68,7 +68,7 @@ class TestFamilyManifest:
                     f"{skill['name']} is marked built but has no folder"
                 )
 
-    def test_exactly_nine_skills_are_built_so_far(self) -> None:
+    def test_exactly_thirteen_skills_are_built_so_far(self) -> None:
         # Both flagships (step 11), draft-privacy-notice-update (step 12),
         # triage-privacy-rights-request (step 12 continued, the first
         # rubric-less/triage-shaped skill), triage-privacy-incident
@@ -77,10 +77,14 @@ class TestFamilyManifest:
         # (step 15, reusing step 14's shape directly for a second domain),
         # review-vendor-privacy-assessment / review-ai-vendor-governance
         # (step 16, a fourth shape — a per-item baseline check — reused
-        # across both domains), and draft-model-card (step 17, sharing
+        # across both domains), draft-model-card (step 17, sharing
         # assess-ai-system-risk-tier's exact rubric-scored shape, the way
-        # draft-privacy-notice-update shares its own sibling's) — the rest
-        # are planned.
+        # draft-privacy-notice-update shares its own sibling's), and the
+        # retention/verdict and regulatory-change shapes' four skills
+        # (step 18: review-data-retention-entry, review-ai-system-
+        # reassessment, map-regulatory-change, map-ai-regulatory-change)
+        # — draft-ai-risk-impact-assessment is retired, not planned; the
+        # backlog is otherwise empty.
         built = {s["name"] for s in self._skills() if s["status"] == "built"}
         assert built == {
             "draft-privacy-impact-assessment",
@@ -92,6 +96,10 @@ class TestFamilyManifest:
             "review-vendor-privacy-assessment",
             "draft-model-card",
             "review-ai-vendor-governance",
+            "review-data-retention-entry",
+            "review-ai-system-reassessment",
+            "map-regulatory-change",
+            "map-ai-regulatory-change",
         }
 
     def test_every_entry_with_a_rubric_field_points_at_a_real_file(self) -> None:

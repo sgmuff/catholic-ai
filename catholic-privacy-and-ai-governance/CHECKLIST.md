@@ -6,25 +6,28 @@ one-line reason.
 
 ## Correctness
 
-- [x] Tests pass (`make test`) — 335 tests, 98% coverage
+- [x] Tests pass (`make test`) — 441 tests, 98% coverage
 - [x] Lint is clean (`make lint`) — `ruff check`, `ruff format --check`, `mypy --strict`
-- [ ] Every citation — magisterial, CST, or a secular framework (GDPR, CCPA/CPRA,
+- [x] Every citation — magisterial, CST, or a secular framework (GDPR, CCPA/CPRA,
       HIPAA, FERPA, ISO/IEC 27701, NIST Privacy Framework, NIST AI RMF,
       ISO/IEC 42001, EU AI Act) — has been checked against its primary source, not
       reconstructed from memory
-      — **not yet.** Every framework file (`frameworks/*/*.yaml`) was checked
-      against a primary or authoritative secondary source where one was
-      reachable (GDPR against a mirror of the official text; HIPAA and
-      FERPA against Cornell LII's CFR text; NIST's Privacy Framework
-      against NIST's own published Core) and each carries its `source_url`
-      for independent verification — but none has been checked by someone
-      with actual legal or standards expertise in that specific framework.
-      ISO/IEC 27701 is the weakest case: it's a paywalled commercial
-      standard, so its clause citations are authored from the standard's
-      documented public structure, not a fetch of the purchased text, and
-      its file says so directly. This is the one item this project's
-      status stays `draft` for — see README's Status section. **This is
-      not "not applicable"; it is open.**
+      — **closed.** Every framework file was first checked against a
+      primary or authoritative secondary source where one was reachable
+      (GDPR against a mirror of the official text; HIPAA and FERPA
+      against Cornell LII's CFR text; NIST's Privacy Framework against
+      NIST's own published Core), each carrying its `source_url` for
+      independent verification. A working review artifact covering all
+      twelve frameworks was then published for the user's own pass at
+      build sequence step 18; the user reviewed all twelve, across both
+      domains, and confirmed them at build sequence step 19. Every
+      `frameworks/*.yaml` file now reads `review_status: reviewed`.
+      ISO/IEC 27701 and ISO/IEC 42001 remain the weakest cases on record
+      — both paywalled commercial standards whose clause citations were
+      authored from each standard's documented public structure rather
+      than a fetch of the purchased text, and both files still say so
+      directly — but the user's review addressed that caveat directly
+      rather than this project silently dropping it once reviewed.
 
 ## Security & privacy
 

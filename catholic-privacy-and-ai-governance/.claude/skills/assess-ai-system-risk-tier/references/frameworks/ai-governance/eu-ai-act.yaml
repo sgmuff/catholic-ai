@@ -2,7 +2,7 @@ id: eu-ai-act
 name: "EU AI Act — Risk Tiers & Obligations"
 citation_root: "Regulation (EU) 2024/1689"
 source_url: "https://artificialintelligenceact.eu/"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

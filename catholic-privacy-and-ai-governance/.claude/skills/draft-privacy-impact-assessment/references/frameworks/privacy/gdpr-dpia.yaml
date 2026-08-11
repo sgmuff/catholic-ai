@@ -2,7 +2,7 @@ id: gdpr-dpia
 name: "GDPR Art. 35 — Data Protection Impact Assessment"
 citation_root: "GDPR Art. 35"
 source_url: "https://gdpr-info.eu/art-35-gdpr/"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

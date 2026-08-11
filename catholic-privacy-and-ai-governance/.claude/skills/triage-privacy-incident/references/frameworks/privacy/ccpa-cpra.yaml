@@ -2,7 +2,7 @@ id: ccpa-cpra
 name: "CCPA/CPRA — California Consumer Privacy Act, as amended by the California Privacy Rights Act"
 citation_root: "Cal. Civ. Code § 1798.100 et seq."
 source_url: "https://oag.ca.gov/privacy/ccpa"
-review_status: unreviewed
+review_status: reviewed
 
 applicability:
   trigger: >

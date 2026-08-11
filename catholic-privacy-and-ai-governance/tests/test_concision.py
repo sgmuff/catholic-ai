@@ -1,6 +1,8 @@
 from privacy_and_ai_governance.concision import (
     lint_assessment,
     lint_incident,
+    lint_regulatory_change,
+    lint_retention_entry,
     lint_review,
     lint_triage,
 )
@@ -277,4 +279,100 @@ class TestLintReview:
         review = _tight_review()
         review["cst_reflection"] = "word " * 1000
         warnings = lint_review(review)
+        assert any("cst_reflection" in w for w in warnings)
+
+
+def _tight_retention_entry() -> dict:
+    return {
+        "title": "Parish bulletin subscriber list",
+        "entry": {"description": "Email addresses collected via the sign-up form."},
+        "frameworks_considered": [{"id": "gdpr-dpia", "applicable": True}],
+        "verdict": {"rationale": "No re-confirmation has happened in over a year."},
+        "compliance": "Under GDPR Art. 5(1)(e), retention must be actively justified.",
+        "cst_reflection": "This keeps the review from lapsing into indefinite retention.",
+    }
+
+
+class TestLintRetentionEntry:
+    def test_tight_entry_produces_no_warnings(self) -> None:
+        assert lint_retention_entry(_tight_retention_entry()) == []
+
+    def test_does_not_raise_on_a_padded_entry(self) -> None:
+        padded = _tight_retention_entry()
+        padded["compliance"] = "word " * 5000
+        lint_retention_entry(padded)  # should not raise
+
+    def test_flags_overlong_entry_description(self) -> None:
+        entry = _tight_retention_entry()
+        entry["entry"]["description"] = "word " * 500
+        warnings = lint_retention_entry(entry)
+        assert any("entry.description" in w for w in warnings)
+
+    def test_flags_overlong_verdict_rationale(self) -> None:
+        entry = _tight_retention_entry()
+        entry["verdict"]["rationale"] = "word " * 500
+        warnings = lint_retention_entry(entry)
+        assert any("verdict.rationale" in w for w in warnings)
+
+    def test_flags_overlong_compliance_relative_to_applicable_scope(self) -> None:
+        entry = _tight_retention_entry()
+        entry["compliance"] = "word " * 2000
+        warnings = lint_retention_entry(entry)
+        assert any("compliance" in w for w in warnings)
+
+    def test_flags_overlong_cst_reflection(self) -> None:
+        entry = _tight_retention_entry()
+        entry["cst_reflection"] = "word " * 1000
+        warnings = lint_retention_entry(entry)
+        assert any("cst_reflection" in w for w in warnings)
+
+
+def _tight_regulatory_change() -> dict:
+    return {
+        "title": "CPPA risk-assessment regulations take effect",
+        "development": {"summary": "New risk-assessment content requirements."},
+        "frameworks_considered": [{"id": "ccpa-cpra", "impacted": True}],
+        "recommended_actions": [
+            {
+                "id": "update-risk-assessment-element",
+                "description": "Update the risk-assessment required element.",
+            }
+        ],
+        "compliance": "Under Cal. Code Regs. tit. 11, § 7152, specified elements must "
+        "be documented in the risk assessment.",
+        "cst_reflection": "Keeping the registry current keeps the assessment honest.",
+    }
+
+
+class TestLintRegulatoryChange:
+    def test_tight_change_produces_no_warnings(self) -> None:
+        assert lint_regulatory_change(_tight_regulatory_change()) == []
+
+    def test_does_not_raise_on_a_padded_change(self) -> None:
+        padded = _tight_regulatory_change()
+        padded["compliance"] = "word " * 5000
+        lint_regulatory_change(padded)  # should not raise
+
+    def test_flags_overlong_development_summary(self) -> None:
+        change = _tight_regulatory_change()
+        change["development"]["summary"] = "word " * 500
+        warnings = lint_regulatory_change(change)
+        assert any("development.summary" in w for w in warnings)
+
+    def test_flags_overlong_recommended_action_description(self) -> None:
+        change = _tight_regulatory_change()
+        change["recommended_actions"][0]["description"] = "word " * 500
+        warnings = lint_regulatory_change(change)
+        assert any("recommended_actions[update-risk-assessment-element]" in w for w in warnings)
+
+    def test_flags_overlong_compliance_relative_to_impacted_scope(self) -> None:
+        change = _tight_regulatory_change()
+        change["compliance"] = "word " * 2000
+        warnings = lint_regulatory_change(change)
+        assert any("compliance" in w for w in warnings)
+
+    def test_flags_overlong_cst_reflection(self) -> None:
+        change = _tight_regulatory_change()
+        change["cst_reflection"] = "word " * 1000
+        warnings = lint_regulatory_change(change)
         assert any("cst_reflection" in w for w in warnings)
