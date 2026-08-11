@@ -9,6 +9,11 @@
 # that, sync_all() assumed every skill shared one rubric, which stopped
 # being true the moment a second domain had a real skill to sync.
 #
+# `baseline` (step 16) is the project-root-relative path to the
+# vendor-review baseline a review-shaped skill checks documentation
+# against — absent for every other skill, since only the review shape uses
+# one.
+#
 # Flipping a skill from "planned" to "built": build it under
 # .claude/skills/<name>/ first, then flip the status here and re-run the
 # sync. sync_all() raises ManifestDriftError if a "built" entry has no
@@ -33,18 +38,19 @@ skills:
     trigger: "a possible data breach or privacy incident happened"
   - name: review-vendor-privacy-assessment
     domain: privacy
-    status: planned
-    rubric: rubric/criteria.md
+    status: built
+    rubric: null # review shape (build-plan.md step 16): per-item baseline check + remediation + reassessment, not rubric-scored
+    baseline: baselines/privacy-vendor.md
     trigger: "reviewing a vendor's privacy questionnaire, DPA, or certifications"
   - name: review-data-retention-entry
     domain: privacy
     status: planned
-    rubric: rubric/criteria.md
+    rubric: null # not rubric-scored — shape not yet designed (build-plan.md §8's correction note, step 16)
     trigger: "checking whether a data-inventory entry's retention is still justified"
   - name: map-regulatory-change
     domain: privacy
     status: planned
-    rubric: rubric/criteria.md
+    rubric: null # not rubric-scored — shape not yet designed (build-plan.md §8's correction note, step 16)
     trigger: "a new privacy regulatory development needs to be mapped to existing policies"
   - name: draft-privacy-notice-update
     domain: privacy
@@ -65,16 +71,27 @@ skills:
     trigger: "an AI system needs a structured risk or impact assessment"
   - name: draft-model-card
     domain: ai-governance
-    status: planned
+    status: built
     rubric: rubric/ai-criteria.md
     trigger: "an AI system or model needs a documentation record"
   - name: review-ai-vendor-governance
     domain: ai-governance
-    status: planned
-    rubric: rubric/ai-criteria.md
+    status: built
+    rubric: null # review shape (build-plan.md step 16), reused directly from review-vendor-privacy-assessment
+    baseline: baselines/ai-vendor.md
     trigger: "reviewing a vendor's or foundation-model provider's AI governance documentation"
   - name: triage-ai-incident
     domain: ai-governance
-    status: planned
-    rubric: rubric/ai-criteria.md
+    status: built
+    rubric: null # incident shape (build-plan.md step 15), reused directly from triage-privacy-incident: severity + parallel notification/reporting obligations + gaps
     trigger: "a possible AI safety, bias, or reliability incident happened"
+  - name: map-ai-regulatory-change
+    domain: ai-governance
+    status: planned
+    rubric: null # not rubric-scored — the AI-governance sibling of map-regulatory-change, added at step 16's correction
+    trigger: "a new AI-specific regulatory or standards development needs to be mapped to existing controls"
+  - name: review-ai-system-reassessment
+    domain: ai-governance
+    status: planned
+    rubric: null # not rubric-scored — shape not yet designed, the AI-governance analog of review-data-retention-entry (build-plan.md §8's correction note, step 16)
+    trigger: "checking whether an inventoried AI system is overdue for reassessment"

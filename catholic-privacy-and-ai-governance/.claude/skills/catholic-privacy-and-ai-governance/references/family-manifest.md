@@ -21,7 +21,7 @@
 ## review-vendor-privacy-assessment
 
 - **Domain:** privacy
-- **Status:** planned
+- **Status:** built
 - **Trigger:** reviewing a vendor's privacy questionnaire, DPA, or certifications
 
 ## review-data-retention-entry
@@ -57,17 +57,29 @@
 ## draft-model-card
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** built
 - **Trigger:** an AI system or model needs a documentation record
 
 ## review-ai-vendor-governance
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** built
 - **Trigger:** reviewing a vendor's or foundation-model provider's AI governance documentation
 
 ## triage-ai-incident
 
 - **Domain:** ai-governance
-- **Status:** planned
+- **Status:** built
 - **Trigger:** a possible AI safety, bias, or reliability incident happened
+
+## map-ai-regulatory-change
+
+- **Domain:** ai-governance
+- **Status:** planned
+- **Trigger:** a new AI-specific regulatory or standards development needs to be mapped to existing controls
+
+## review-ai-system-reassessment
+
+- **Domain:** ai-governance
+- **Status:** planned
+- **Trigger:** checking whether an inventoried AI system is overdue for reassessment

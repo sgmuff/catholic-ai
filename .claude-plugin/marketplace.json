@@ -44,6 +44,30 @@
       "source": "./catholic-privacy-and-ai-governance/.claude/skills/triage-privacy-incident",
       "description": "Triages a reported privacy incident against a pluggable registry of laws, scores its severity, identifies every independent notification obligation and its deadline, and flags whether it meets the threshold for escalation.",
       "category": "productivity"
+    },
+    {
+      "name": "triage-ai-incident",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/triage-ai-incident",
+      "description": "Triages a reported AI safety, bias, or reliability incident against a pluggable registry of laws and standards, scores its severity, identifies every independent notification or reporting obligation and its deadline, and flags whether it meets the threshold for escalation.",
+      "category": "productivity"
+    },
+    {
+      "name": "review-vendor-privacy-assessment",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/review-vendor-privacy-assessment",
+      "description": "Reviews a vendor's privacy questionnaire, DPA, or certifications against a fixed baseline, marks each item satisfied, partial, or missing with evidence or a gap, tracks remediation commitments, and states an overall risk level and reassessment date.",
+      "category": "productivity"
+    },
+    {
+      "name": "review-ai-vendor-governance",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/review-ai-vendor-governance",
+      "description": "Reviews a vendor's or foundation-model provider's AI governance documentation against a fixed baseline, marks each item satisfied, partial, or missing with evidence or a gap, tracks remediation commitments, and states an overall risk level and reassessment date.",
+      "category": "productivity"
+    },
+    {
+      "name": "draft-model-card",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/draft-model-card",
+      "description": "Produces a model or system documentation record for an AI system, grounded in a full assessment against the current framework registry and the same seven-dimension AI-governance rubric assess-ai-system-risk-tier uses.",
+      "category": "productivity"
     }
   ]
 }

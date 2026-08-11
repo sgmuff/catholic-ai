@@ -4,6 +4,7 @@ from pathlib import Path
 from privacy_and_ai_governance.report import (
     render_incident_markdown,
     render_markdown,
+    render_review_markdown,
     render_triage_markdown,
     slugify,
     write_report,
@@ -270,6 +271,99 @@ class TestRenderIncidentMarkdown:
 
     def test_advisory_disclosure_is_present(self) -> None:
         markdown = render_incident_markdown(_incident())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+def _review() -> dict:
+    return {
+        "title": "Annual review of MailerParish, Inc.",
+        "vendor": {
+            "name": "MailerParish, Inc.",
+            "description": "A bulk-email vendor used to send the weekly bulletin.",
+            "service_provided": "Bulk email delivery and subscriber list hosting.",
+        },
+        "frameworks_considered": [
+            {
+                "id": "gdpr-dpia",
+                "applicable": True,
+                "basis": "Some subscribed parishioners are EU residents.",
+            }
+        ],
+        "baseline_items": [
+            {
+                "id": "dpa-in-place",
+                "status": "satisfied",
+                "evidence": "Signed DPA on file, executed 2025-01-10.",
+                "gap": None,
+            },
+            {
+                "id": "security-controls-evidence",
+                "status": "missing",
+                "evidence": None,
+                "gap": "No current SOC 2 report on file.",
+            },
+        ],
+        "remediation_commitments": [
+            {
+                "id": "security-questionnaire",
+                "description": "Vendor to provide an updated security questionnaire.",
+                "target_date": "2026-09-15",
+                "status": "open",
+            }
+        ],
+        "reassessment_due": "2027-08-01",
+        "overall_risk": {
+            "level": "moderate",
+            "rationale": "One baseline item unmet, with an open remediation commitment.",
+        },
+        "compliance": "Under GDPR Art. 28(3), the DPA must specify processing terms; "
+        "current security-control evidence is required before the relationship continues.",
+        "cst_reflection": "Closing this gap keeps the parishioners' trust intact.",
+    }
+
+
+class TestRenderReviewMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_review_markdown(_review())
+        assert markdown.startswith("# Annual review of MailerParish, Inc.")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_review_markdown(_review())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_overall_risk_is_rendered(self) -> None:
+        markdown = render_review_markdown(_review())
+        assert "moderate" in markdown.lower()
+
+    def test_every_baseline_item_appears_with_its_status(self) -> None:
+        markdown = render_review_markdown(_review())
+        assert "dpa-in-place" in markdown
+        assert "satisfied" in markdown.lower()
+        assert "security-controls-evidence" in markdown
+        assert "missing" in markdown.lower()
+
+    def test_remediation_commitment_is_rendered_with_its_target_date(self) -> None:
+        markdown = render_review_markdown(_review())
+        assert "2026-09-15" in markdown
+        assert "Vendor to provide an updated security questionnaire." in markdown
+
+    def test_no_remediation_commitments_renders_a_clean_statement_not_an_empty_section(
+        self,
+    ) -> None:
+        review = _review()
+        review["remediation_commitments"] = []
+        markdown = render_review_markdown(review)
+        assert "no open remediation" in markdown.lower() or "none identified" in markdown.lower()
+
+    def test_reassessment_due_is_rendered(self) -> None:
+        markdown = render_review_markdown(_review())
+        assert "2027-08-01" in markdown
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        markdown = render_review_markdown(_review())
         assert "not a legal opinion" in markdown
         assert "accountable person" in markdown
 

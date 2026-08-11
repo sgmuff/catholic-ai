@@ -18,6 +18,7 @@ from eval.sync_skill_bundle import (
 REPO_ROOT = Path(__file__).parent.parent
 REAL_FRAMEWORKS_DIR = REPO_ROOT / "frameworks"
 REAL_RUBRIC_PATH = REPO_ROOT / "rubric" / "criteria.md"
+REAL_BASELINE_PATH = REPO_ROOT / "baselines" / "privacy-vendor.md"
 REAL_SRC_DIR = REPO_ROOT / "src" / "privacy_and_ai_governance"
 STDLIB_ONLY_MODULES = ["concision.py", "language.py", "report.py", "rubric.py"]
 
@@ -165,6 +166,25 @@ class TestSyncSkillReferences:
         assert not (skill_dir / "references" / "rubric").exists()
         assert not any("rubric" in str(p.relative_to(skill_dir)) for p in written)
         assert (skill_dir / "references" / "frameworks" / "index.md").exists()
+
+    def test_baseline_path_given_syncs_the_baseline_document(self, tmp_path: Path) -> None:
+        # A review-shaped skill (build sequence step 16) has a
+        # vendor-review baseline instead of a rubric.
+        skill_dir = tmp_path / "review-vendor-privacy-assessment"
+        written = sync_skill_references(
+            skill_dir, "privacy", REAL_FRAMEWORKS_DIR, None, REAL_BASELINE_PATH
+        )
+
+        baseline_dest = skill_dir / "references" / "baseline" / "privacy-vendor.md"
+        assert baseline_dest in written
+        assert baseline_dest.read_text() == REAL_BASELINE_PATH.read_text()
+
+    def test_baseline_path_none_skips_baseline_syncing_entirely(self, tmp_path: Path) -> None:
+        skill_dir = tmp_path / "draft-privacy-impact-assessment"
+        written = sync_skill_references(skill_dir, "privacy", REAL_FRAMEWORKS_DIR, REAL_RUBRIC_PATH)
+
+        assert not (skill_dir / "references" / "baseline").exists()
+        assert not any("baseline" in str(p.relative_to(skill_dir)) for p in written)
 
 
 class TestSyncSkillScripts:
@@ -436,3 +456,54 @@ class TestSyncAll:
         assert (triage_skill_dir / "references" / "frameworks" / "index.md").exists()
         assert not (triage_skill_dir / "scripts" / "rubric.py").exists()
         assert (triage_skill_dir / "scripts" / "concision.py").exists()
+
+    def test_a_baseline_entry_syncs_the_baseline_and_baseline_py(self, tmp_path: Path) -> None:
+        # A review-shaped skill (build sequence step 16) has a
+        # vendor-review baseline instead of a rubric — the manifest's
+        # `baseline` field has only two states (present or absent), unlike
+        # `rubric`'s three, since no entry predates this field.
+        project_root = self._project_with_one_built_skill(tmp_path)
+        baseline_dir = project_root / "baselines"
+        baseline_dir.mkdir()
+        (baseline_dir / "privacy-vendor.md").write_text(
+            "## How to review\n\n## 1. Written data-processing terms — `dpa-in-place`\n"
+        )
+        manifest_path = project_root / "family-manifest.yaml"
+        manifest = yaml.safe_load(manifest_path.read_text())
+        manifest["skills"].append(
+            {
+                "name": "review-vendor-privacy-assessment",
+                "domain": "privacy",
+                "status": "built",
+                "rubric": None,
+                "baseline": "baselines/privacy-vendor.md",
+                "trigger": "reviewing a vendor's privacy questionnaire, DPA, or certifications",
+            }
+        )
+        _write_yaml(manifest_path, manifest)
+        (project_root / ".claude" / "skills" / "review-vendor-privacy-assessment").mkdir(
+            parents=True
+        )
+
+        sync_all(
+            project_root, router_name="catholic-privacy-and-ai-governance", src_dir=REAL_SRC_DIR
+        )
+
+        review_skill_dir = project_root / ".claude" / "skills" / "review-vendor-privacy-assessment"
+        assert not (review_skill_dir / "references" / "rubric").exists()
+        baseline_dest = review_skill_dir / "references" / "baseline" / "privacy-vendor.md"
+        assert baseline_dest.exists()
+        assert "dpa-in-place" in baseline_dest.read_text()
+        assert (review_skill_dir / "scripts" / "baseline.py").exists()
+        assert not (review_skill_dir / "scripts" / "rubric.py").exists()
+
+    def test_an_entry_with_no_baseline_key_syncs_no_baseline(self, tmp_path: Path) -> None:
+        project_root = self._project_with_one_built_skill(tmp_path)
+        skill_dir = project_root / ".claude" / "skills" / "draft-privacy-impact-assessment"
+
+        sync_all(
+            project_root, router_name="catholic-privacy-and-ai-governance", src_dir=REAL_SRC_DIR
+        )
+
+        assert not (skill_dir / "references" / "baseline").exists()
+        assert not (skill_dir / "scripts" / "baseline.py").exists()

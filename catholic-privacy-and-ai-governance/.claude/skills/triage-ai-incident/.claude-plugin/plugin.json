@@ -1,0 +1,5 @@
+{
+  "name": "triage-ai-incident",
+  "description": "Triages a reported AI safety, bias, or reliability incident against the current framework registry (EU AI Act serious-incident reporting, NIST AI RMF), scores its severity, identifies every independent notification or reporting obligation and its deadline, and states whether it meets the threshold for escalation.",
+  "version": "0.1.0"
+}

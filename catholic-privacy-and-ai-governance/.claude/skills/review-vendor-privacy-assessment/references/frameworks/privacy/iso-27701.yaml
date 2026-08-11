@@ -1,0 +1,100 @@
+id: iso-27701
+name: "ISO/IEC 27701:2019 — Privacy Information Management System (PIMS)"
+citation_root: "ISO/IEC 27701:2019"
+source_url: "https://www.iso.org/standard/71670.html"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Voluntary — an institution opts into assessment against this standard,
+    typically to extend an existing ISO/IEC 27001 information security
+    management system (ISMS) into a full privacy information management
+    system (PIMS), or to demonstrate privacy-by-design maturity to
+    partners, regulators, or auditors. Applies distinctly to PII
+    controllers (Annex A-style requirements) and PII processors (Annex
+    B-style requirements) — an institution assessed against this standard
+    should state which role, or both, it holds for the activity in scope.
+  jurisdiction:
+    - any
+
+required_elements:
+  - id: pims-builds-on-isms
+    citation: "Clause 5"
+    requirement: >
+      An organization implementing a PIMS must extend its existing ISO/IEC
+      27001 information security management system with privacy-specific
+      requirements — a PIMS is not a freestanding substitute for an ISMS,
+      but an explicit extension of one.
+  - id: privacy-risk-assessment
+    citation: "Clause 5 (extending ISO/IEC 27001 Clause 6.1)"
+    requirement: >
+      The organization's risk assessment process must be extended to
+      consider privacy risks to PII principals specifically — not only
+      risks to the organization itself — when processing PII.
+  - id: pii-controller-obligations
+    citation: "Clause 7 / Annex A"
+    requirement: >
+      An organization acting as a PII controller must address conditions
+      for collection and processing, obligations to PII principals,
+      privacy by design and by default, and PII sharing, transfer, and
+      disclosure — including determining and documenting a lawful basis
+      before collection.
+  - id: pii-processor-obligations
+    citation: "Clause 8 / Annex B"
+    requirement: >
+      An organization acting as a PII processor must address conditions
+      for collection and processing on the controller's instructions,
+      obligations to controllers (including notifying the controller of
+      any legally binding request for disclosure), and PII sharing,
+      transfer, and disclosure only as instructed or authorized.
+  - id: purpose-limitation
+    citation: "Clause 7.2 / 8.2 area"
+    requirement: >
+      PII must be collected and processed only for specified, explicit,
+      and legitimate purposes, determined and documented before
+      collection begins.
+  - id: pii-minimization
+    citation: "Clause 7.4 area"
+    requirement: >
+      The organization must limit the PII it processes to what is
+      adequate, relevant, and necessary for the identified purposes, and
+      should minimize what is processed through de-identification or
+      similar techniques where the identified purposes can still be
+      achieved.
+  - id: retention-and-disposal
+    citation: "Clause 7.4 / 8.4 area"
+    requirement: >
+      The organization must define and document retention periods for PII
+      and provide for its secure disposal or de-identification once the
+      purpose for processing no longer applies.
+
+terms_of_art:
+  - term: PIMS
+    meaning: >
+      Privacy Information Management System — the set of policies,
+      processes, and controls an organization implements to manage
+      privacy risk, structured as an extension of an ISO/IEC 27001 ISMS.
+  - term: PII controller
+    meaning: >
+      The party that determines the purposes and means of processing
+      personally identifiable information — the ISO/IEC 27701 role
+      corresponding to a GDPR "controller."
+  - term: PII processor
+    meaning: >
+      The party that processes personally identifiable information on
+      behalf of, and according to the instructions of, a PII controller —
+      corresponding to a GDPR "processor."
+  - term: PII principal
+    meaning: >
+      The natural person to whom personally identifiable information
+      relates — corresponding to a GDPR "data subject."
+
+# Note on sourcing: ISO/IEC 27701 is a paywalled commercial standard, not a
+# public-domain legal text. Unlike the law-type entries in this registry,
+# this file was authored from the standard's well-documented public
+# structure (clause numbering, controller/processor split, ISO/IEC 27001
+# lineage) rather than a fetch of the purchased standard's own text. Treat
+# every clause citation here as indicative until checked against a licensed
+# copy of ISO/IEC 27701:2019 — this is a stronger caveat than the
+# "unreviewed" status this project applies to every framework file, and
+# should be resolved before this entry is relied on for a real assessment.

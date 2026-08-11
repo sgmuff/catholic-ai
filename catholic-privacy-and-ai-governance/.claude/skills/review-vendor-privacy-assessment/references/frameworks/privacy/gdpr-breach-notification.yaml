@@ -1,0 +1,84 @@
+id: gdpr-breach-notification
+name: "GDPR Arts. 33-34 — Notification of a Personal Data Breach"
+citation_root: "GDPR Arts. 33-34"
+source_url: "https://gdpr-info.eu/art-33-gdpr/"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies whenever a controller becomes aware of a personal data breach —
+    a breach of security leading to the accidental or unlawful destruction,
+    loss, alteration, unauthorized disclosure of, or access to, personal
+    data. Distinct from `gdpr-dpia` (Art. 35's pre-processing impact
+    assessment) and `gdpr-data-subject-rights` (Chapter III's response
+    obligations to a rights request) in this registry — an incident-triage
+    task should cite this entry, not those.
+  jurisdiction:
+    - European Union
+    - European Economic Area
+    - Any controller or processor outside the EU/EEA processing EU/EEA data
+      subjects' personal data under GDPR's extraterritorial scope (Art. 3)
+
+required_elements:
+  - id: supervisory-authority-notification-deadline
+    citation: "Art. 33(1)"
+    requirement: >
+      The controller shall notify the competent supervisory authority
+      without undue delay and, where feasible, not later than 72 hours
+      after having become aware of a personal data breach, unless the
+      breach is unlikely to result in a risk to the rights and freedoms of
+      natural persons. Where notification is not made within 72 hours, it
+      shall be accompanied by reasons for the delay.
+  - id: processor-notifies-controller
+    citation: "Art. 33(2)"
+    requirement: >
+      A processor shall notify the controller without undue delay after
+      becoming aware of a personal data breach — the processor has no
+      independent duty to notify the supervisory authority or data
+      subjects directly.
+  - id: supervisory-authority-notification-content
+    citation: "Art. 33(3)"
+    requirement: >
+      The notification to the supervisory authority must at least describe
+      the nature of the breach (including categories and approximate
+      numbers of data subjects and records concerned), the data protection
+      officer's or other contact point's details, the likely consequences,
+      and the measures taken or proposed to address the breach and
+      mitigate its effects.
+  - id: data-subject-notification-standard
+    citation: "Art. 34(1)"
+    requirement: >
+      When a personal data breach is likely to result in a high risk to
+      the rights and freedoms of natural persons, the controller shall
+      communicate the breach to the affected data subjects without undue
+      delay, in clear and plain language.
+  - id: data-subject-notification-exceptions
+    citation: "Art. 34(3)"
+    requirement: >
+      Notification to data subjects is not required if the controller has
+      implemented protective measures (e.g. encryption) that render the
+      data unintelligible to anyone not authorized to access it, has taken
+      subsequent measures ensuring the high risk is no longer likely to
+      materialize, or if individual notification would involve
+      disproportionate effort — in which case a public communication or
+      similarly effective measure is used instead.
+
+terms_of_art:
+  - term: personal data breach
+    meaning: >
+      A breach of security leading to the accidental or unlawful
+      destruction, loss, alteration, unauthorized disclosure of, or access
+      to, personal data transmitted, stored, or otherwise processed
+      (Art. 4(12)).
+  - term: without undue delay
+    meaning: >
+      The governing standard for both the 72-hour supervisory-authority
+      notification and the data-subject notification — assessed against
+      how quickly a controller, acting responsibly, could reasonably act
+      once aware, not a fixed grace period on top of the stated deadline.
+  - term: high risk (Art. 34)
+    meaning: >
+      A materially higher threshold than Art. 33's "risk" standard for
+      notifying the supervisory authority — not every breach reportable to
+      a supervisory authority also triggers the data-subject notification
+      duty.

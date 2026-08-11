@@ -152,3 +152,52 @@ def lint_incident(incident: dict[str, Any]) -> list[str]:
 
     warnings.extend(_lint_compliance_and_cst_reflection(incident))
     return warnings
+
+
+def lint_review(review: dict[str, Any]) -> list[str]:
+    """Returns a list of non-fatal concision warnings for the vendor-review
+    shape (build-plan.md step 16); an empty list means nothing stood out as
+    unusually long.
+    """
+    warnings: list[str] = []
+
+    vendor_description = review.get("vendor", {}).get("description", "")
+    count = _word_count(vendor_description)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"vendor.description is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    for item in review.get("baseline_items", []):
+        item_id = item.get("id", "<unknown item>")
+        for field in ("evidence", "gap"):
+            value = item.get(field)
+            if not value:
+                continue
+            count = _word_count(value)
+            if count > RATING_FIELD_WORD_LIMIT:
+                warnings.append(
+                    f"baseline_items[{item_id}].{field} is {count} words — past the "
+                    f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+                )
+
+    for commitment in review.get("remediation_commitments", []):
+        commitment_id = commitment.get("id", "<unknown commitment>")
+        count = _word_count(commitment.get("description", ""))
+        if count > RATING_FIELD_WORD_LIMIT:
+            warnings.append(
+                f"remediation_commitments[{commitment_id}].description is {count} words "
+                f"— past the {RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+            )
+
+    risk_rationale = review.get("overall_risk", {}).get("rationale", "")
+    count = _word_count(risk_rationale)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"overall_risk.rationale is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    warnings.extend(_lint_compliance_and_cst_reflection(review))
+    return warnings

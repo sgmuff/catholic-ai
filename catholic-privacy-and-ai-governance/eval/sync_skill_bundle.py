@@ -65,13 +65,19 @@ def render_frameworks_index_markdown(records: list[dict[str, Any]]) -> str:
 
 
 def sync_skill_references(
-    skill_dir: Path, domain: str, frameworks_dir: Path, rubric_path: Path | None
+    skill_dir: Path,
+    domain: str,
+    frameworks_dir: Path,
+    rubric_path: Path | None,
+    baseline_path: Path | None = None,
 ) -> list[Path]:
     """Regenerates skill_dir/references/ for a specialist skill: a copy of
-    the rubric (if *rubric_path* is given — a triage-shaped skill has none,
-    per build-plan.md step 12), a rendered index of every active framework
-    in *domain*, and a copy of each such framework's content file. Returns
-    every path written.
+    the rubric (if *rubric_path* is given — a triage- or incident-shaped
+    skill has none, per build-plan.md steps 12 and 14), a copy of the
+    vendor-review baseline (if *baseline_path* is given — only a
+    review-shaped skill has one, per build-plan.md step 16), a rendered
+    index of every active framework in *domain*, and a copy of each such
+    framework's content file. Returns every path written.
     """
     references_dir = skill_dir / "references"
     written: list[Path] = []
@@ -81,6 +87,12 @@ def sync_skill_references(
         rubric_dest.parent.mkdir(parents=True, exist_ok=True)
         rubric_dest.write_text(rubric_path.read_text(encoding="utf-8"), encoding="utf-8")
         written.append(rubric_dest)
+
+    if baseline_path is not None:
+        baseline_dest = references_dir / "baseline" / baseline_path.name
+        baseline_dest.parent.mkdir(parents=True, exist_ok=True)
+        baseline_dest.write_text(baseline_path.read_text(encoding="utf-8"), encoding="utf-8")
+        written.append(baseline_dest)
 
     records = active_frameworks(load_framework_registry(frameworks_dir), domain=domain)
 
@@ -181,7 +193,11 @@ def sync_all(
     at all falls back to *rubric_path* (default project_root/rubric/
     criteria.md), so a manifest written before step 11 (when every skill
     shared one rubric) still works unchanged; an entry with `rubric: null`
-    (a triage-shaped skill, step 12) is synced with no rubric at all.
+    (a triage- or incident-shaped skill, steps 12 and 14) is synced with
+    no rubric at all. A `baseline` field (step 16) works the same way but
+    with only two states, since no entry predates it: an explicit string
+    path syncs that baseline; an absent key means no baseline at all —
+    there's no historical default to fall back to.
 
     Raises ManifestDriftError if a `built` entry has no matching folder
     under .claude/skills/.
@@ -212,14 +228,19 @@ def sync_all(
             entry_rubric_path = None
         else:
             entry_rubric_path = project_root / entry["rubric"]
+        entry_baseline_path = (
+            project_root / entry["baseline"] if entry.get("baseline") is not None else None
+        )
         written.extend(
-            sync_skill_references(skill_dir, entry["domain"], frameworks_dir, entry_rubric_path)
+            sync_skill_references(
+                skill_dir, entry["domain"], frameworks_dir, entry_rubric_path, entry_baseline_path
+            )
         )
-        scripts_to_sync = (
-            STDLIB_ONLY_MODULES
-            if entry_rubric_path is not None
-            else [m for m in STDLIB_ONLY_MODULES if m != "rubric.py"]
-        )
+        scripts_to_sync = ["concision.py", "language.py", "report.py"]
+        if entry_rubric_path is not None:
+            scripts_to_sync.append("rubric.py")
+        if entry_baseline_path is not None:
+            scripts_to_sync.append("baseline.py")
         written.extend(sync_skill_scripts(skill_dir, src_dir, scripts_to_sync))
 
     router_dir = skills_dir / router_name

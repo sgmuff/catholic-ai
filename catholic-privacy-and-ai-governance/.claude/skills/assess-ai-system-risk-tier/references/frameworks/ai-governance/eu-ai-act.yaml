@@ -122,6 +122,26 @@ required_elements:
       informed; and deepfake content, or AI-generated text published on
       matters of public interest, must be disclosed as such, subject to
       narrow exceptions.
+  - id: serious-incident-reporting
+    citation: "Art. 73(1)-(4)"
+    requirement: >
+      A provider of a high-risk AI system must report a serious incident to
+      the market surveillance authority of the Member State where it
+      occurred. The general deadline is 15 days after the provider (or,
+      where applicable, the deployer) establishes a causal link between the
+      AI system and the incident, or the reasonable likelihood of such a
+      link. That deadline shortens to immediately, and no later than 2
+      days, for a widespread infringement or a serious incident causing a
+      serious and irreversible disruption of critical infrastructure (Art.
+      3(49)(b)); and to no later than 10 days for a serious incident
+      involving the death of a person.
+  - id: post-incident-investigation
+    citation: "Art. 73(6)"
+    requirement: >
+      Following a serious incident, the provider must perform the
+      necessary investigations, including a risk assessment of the
+      incident and corrective action, and cooperate with the competent
+      authorities.
 
 terms_of_art:
   - term: AI system
@@ -154,3 +174,12 @@ terms_of_art:
       placed on the market, put into service, or used at all, regardless
       of risk-mitigation measures — distinct from a high-risk system,
       which may be used if its Chapter III obligations are met.
+  - term: serious incident
+    meaning: >
+      An incident or malfunctioning of an AI system that directly or
+      indirectly leads to: (a) the death of a person, or serious harm to a
+      person's health; (b) a serious and irreversible disruption of the
+      management or operation of critical infrastructure; (c) the
+      infringement of obligations under Union law intended to protect
+      fundamental rights; or (d) serious harm to property or the
+      environment (Art. 3(49)).

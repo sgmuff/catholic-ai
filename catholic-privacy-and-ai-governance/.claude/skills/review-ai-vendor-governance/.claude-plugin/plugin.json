@@ -1,0 +1,5 @@
+{
+  "name": "review-ai-vendor-governance",
+  "description": "Reviews a vendor's or foundation-model provider's AI governance documentation against a fixed seven-item baseline, marks each item satisfied, partial, or missing with evidence or a gap, tracks remediation commitments, and states an overall risk level and reassessment date.",
+  "version": "0.1.0"
+}

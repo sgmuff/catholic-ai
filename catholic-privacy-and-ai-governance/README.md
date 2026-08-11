@@ -16,33 +16,45 @@ regardless of whether they share the theology grounding it.
 ## Status
 
 `draft` — held there for one specific, deliberate reason, not because
-nothing works yet. Six skills are built, tested, and validated
+nothing works yet. Ten skills are built, tested, and validated
 end-to-end: a router (`catholic-privacy-and-ai-governance`); one flagship
 per domain — `draft-privacy-impact-assessment` (privacy, nine frameworks:
 GDPR DPIA, GDPR data-subject rights, GDPR breach notification, CCPA/CPRA,
 California's breach notification law, HIPAA, FERPA, ISO/IEC 27701, NIST
-Privacy Framework) and `assess-ai-system-risk-tier` (AI governance, two
-frameworks: the EU AI Act, NIST AI RMF), proving the pluggable
-architecture generalizes across domains, not just across frameworks
-within one; `draft-privacy-notice-update`, proving a second skill can
-share a domain and a rubric with its sibling with zero special-casing;
-`triage-privacy-rights-request`, proving a non-rubric-scored task shape
-(classification, a single calculated deadline, a gap checklist) fits the
-same architecture without forcing it into the rubric-scored shape the
-other skills use; and `triage-privacy-incident`, a sibling shape proving
-that a task with several independent, simultaneous obligations (a breach
-notification owed to a regulator *and* affected individuals *and*
-possibly other parties, each with its own deadline) doesn't force-fit
-into the single-deadline shape either — it gets its own. What's not done:
-every framework file in `frameworks/` is marked `review_status:
-unreviewed` — citations were checked against a primary or authoritative
-secondary source where one was reachable, never reconstructed from
-memory, but none has been checked by someone with actual legal or
-standards expertise in that specific framework. `CHECKLIST.md` tracks
-this as the project's one open go-live item; status moves to `active`
-once it closes, not once more gets built. See
-[`build-plan.md`](build-plan.md)'s build sequence for what's done and
-what's next — six more skills are planned across both domains.
+Privacy Framework) and `assess-ai-system-risk-tier` (AI governance, three
+frameworks: the EU AI Act, NIST AI RMF, ISO/IEC 42001), proving the
+pluggable architecture generalizes across domains, not just across
+frameworks within one; `draft-privacy-notice-update`, proving a second
+skill can share a domain and a rubric with its sibling with zero
+special-casing; `triage-privacy-rights-request`, proving a non-rubric-
+scored task shape (classification, a single calculated deadline, a gap
+checklist) fits the same architecture without forcing it into the
+rubric-scored shape the other skills use; `triage-privacy-incident`, a
+sibling shape proving that a task with several independent, simultaneous
+obligations (a breach notification owed to a regulator *and* affected
+individuals *and* possibly other parties, each with its own deadline)
+doesn't force-fit into the single-deadline shape either — it gets its
+own; `triage-ai-incident`, the AI-governance domain's sibling, proving
+that same incident shape carries across domains with zero code changes,
+the same way the rubric-scored shape did at step 11;
+`review-vendor-privacy-assessment` / `review-ai-vendor-governance`, a
+fourth task shape — a fixed per-item baseline check, each item
+independently `satisfied`/`partial`/`missing` rather than scored or
+deadline-driven — built once and reused across both domains
+simultaneously; and `draft-model-card`, sharing
+`assess-ai-system-risk-tier`'s exact rubric-scored shape the way
+`draft-privacy-notice-update` shares its own sibling's, grounded in part
+in ISO/IEC 42001's Annex A.8 (information for interested parties), which
+this step also registered. What's not done: every framework file in
+`frameworks/` is marked `review_status: unreviewed` — citations were
+checked against a primary or authoritative secondary source where one
+was reachable, never reconstructed from memory, but none has been
+checked by someone with actual legal or standards expertise in that
+specific framework. `CHECKLIST.md` tracks this as the project's one open
+go-live item; status moves to `active` once it closes, not once more
+gets built. See [`build-plan.md`](build-plan.md)'s build sequence for
+what's done and what's next — five more skills are planned across both
+domains.
 
 ## Grounding
 
@@ -57,8 +69,8 @@ both domains.
 
 Recognized secular frameworks anchor the compliance side: GDPR, CCPA/CPRA,
 California's breach notification law, HIPAA, FERPA, ISO/IEC 27701, and the
-NIST Privacy Framework for privacy; the EU AI Act's risk tiers and NIST AI
-RMF for AI governance (ISO/IEC 42001 not yet registered). These are
+NIST Privacy Framework for privacy; the EU AI Act's risk tiers, NIST AI
+RMF, and ISO/IEC 42001 for AI governance. These are
 registered in a pluggable `frameworks/` registry rather
 than fixed in code, so the set can grow or shrink without restructuring
 anything (`build-plan.md` §3) — and a whole second domain was added to that
@@ -102,7 +114,7 @@ interpreter, create the venv with a 3.12 binary directly (e.g.
 make test
 ```
 
-238 tests, 98% coverage. `make lint` runs `ruff check`, `ruff format --check`,
+335 tests, 98% coverage. `make lint` runs `ruff check`, `ruff format --check`,
 and `mypy --strict`. `make check-framework-freshness` flags any framework
 entry due for a periodic review; `make sync-skill-bundle` regenerates every
 skill's bundled `references/` and `scripts/` from this project's authored
@@ -130,7 +142,7 @@ findings (`build-plan.md` §2.1).
 
 ## Skills used or provided
 
-Six skills, all validated with `agentskills validate` and installable via
+Ten skills, all validated with `agentskills validate` and installable via
 this repo's root `.claude-plugin/marketplace.json`:
 
 - `catholic-privacy-and-ai-governance` — the router; routes a generic
@@ -156,6 +168,28 @@ this repo's root `.claude-plugin/marketplace.json`:
   notification obligation this incident triggers — to a regulator,
   affected individuals, or others — each with its own deadline, rather
   than a single governing one. No rubric.
+- `triage-ai-incident` — the AI-governance sibling of
+  `triage-privacy-incident`, reusing the same incident shape unchanged:
+  triages a reported AI safety, bias, or reliability incident, scores its
+  severity, and identifies every independent notification or reporting
+  obligation it triggers — to a market surveillance authority, an
+  internal governance body, or others. No rubric.
+- `review-vendor-privacy-assessment` — reviews a vendor's privacy
+  questionnaire, DPA, or certifications against a fixed eight-item
+  baseline, marking each item satisfied, partial, or missing with
+  evidence or a gap, tracking remediation commitments, and stating an
+  overall risk level and reassessment date. No rubric — a fourth task
+  shape (a per-item baseline check) from its sibling skills above.
+- `review-ai-vendor-governance` — the AI-governance sibling of
+  `review-vendor-privacy-assessment`, reusing the same review shape
+  unchanged against a seven-item AI-vendor baseline (model documentation,
+  evaluation results, incident-notification commitment, upstream
+  dependency disclosure, human-oversight support, model-update
+  notification, training-data governance).
+- `draft-model-card` — produces a model/system documentation record for
+  an AI system, grounded in the same rubric and framework registry
+  `assess-ai-system-risk-tier` uses, the way `draft-privacy-notice-update`
+  shares `draft-privacy-impact-assessment`'s.
 
-Six more are planned across both domains — see `family-manifest.yaml`
+Five more are planned across both domains — see `family-manifest.yaml`
 and `build-plan.md` §8 for the full list.

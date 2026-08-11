@@ -68,12 +68,19 @@ class TestFamilyManifest:
                     f"{skill['name']} is marked built but has no folder"
                 )
 
-    def test_exactly_five_skills_are_built_so_far(self) -> None:
+    def test_exactly_nine_skills_are_built_so_far(self) -> None:
         # Both flagships (step 11), draft-privacy-notice-update (step 12),
         # triage-privacy-rights-request (step 12 continued, the first
-        # rubric-less/triage-shaped skill), and triage-privacy-incident
+        # rubric-less/triage-shaped skill), triage-privacy-incident
         # (step 14, a sibling shape with parallel notification obligations
-        # instead of a single governing deadline) — the rest are planned.
+        # instead of a single governing deadline), triage-ai-incident
+        # (step 15, reusing step 14's shape directly for a second domain),
+        # review-vendor-privacy-assessment / review-ai-vendor-governance
+        # (step 16, a fourth shape — a per-item baseline check — reused
+        # across both domains), and draft-model-card (step 17, sharing
+        # assess-ai-system-risk-tier's exact rubric-scored shape, the way
+        # draft-privacy-notice-update shares its own sibling's) — the rest
+        # are planned.
         built = {s["name"] for s in self._skills() if s["status"] == "built"}
         assert built == {
             "draft-privacy-impact-assessment",
@@ -81,6 +88,10 @@ class TestFamilyManifest:
             "draft-privacy-notice-update",
             "triage-privacy-rights-request",
             "triage-privacy-incident",
+            "triage-ai-incident",
+            "review-vendor-privacy-assessment",
+            "draft-model-card",
+            "review-ai-vendor-governance",
         }
 
     def test_every_entry_with_a_rubric_field_points_at_a_real_file(self) -> None:

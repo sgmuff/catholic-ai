@@ -1,0 +1,79 @@
+id: nist-privacy-framework
+name: "NIST Privacy Framework v1.0"
+citation_root: "NIST Privacy Framework v1.0"
+source_url: "https://www.nist.gov/privacy-framework/privacy-framework"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Voluntary — an institution opts into assessment against this framework
+    to structure its privacy risk management using a common vocabulary,
+    often alongside the NIST Cybersecurity Framework. Not a checklist of
+    binding requirements; each Function/Category is a risk-management
+    outcome an institution can adopt, adapt, or explicitly decide not to
+    prioritize, documenting why.
+  jurisdiction:
+    - any
+
+required_elements:
+  - id: govern-p
+    citation: "Govern-P"
+    requirement: >
+      The organization's privacy risk management policies, processes, and
+      procedures are understood, established, communicated, and monitored
+      — including governance structures, risk management strategy, and
+      workforce awareness of privacy responsibilities.
+  - id: identify-p
+    citation: "Identify-P"
+    requirement: >
+      The organization develops the understanding needed to manage privacy
+      risk: cataloging the data processing ecosystem, systems, and PII
+      data actions and flows, and identifying business context and privacy
+      risks arising from them.
+  - id: control-p
+    citation: "Control-P"
+    requirement: >
+      The organization develops and implements appropriate activities to
+      enable itself or individuals to manage data with sufficient
+      granularity to manage privacy risk — including data-processing
+      management, and disassociating data processing from identified
+      individuals where consistent with the organization's objectives.
+  - id: communicate-p
+    citation: "Communicate-P"
+    requirement: >
+      The organization develops and implements appropriate activities to
+      enable a dialogue about how it processes data and manages privacy
+      risk — including transparency about data-processing practices,
+      purposes, and choices available to individuals.
+  - id: protect-p
+    citation: "Protect-P"
+    requirement: >
+      The organization develops and implements appropriate data protection
+      safeguards, drawing on cybersecurity practices to support privacy
+      risk management — including data protection policies, processes,
+      and de-identification techniques.
+
+terms_of_art:
+  - term: PII
+    meaning: >
+      Personally identifiable information — used throughout the NIST
+      Privacy Framework as the general term for information an
+      organization processes about individuals.
+  - term: data action
+    meaning: >
+      A system or organizational operation performed on PII, from
+      collection through disposal — the unit of analysis the Identify-P
+      function catalogs to understand privacy risk.
+  - term: privacy risk
+    meaning: >
+      In this framework, the likelihood that individuals will experience
+      problems resulting from data processing, and the impact if they
+      occur — distinct from security risk, which concerns unauthorized
+      system behavior.
+  - term: profile
+    meaning: >
+      A selection of specific Functions, Categories, and Subcategories
+      from the Core that an organization has prioritized to align with its
+      business needs, risk tolerance, and resources — the framework's
+      mechanism for scoping which outcomes actually apply to a given
+      assessment.

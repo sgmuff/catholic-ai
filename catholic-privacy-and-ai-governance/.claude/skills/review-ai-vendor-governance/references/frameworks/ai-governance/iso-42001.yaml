@@ -1,0 +1,86 @@
+id: iso-42001
+name: "ISO/IEC 42001:2023 — Artificial Intelligence Management System (AIMS)"
+citation_root: "ISO/IEC 42001:2023"
+source_url: "https://www.iso.org/standard/81230.html"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Voluntary — an institution opts into assessment against this standard,
+    typically to structure an AI management system (AIMS) for
+    organizations that develop, provide, or use AI systems, or to
+    demonstrate AI governance maturity to partners, regulators, or
+    auditors. Follows the same high-level structure (clauses 4-10) shared
+    across other ISO management-system standards (e.g. ISO/IEC 27001),
+    extended with an AI-specific Annex A control set.
+  jurisdiction:
+    - any
+
+required_elements:
+  - id: ai-policy
+    citation: "Annex A.2"
+    requirement: >
+      The organization must establish, document, and communicate an AI
+      policy setting out its objectives and principles for developing,
+      providing, or using AI systems responsibly.
+  - id: impact-assessment
+    citation: "Annex A.5"
+    requirement: >
+      The organization must assess the impacts an AI system may have on
+      individuals or groups — including foreseeable harms — before and
+      during its use, as part of the management system's own risk
+      process.
+  - id: ai-system-lifecycle
+    citation: "Annex A.6"
+    requirement: >
+      The organization must define and follow a lifecycle process for AI
+      systems it develops or provides, covering design, development,
+      verification, validation, deployment, operation, and retirement.
+  - id: data-for-ai-systems
+    citation: "Annex A.7"
+    requirement: >
+      The organization must manage data used to develop, train, and
+      evaluate an AI system — including its provenance, quality, and
+      known limitations — as its own governed category of documented
+      information.
+  - id: information-for-interested-parties
+    citation: "Annex A.8"
+    requirement: >
+      The organization must provide interested parties (users, affected
+      individuals, regulators) with information about an AI system
+      sufficient to understand its intended purpose, capabilities, and
+      limitations — the clause this project's `draft-model-card` skill
+      most directly documents against.
+  - id: documented-information
+    citation: "Clause 7.5"
+    requirement: >
+      The organization must maintain documented information required by
+      this standard and by its own determination as necessary for the AI
+      management system's effectiveness, controlled for availability,
+      protection, and version currency.
+
+terms_of_art:
+  - term: AIMS
+    meaning: >
+      Artificial Intelligence Management System — the set of policies,
+      processes, and controls an organization implements to govern how it
+      develops, provides, or uses AI systems, structured the same way an
+      ISO/IEC 27001 ISMS structures information security management.
+  - term: interested party
+    meaning: >
+      A person or organization that can affect, be affected by, or
+      perceive itself to be affected by an AI system's development,
+      provision, or use — broader than only the AI system's direct users.
+
+# Note on sourcing: ISO/IEC 42001 is a paywalled commercial standard, not a
+# public-domain legal text. Unlike the law-type entries in this registry,
+# this file was authored from the standard's well-documented public
+# structure (the clause 4-10 high-level structure shared across ISO
+# management-system standards, and the ten-category Annex A control set)
+# as summarized by secondary sources, not a fetch of the purchased
+# standard's own text. Treat every clause/annex citation here as
+# indicative until checked against a licensed copy of ISO/IEC 42001:2023
+# — this is a stronger caveat than the "unreviewed" status this project
+# applies to every framework file, and should be resolved before this
+# entry is relied on for a real assessment. Same treatment this registry
+# already gives `iso-27701` for the same reason.

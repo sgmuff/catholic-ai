@@ -88,9 +88,14 @@ class TestSkillMetadata:
         assert [p.name for p in rubric_files] == ["ai-criteria.md"]
 
     def test_bundled_frameworks_are_ai_governance_only(self) -> None:
+        # Asserted by membership, not exact count — the AI-governance
+        # framework set grows independently of this skill (e.g. iso-42001,
+        # added at build sequence step 17), and every skill in the domain
+        # picks up a new entry the next sync, per build-plan.md §3.
         index = json.loads((SKILL_DIR / "references" / "frameworks" / "index.json").read_text())
         ids = {record["id"] for record in index}
-        assert ids == {"eu-ai-act", "nist-ai-rmf"}
+        assert {"eu-ai-act", "nist-ai-rmf"} <= ids
+        assert "gdpr-dpia" not in ids and "hipaa" not in ids
 
 
 class TestEndToEnd:

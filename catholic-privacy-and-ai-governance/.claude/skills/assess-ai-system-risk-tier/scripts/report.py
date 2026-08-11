@@ -1,13 +1,15 @@
-"""Renders a validated assessment, triage, or incident record to Markdown.
-Compliance always precedes the Catholic Social Teaching reflection, per
-build-plan.md §2.1 — a reader who wants only the compliance content can act
-on it without reading past it. Three renderers live here because three
-shapes exist (build-plan.md steps 12 and 14): render_markdown for the
-rubric-scored shape (assessment.py), render_triage_markdown for the
-single-governing-deadline classify/deadline/gaps shape (triage.py), and
-render_incident_markdown for the shape with several independent,
-simultaneous notification obligations (incident.py). write_report takes
-the renderer as a parameter rather than each shape needing its own copy of
+"""Renders a validated assessment, triage, incident, or review record to
+Markdown. Compliance always precedes the Catholic Social Teaching
+reflection, per build-plan.md §2.1 — a reader who wants only the
+compliance content can act on it without reading past it. Four renderers
+live here because four shapes exist (build-plan.md steps 12, 14, and 16):
+render_markdown for the rubric-scored shape (assessment.py),
+render_triage_markdown for the single-governing-deadline classify/
+deadline/gaps shape (triage.py), render_incident_markdown for the shape
+with several independent, simultaneous notification obligations
+(incident.py), and render_review_markdown for the per-item satisfied/
+partial/missing baseline-check shape (review.py). write_report takes the
+renderer as a parameter rather than each shape needing its own copy of
 the file-writing logic.
 """
 
@@ -241,6 +243,85 @@ def render_incident_markdown(incident: dict[str, Any]) -> str:
     lines.append("## Catholic Social Teaching reflection")
     lines.append("")
     lines.append(incident["cst_reflection"])
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def render_review_markdown(review: dict[str, Any]) -> str:
+    lines: list[str] = []
+    lines.append(f"# {review['title']}")
+    lines.append("")
+    lines.append(
+        "*Advisory draft, grounded in a working interpretation of the frameworks "
+        "considered below — not a legal opinion. Requires review and approval by "
+        "an accountable person before this review is relied on.*"
+    )
+    lines.append("")
+
+    vendor = review["vendor"]
+    lines.append("## Vendor")
+    lines.append("")
+    lines.append(f"- **Name:** {vendor['name']}")
+    lines.append(f"- **Description:** {vendor['description']}")
+    if vendor.get("service_provided"):
+        lines.append(f"- **Service provided:** {vendor['service_provided']}")
+    lines.append("")
+
+    lines.append("## Frameworks considered")
+    lines.append("")
+    for framework in review["frameworks_considered"]:
+        status = "Applicable" if framework.get("applicable") else "Not applicable"
+        lines.append(f"- **{framework['id']}** — {status}: {framework['basis']}")
+    lines.append("")
+
+    lines.append("## Baseline items")
+    lines.append("")
+    lines.append("| Item | Status |")
+    lines.append("|---|---|")
+    for item in review["baseline_items"]:
+        lines.append(f"| {item['id']} | {item['status']} |")
+    lines.append("")
+
+    for item in review["baseline_items"]:
+        lines.append(f"### {item['id']} — {item['status']}")
+        lines.append("")
+        if item.get("evidence"):
+            lines.append(f"**Evidence:** {item['evidence']}")
+            lines.append("")
+        if item.get("gap"):
+            lines.append(f"**Gap:** {item['gap']}")
+            lines.append("")
+
+    lines.append("## Compliance")
+    lines.append("")
+    lines.append(review["compliance"])
+    lines.append("")
+
+    lines.append("## Remediation commitments")
+    lines.append("")
+    commitments = review.get("remediation_commitments", [])
+    if not commitments:
+        lines.append("No open remediation commitments.")
+    else:
+        for commitment in commitments:
+            lines.append(
+                f"- **{commitment['status']}**, due {commitment['target_date']}: "
+                f"{commitment['description']}"
+            )
+    lines.append("")
+
+    overall_risk = review["overall_risk"]
+    lines.append("## Overall risk")
+    lines.append("")
+    lines.append(f"**{overall_risk['level'].capitalize()}.** {overall_risk['rationale']}")
+    lines.append("")
+    lines.append(f"**Reassessment due: {review['reassessment_due']}**")
+    lines.append("")
+
+    lines.append("## Catholic Social Teaching reflection")
+    lines.append("")
+    lines.append(review["cst_reflection"])
     lines.append("")
 
     return "\n".join(lines)

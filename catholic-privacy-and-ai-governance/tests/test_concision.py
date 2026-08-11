@@ -1,4 +1,9 @@
-from privacy_and_ai_governance.concision import lint_assessment, lint_incident, lint_triage
+from privacy_and_ai_governance.concision import (
+    lint_assessment,
+    lint_incident,
+    lint_review,
+    lint_triage,
+)
 
 
 def _tight_rating(dimension_id: str = "retention") -> dict:
@@ -198,4 +203,78 @@ class TestLintIncident:
         incident = _tight_incident()
         incident["cst_reflection"] = "word " * 1000
         warnings = lint_incident(incident)
+        assert any("cst_reflection" in w for w in warnings)
+
+
+def _tight_review() -> dict:
+    return {
+        "title": "Annual review of MailerParish, Inc.",
+        "vendor": {"description": "A bulk-email vendor used to send the weekly bulletin."},
+        "frameworks_considered": [{"id": "gdpr-dpia", "applicable": True}],
+        "baseline_items": [
+            {"id": "dpa-in-place", "evidence": "Signed DPA on file.", "gap": None},
+            {
+                "id": "security-controls-evidence",
+                "evidence": None,
+                "gap": "No current SOC 2 report on file.",
+            },
+        ],
+        "remediation_commitments": [
+            {"id": "security-questionnaire", "description": "Provide an updated questionnaire."}
+        ],
+        "overall_risk": {"rationale": "One item unmet, with an open remediation commitment."},
+        "compliance": "Under GDPR Art. 28(3), the DPA must specify processing terms.",
+        "cst_reflection": "Closing this gap keeps the parishioners' trust intact.",
+    }
+
+
+class TestLintReview:
+    def test_tight_review_produces_no_warnings(self) -> None:
+        assert lint_review(_tight_review()) == []
+
+    def test_does_not_raise_on_a_padded_review(self) -> None:
+        padded = _tight_review()
+        padded["compliance"] = "word " * 5000
+        lint_review(padded)  # should not raise
+
+    def test_flags_overlong_vendor_description(self) -> None:
+        review = _tight_review()
+        review["vendor"]["description"] = "word " * 500
+        warnings = lint_review(review)
+        assert any("vendor.description" in w for w in warnings)
+
+    def test_flags_overlong_baseline_item_evidence(self) -> None:
+        review = _tight_review()
+        review["baseline_items"][0]["evidence"] = "word " * 500
+        warnings = lint_review(review)
+        assert any("baseline_items[dpa-in-place].evidence" in w for w in warnings)
+
+    def test_flags_overlong_baseline_item_gap(self) -> None:
+        review = _tight_review()
+        review["baseline_items"][1]["gap"] = "word " * 500
+        warnings = lint_review(review)
+        assert any("baseline_items[security-controls-evidence].gap" in w for w in warnings)
+
+    def test_flags_overlong_remediation_commitment_description(self) -> None:
+        review = _tight_review()
+        review["remediation_commitments"][0]["description"] = "word " * 500
+        warnings = lint_review(review)
+        assert any("remediation_commitments[security-questionnaire]" in w for w in warnings)
+
+    def test_flags_overlong_overall_risk_rationale(self) -> None:
+        review = _tight_review()
+        review["overall_risk"]["rationale"] = "word " * 500
+        warnings = lint_review(review)
+        assert any("overall_risk.rationale" in w for w in warnings)
+
+    def test_flags_overlong_compliance_relative_to_applicable_scope(self) -> None:
+        review = _tight_review()
+        review["compliance"] = "word " * 2000
+        warnings = lint_review(review)
+        assert any("compliance" in w for w in warnings)
+
+    def test_flags_overlong_cst_reflection(self) -> None:
+        review = _tight_review()
+        review["cst_reflection"] = "word " * 1000
+        warnings = lint_review(review)
         assert any("cst_reflection" in w for w in warnings)

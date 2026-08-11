@@ -656,6 +656,23 @@ here so both duty documents' full scope has a landing spot and nothing gets lost
 | `draft-model-card` | Model & System Documentation | Produces a model/system documentation record grounded in ISO/IEC 42001's documented-information requirements and the EU AI Act's Annex IV technical documentation — name matches the example already given in `docs/standards/skills.md`. |
 | `review-ai-vendor-governance` | Third-Party & Vendor AI Governance | Reviews a vendor's or foundation-model provider's AI governance documentation against a baseline requirement set and flags missing documentation or control gaps. |
 | `triage-ai-incident` | AI Incident Management | Intakes a reported AI safety, bias, or reliability incident, runs a preliminary impact assessment, and flags applicable notification thresholds — the AI-governance sibling of `triage-privacy-incident`. |
+| `map-ai-regulatory-change` | Regulatory & Standards Monitoring | Given an AI-specific regulatory or standards development pasted in by the user, summarizes it and maps which existing AI governance controls or policies it likely affects — the AI-governance sibling of `map-regulatory-change`. |
+| `review-ai-system-reassessment` | Testing, Validation & Performance Monitoring | Checks one inventoried AI system against its defined re-evaluation interval and flags whether it's overdue for reassessment, due for documentation update, or current — the AI-governance analog to `review-data-retention-entry`. |
+
+**Correction, added at build sequence step 16:** the two rows above were
+missing from this table since the original build plan, even though both
+duties are directly stated in `ai-gov-duties.md` — "Regulatory & Standards
+Monitoring" is a near-mirror of `jobduties.md`'s "Regulatory Monitoring"
+section, and "Testing, Validation & Performance Monitoring"'s "Identify
+systems overdue for re-evaluation given their risk tier and the interval
+defined for it" is the AI-governance analog of a retention check, even
+though it isn't phrased in retention terms. Found by rereading
+`ai-gov-duties.md` directly rather than trusting an earlier summary of it
+— the same discipline this project asks of every citation, applied to its
+own planning document. `review-ai-system-reassessment`'s grounding is
+looser than `map-ai-regulatory-change`'s (a real paraphrase, not a
+near-identical section), so treat its exact shape as less settled until
+it's actually designed.
 
 Explicitly **not planned** as skills, in either domain, because they're
 program-administration work a stateless skill can't do (see §1): the compliance
@@ -1196,3 +1213,228 @@ its own examples and tests.
     can likely reuse the `incident.py` shape (severity + parallel
     notification/reporting obligations) directly, the same way this step
     reused step 13's rubric-less sync-layer plumbing.
+15. **Built `triage-ai-incident` — and this time the reuse prediction held.**
+    Unlike step 14's correction of step 13's own prediction, `incident.py`
+    turned out to be genuinely domain-agnostic: nothing in its schema
+    (`incident`, `frameworks_considered`, `severity`,
+    `notification_obligations`, `gaps`, `escalation`, `compliance`,
+    `cst_reflection`) is privacy-specific — the same reason `assessment.py`
+    carried across domains unchanged at step 11. No new `src/` module was
+    needed; `triage-ai-incident/scripts/incident.py` is the exact same
+    validation logic as its privacy sibling's copy, hand-authored again
+    (not synced, matching every other skill's own `scripts/{assessment,
+    triage,incident}.py`) with only the module docstring and argparse
+    description string naming the domain — proven structurally identical
+    via the same `ast`-normalized comparison test step 11 introduced for
+    `assessment.py`.
+
+    Added Art. 73's serious-incident reporting duty to `eu-ai-act.yaml`
+    (previously covering only the pre-deployment Chapter III obligations,
+    nothing about an incident after deployment) — verified against
+    artificialintelligenceact.eu's article text directly, including the
+    "serious incident" definition itself (Art. 3(49): death or serious
+    harm to health, critical-infrastructure disruption, a fundamental-
+    rights-obligation infringement, or serious harm to property/
+    environment) and all three reporting-deadline tiers (15 days general,
+    2 days for a widespread infringement or critical-infrastructure
+    disruption, 10 days for a death). `nist-ai-rmf.yaml` needed no
+    changes — its MANAGE function already covered incident response
+    generically from when the framework was first registered at step 11,
+    and as a voluntary framework it has no statutory deadline of its own;
+    `SKILL.md` step 3 says explicitly to record an institution's own
+    adopted internal target here rather than inventing a regulatory one
+    where none exists.
+
+    `family-manifest.yaml`'s `triage-ai-incident` entry is `rubric: null`,
+    `status: built` — no sync-layer or manifest-resolution changes needed,
+    since steps 13-14 already built that plumbing generically. Proved
+    end-to-end with the bare dependency-free `python3.12` interpreter on a
+    fabricated emergency-call-triage misclassification scenario meeting
+    the EU AI Act's own "serious incident" definition — two independent
+    obligations (a 15-day statutory filing to the EU market surveillance
+    authority, a next-business-day internal governance-committee report
+    under an adopted NIST AI RMF target) both rendered correctly with
+    their own dates and citations, not collapsed into one.
+
+    251 tests, 98% coverage, clean under `ruff`, `mypy --strict`, and
+    `agentskills validate` for all seven skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match. Next: any of the remaining five backlog skills in
+    §8 — `review-vendor-privacy-assessment` and `review-ai-vendor-
+    governance` are a similar same-shape-across-domains pair waiting to
+    happen, this time for a "review a document against a baseline and
+    flag gaps" task shape that doesn't yet exist in this project.
+16. **Built `review-vendor-privacy-assessment` and `review-ai-vendor-
+    governance` together — the fourth task shape, and the first time a
+    new shape was built for both domains in one step rather than one
+    then the other.** A vendor review doesn't fit any of the three
+    existing shapes: it isn't scored 1-5 (there's no "3 out of 5" for
+    whether a DPA exists), and it isn't anchored to a single event with a
+    deadline the way a rights request or an incident is. It's a fixed
+    checklist, each item independently `satisfied`/`partial`/`missing`
+    against what a vendor's documentation actually shows — closer in
+    spirit to the rubric shape's "one entry per known id" discipline than
+    to the triage/incident shapes' date arithmetic, but scored as a
+    status enum with conditional required fields (`evidence` for
+    `satisfied`/`partial`, `gap` for `partial`/`missing`) rather than 1-5.
+
+    This meant a genuinely new authored-content type, not just a new
+    module: `baselines/privacy-vendor.md` (eight items: written
+    data-processing terms, sub-processor disclosure, security-controls
+    evidence, breach-notification commitment, data return/deletion, audit
+    rights, international transfer mechanism, minimum-necessary access
+    scope) and `baselines/ai-vendor.md` (seven items: model documentation,
+    evaluation results, incident-notification commitment, upstream
+    dependency disclosure, human-oversight support, model-update
+    notification, training-data governance) — same heading format as
+    `rubric/criteria.md` (`## N. Name — \`id\``) so a new stdlib-only
+    `src/privacy_and_ai_governance/baseline.py` could parse item ids with
+    the identical regex `rubric.py` already used, rather than inventing a
+    second parsing convention. Both baseline documents are professional-
+    judgment checklists, not verbatim statutory text, the same way
+    `rubric/criteria.md` is — grounded in specific citations already
+    verified earlier in this project (GDPR Art. 28 processor terms, Art.
+    32 security, Art. 33(2) processor-to-controller notice, Chapter V
+    transfers; EU AI Act Arts. 10/11/14/15/73) where a specific provision
+    backs an item, general vendor-diligence best practice where one
+    doesn't — exactly like a rubric dimension's own mix.
+
+    `src/privacy_and_ai_governance/review.py` is the fourth validation
+    module, sharing the `frameworks_considered` discipline with its three
+    siblings but otherwise its own shape: `vendor`, `baseline_items`
+    (exactly one per known baseline id, the same missing/unknown/
+    duplicate checks `assessment.py` runs for rubric dimensions),
+    `remediation_commitments`, `reassessment_due`, `overall_risk`
+    (reusing the same four-level severity enum `incident.py` introduced,
+    for consistency across shapes rather than a fifth naming scheme).
+    `concision.lint_review` and `report.render_review_markdown` are new
+    siblings of their `incident`-shaped counterparts, needing no changes
+    to `write_report`'s `render_fn` parameter — the second shape in a row
+    to need zero changes there, confirming step 12's generalization was
+    the right level of abstraction.
+
+    The sync layer needed one real extension, not a rebuild: a `baseline`
+    field alongside `rubric` in `family-manifest.yaml`, with only two
+    states (present or absent) rather than `rubric`'s three, since no
+    entry predates this field and there's no historical default to fall
+    back to. `sync_skill_references` gained a `baseline_path: Path | None
+    = None` parameter mirroring the `rubric_path` block exactly;
+    `sync_all`'s `scripts_to_sync` list-building was generalized from a
+    single rubric-conditional branch to two independent conditionals
+    (append `rubric.py` if a rubric exists, `baseline.py` if a baseline
+    exists) rather than hard-coding every combination.
+
+    Built both skills together rather than sequentially, since the second
+    was zero-marginal-cost the same way `triage-ai-incident` was: hand-
+    authored `scripts/review.py` copied verbatim between them with only
+    the module docstring and argparse description string changed,
+    confirmed structurally identical by the same `ast`-normalized
+    comparison test every prior cross-domain reuse has used. Proved both
+    end-to-end with the bare dependency-free `python3.12` interpreter —
+    a diocesan cloud-backup vendor with a missing sub-processor
+    disclosure and an unstated deletion timeframe (privacy), and a
+    hospital's emergency-triage AI vendor with a missing model-update-
+    notification commitment (AI governance) — both rendering the full
+    baseline-item table, remediation commitments with dates, and overall
+    risk correctly.
+
+    325 tests, 98% coverage, clean under `ruff`, `mypy --strict`, and
+    `agentskills validate` for all nine skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match. Next: any of the remaining four backlog skills in
+    §8. `draft-ai-risk-impact-assessment` and `draft-model-card` read as
+    assessment-shaped and should need no new task shape. The other two
+    are less certain from the table description alone:
+    `review-data-retention-entry` ("flags whether it needs deletion,
+    review, or an updated retention justification") may fit the review
+    shape's per-item check loosely but outputs one verdict rather than a
+    checklist, and `map-regulatory-change` ("summarizes a pasted
+    development and maps affected policies") doesn't obviously fit any
+    of the four shapes built so far — both worth designing deliberately
+    when picked up, per this project's own recurring lesson, rather than
+    assumed to fit in advance.
+
+    **§8 correction, added before this step's own work:** rereading
+    `ai-gov-duties.md` directly (rather than trusting the earlier summary
+    of it §8 was originally drafted from) surfaced two AI-governance
+    duties with no corresponding backlog row: "Regulatory & Standards
+    Monitoring" (a near-mirror of `jobduties.md`'s "Regulatory
+    Monitoring," which `map-regulatory-change` already comes from) and
+    "Testing, Validation & Performance Monitoring"'s overdue-reassessment
+    language (a looser analog of `review-data-retention-entry`). Added
+    `map-ai-regulatory-change` and `review-ai-system-reassessment` to
+    §8's AI-governance table as `planned`, and corrected
+    `family-manifest.yaml`'s existing `review-data-retention-entry` and
+    `map-regulatory-change` entries — both previously still listed
+    `rubric: rubric/criteria.md`, which misleadingly implied they'd be
+    rubric-scored after this very step concluded they probably aren't;
+    both now `rubric: null` with a comment pointing at the open design
+    question. The same discipline this project asks of every citation —
+    verify against the primary source, don't trust a prior summary —
+    applied here to its own planning document.
+17. **Built `draft-model-card` — the fifth skill sharing an already-proven
+    shape, and a check for accidental duplication before building.**
+    Before writing anything, compared `draft-ai-risk-impact-assessment`
+    and `draft-model-card` against what `assess-ai-system-risk-tier`
+    actually became at step 11: the built skill already produces a full
+    seven-dimension rubric-scored assessment (`risk-classification`
+    through `human-oversight`) against the same framework registry —
+    not the narrower "inventory classification only" tool §8's original
+    duty-document split implied. `draft-ai-risk-impact-assessment`'s own
+    row description ("bias/fairness, explainability, robustness, and
+    human-oversight design") maps onto that same rubric almost exactly,
+    which means building it as literally described right now would
+    produce a near-duplicate of an already-built skill, not a new one.
+    Flagged this to the user rather than either building the duplicate
+    or unilaterally deciding how to differentiate it — a real product-
+    scope call, not a citation or architecture question this project's
+    own conventions could resolve alone. Deferred; not built this step.
+
+    `draft-model-card` had no such conflict — "Model & System
+    Documentation" is a duty section nothing else built so far covers —
+    so it proceeded the same way `draft-privacy-notice-update` did at
+    step 12: shares `assess-ai-system-risk-tier`'s exact rubric
+    (`rubric/ai-criteria.md`) and framework registry, byte-for-byte
+    identical `scripts/assessment.py`, with the only new work being
+    step 5 of its own `SKILL.md` (drafting the card content itself,
+    outside the validated JSON schema, the same way notice language sits
+    outside `draft-privacy-notice-update`'s).
+
+    Registered `iso-42001` (ISO/IEC 42001:2023, the AI management system
+    standard) in `frameworks/ai-governance/` first, since Annex A.8
+    ("information for interested parties") is this skill's most direct
+    grounding and no AI-governance documentation standard was registered
+    yet. Paywalled like `iso-27701`, so sourced the same way: its clause
+    4-10 high-level structure and ten-category Annex A control set
+    (A.2-A.10) came from a secondary source (isms.online) summarizing
+    the standard's publicly known structure — ISO's own site returned
+    403 on direct fetch, the same blocking pattern HHS.gov and eCFR
+    showed earlier in this project — not a fetch of the purchased
+    standard's own text, flagged with the same stronger caveat
+    `iso-27701`'s file carries.
+
+    Registering a framework in an *existing, already-built* domain
+    surfaced something the pluggable-framework tests never exercised
+    directly: every other built skill in that domain picks up the new
+    entry on the next sync too, not just the skill being built. Three
+    tests (`test_ai_governance_skill.py`, `test_ai_incident_skill.py`,
+    `test_ai_vendor_review_skill.py`) had hardcoded their bundled-
+    framework assertions as an exact set of two ids; all three now assert
+    by membership plus a wrong-domain exclusion instead — the same
+    "registry grew, assert by id not by count" fix step 7 already made
+    once for the privacy domain, now needed for the AI-governance one
+    too.
+
+    Proved end-to-end with the bare dependency-free `python3.12`
+    interpreter on a fabricated diocesan volunteer background-check
+    risk-scoring tool, citing ISO/IEC 42001 Annex A.8 directly in the
+    compliance finding. 335 tests, 98% coverage, clean under `ruff`,
+    `mypy --strict`, and `agentskills validate` for all ten skills.
+    Registered in `.claude-plugin/marketplace.json`; `README.md` and
+    `CHECKLIST.md` updated to match. Next: `draft-ai-risk-impact-
+    assessment` needs its differentiation from `assess-ai-system-risk-
+    tier` resolved with the user before it can be built; the citation-
+    review checklist item (§9/`CHECKLIST.md`) needs the user's own
+    input on what "closing" it can actually mean, since it was written
+    to require a qualified human reviewer this project's own agent
+    can't stand in for.

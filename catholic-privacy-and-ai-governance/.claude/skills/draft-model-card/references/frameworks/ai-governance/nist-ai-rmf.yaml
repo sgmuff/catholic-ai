@@ -1,0 +1,71 @@
+id: nist-ai-rmf
+name: "NIST AI Risk Management Framework (AI RMF) 1.0"
+citation_root: "NIST AI RMF 1.0"
+source_url: "https://www.nist.gov/itl/ai-risk-management-framework"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Voluntary — an institution opts into assessment against this framework
+    to structure AI risk management using a common vocabulary, often
+    alongside EU AI Act compliance work or a procurement requirement that
+    references it. Not a checklist of binding requirements; each function's
+    outcomes are adopted, adapted, or explicitly deprioritized with a
+    stated reason, the same way the NIST Privacy Framework's profiles work.
+  jurisdiction:
+    - any
+
+required_elements:
+  - id: govern
+    citation: "GOVERN"
+    requirement: >
+      A culture of AI risk management is cultivated and present: policies,
+      processes, and accountability structures for managing AI risk are
+      established across the system's lifecycle, including risk tolerance,
+      workforce training, and third-party and supply-chain risk from
+      externally sourced data, models, or components.
+  - id: map
+    citation: "MAP"
+    requirement: >
+      The context for a specific AI system is established: its intended
+      purpose, benefits, and the risks it poses to individuals, groups,
+      organizations, and society are identified and categorized before
+      those risks are measured or managed.
+  - id: measure
+    citation: "MEASURE"
+    requirement: >
+      Identified risks are analyzed, benchmarked, and monitored using
+      quantitative, qualitative, or mixed methods — including testing,
+      evaluation, verification, and validation (TEVV) for accuracy, bias
+      and fairness, robustness, and explainability.
+  - id: manage
+    citation: "MANAGE"
+    requirement: >
+      Resources are allocated to risks that have been mapped and measured,
+      on a regular basis and informed by the GOVERN function, and the
+      organization has a defined way to respond to, recover from, and
+      communicate about an AI incident once one occurs.
+
+terms_of_art:
+  - term: AI risk
+    meaning: >
+      The composite of the probability of an event occurring and the
+      magnitude of its consequences — a framing that, unlike a pure-harm
+      definition, allows for both negative and positive impacts to be
+      weighed.
+  - term: TEVV
+    meaning: >
+      Test, evaluation, verification, and validation — the set of
+      activities under the MEASURE function that establish whether an AI
+      system performs as intended, safely, and without unacceptable bias.
+  - term: trustworthy AI
+    meaning: >
+      In this framework, an AI system that is valid and reliable, safe,
+      secure and resilient, accountable and transparent, explainable and
+      interpretable, privacy-enhanced, and fair with harmful bias managed —
+      the characteristics the four functions are organized to support.
+  - term: AI actor
+    meaning: >
+      Anyone playing an active role in the AI system lifecycle, including
+      the organizations and individuals that design, develop, deploy,
+      operate, or evaluate an AI system.

@@ -95,3 +95,11 @@ frameworks:
     version: "1.0"
     last_reviewed: 2026-08-11
     status: active
+  - id: iso-42001
+    name: "ISO/IEC 42001:2023 — Artificial Intelligence Management System (AIMS)"
+    type: standard
+    domain: ai-governance
+    file: ai-governance/iso-42001.yaml
+    version: "2023"
+    last_reviewed: 2026-08-11
+    status: active

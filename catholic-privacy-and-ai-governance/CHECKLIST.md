@@ -6,7 +6,7 @@ one-line reason.
 
 ## Correctness
 
-- [x] Tests pass (`make test`) — 238 tests, 98% coverage
+- [x] Tests pass (`make test`) — 335 tests, 98% coverage
 - [x] Lint is clean (`make lint`) — `ruff check`, `ruff format --check`, `mypy --strict`
 - [ ] Every citation — magisterial, CST, or a secular framework (GDPR, CCPA/CPRA,
       HIPAA, FERPA, ISO/IEC 27701, NIST Privacy Framework, NIST AI RMF,

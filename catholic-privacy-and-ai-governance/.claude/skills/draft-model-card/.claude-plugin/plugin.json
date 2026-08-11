@@ -1,0 +1,5 @@
+{
+  "name": "draft-model-card",
+  "description": "Produces a model/system documentation record for an AI system, grounded in a full assessment against the current framework registry and the same seven-dimension AI-governance rubric assess-ai-system-risk-tier uses.",
+  "version": "0.1.0"
+}
