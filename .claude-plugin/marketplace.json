@@ -38,6 +38,12 @@
       "source": "./catholic-privacy-and-ai-governance/.claude/skills/triage-privacy-rights-request",
       "description": "Triages an incoming data-subject rights request against a pluggable registry of laws, calculates the governing response deadline, and flags outstanding gaps before a response is sent.",
       "category": "productivity"
+    },
+    {
+      "name": "triage-privacy-incident",
+      "source": "./catholic-privacy-and-ai-governance/.claude/skills/triage-privacy-incident",
+      "description": "Triages a reported privacy incident against a pluggable registry of laws, scores its severity, identifies every independent notification obligation and its deadline, and flags whether it meets the threshold for escalation.",
+      "category": "productivity"
     }
   ]
 }

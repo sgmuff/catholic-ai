@@ -1,4 +1,4 @@
-from privacy_and_ai_governance.concision import lint_assessment, lint_triage
+from privacy_and_ai_governance.concision import lint_assessment, lint_incident, lint_triage
 
 
 def _tight_rating(dimension_id: str = "retention") -> dict:
@@ -138,4 +138,64 @@ class TestLintTriage:
         triage = _tight_triage()
         triage["cst_reflection"] = "word " * 1000
         warnings = lint_triage(triage)
+        assert any("cst_reflection" in w for w in warnings)
+
+
+def _tight_incident() -> dict:
+    return {
+        "title": "Misdirected email",
+        "incident": {
+            "description": "A staff member emailed a donor list to the wrong address.",
+        },
+        "frameworks_considered": [{"id": "ca-breach-notification", "applicable": True}],
+        "notification_obligations": [
+            {
+                "id": "ca-residents",
+                "basis": "30 days from discovery, per Civ. Code § 1798.82(a)(2)(A).",
+            }
+        ],
+        "gaps": [{"id": "scope", "description": "Full scope not yet confirmed."}],
+        "compliance": "Under Civ. Code § 1798.82, affected residents must be notified "
+        "within 30 calendar days.",
+        "cst_reflection": "Treating the exposure as owed a prompt, honest accounting.",
+    }
+
+
+class TestLintIncident:
+    def test_tight_incident_produces_no_warnings(self) -> None:
+        assert lint_incident(_tight_incident()) == []
+
+    def test_does_not_raise_on_a_padded_incident(self) -> None:
+        padded = _tight_incident()
+        padded["compliance"] = "word " * 5000
+        lint_incident(padded)  # should not raise
+
+    def test_flags_overlong_incident_description(self) -> None:
+        incident = _tight_incident()
+        incident["incident"]["description"] = "word " * 500
+        warnings = lint_incident(incident)
+        assert any("incident.description" in w for w in warnings)
+
+    def test_flags_overlong_gap_description(self) -> None:
+        incident = _tight_incident()
+        incident["gaps"][0]["description"] = "word " * 500
+        warnings = lint_incident(incident)
+        assert any("gaps[scope]" in w for w in warnings)
+
+    def test_flags_overlong_notification_obligation_basis(self) -> None:
+        incident = _tight_incident()
+        incident["notification_obligations"][0]["basis"] = "word " * 500
+        warnings = lint_incident(incident)
+        assert any("notification_obligations[ca-residents]" in w for w in warnings)
+
+    def test_flags_overlong_compliance_relative_to_applicable_scope(self) -> None:
+        incident = _tight_incident()
+        incident["compliance"] = "word " * 2000
+        warnings = lint_incident(incident)
+        assert any("compliance" in w for w in warnings)
+
+    def test_flags_overlong_cst_reflection(self) -> None:
+        incident = _tight_incident()
+        incident["cst_reflection"] = "word " * 1000
+        warnings = lint_incident(incident)
         assert any("cst_reflection" in w for w in warnings)

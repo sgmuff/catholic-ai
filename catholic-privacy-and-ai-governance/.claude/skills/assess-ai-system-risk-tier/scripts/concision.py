@@ -115,3 +115,40 @@ def lint_triage(triage: dict[str, Any]) -> list[str]:
 
     warnings.extend(_lint_compliance_and_cst_reflection(triage))
     return warnings
+
+
+def lint_incident(incident: dict[str, Any]) -> list[str]:
+    """Returns a list of non-fatal concision warnings for the incident shape
+    (build-plan.md step 14); an empty list means nothing stood out as
+    unusually long.
+    """
+    warnings: list[str] = []
+
+    incident_description = incident.get("incident", {}).get("description", "")
+    count = _word_count(incident_description)
+    if count > RATING_FIELD_WORD_LIMIT:
+        warnings.append(
+            f"incident.description is {count} words — past the "
+            f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+        )
+
+    for gap in incident.get("gaps", []):
+        gap_id = gap.get("id", "<unknown gap>")
+        count = _word_count(gap.get("description", ""))
+        if count > RATING_FIELD_WORD_LIMIT:
+            warnings.append(
+                f"gaps[{gap_id}].description is {count} words — past the "
+                f"{RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+            )
+
+    for obligation in incident.get("notification_obligations", []):
+        obligation_id = obligation.get("id", "<unknown obligation>")
+        count = _word_count(obligation.get("basis", ""))
+        if count > RATING_FIELD_WORD_LIMIT:
+            warnings.append(
+                f"notification_obligations[{obligation_id}].basis is {count} words — "
+                f"past the {RATING_FIELD_WORD_LIMIT}-word generous guideline (§2.2)."
+            )
+
+    warnings.extend(_lint_compliance_and_cst_reflection(incident))
+    return warnings

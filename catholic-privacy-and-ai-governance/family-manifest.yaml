@@ -28,8 +28,8 @@ skills:
     trigger: "an access, deletion, correction, or portability request came in"
   - name: triage-privacy-incident
     domain: privacy
-    status: planned
-    rubric: rubric/criteria.md
+    status: built
+    rubric: null # incident shape (build-plan.md step 14): severity + parallel notification obligations + gaps, not rubric-scored
     trigger: "a possible data breach or privacy incident happened"
   - name: review-vendor-privacy-assessment
     domain: privacy

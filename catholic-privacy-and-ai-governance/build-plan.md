@@ -1112,3 +1112,87 @@ its own examples and tests.
     updated to match. Next: any of the remaining seven backlog skills in
     §8 — `triage-privacy-incident` can now reuse this same triage shape
     directly rather than designing a third one.
+14. **Built `triage-privacy-incident` — and step 13's own closing note
+    turned out to be wrong.** Started from the assumption that
+    `triage-privacy-incident` could reuse `triage.py`'s shape directly.
+    Designing it for real surfaced a genuine mismatch, not a superficial
+    one: `triage.py`'s `governing_deadline` is singular by design — a
+    rights request has one requester, and when multiple frameworks apply,
+    exactly one deadline actually governs the response to them. An
+    incident is structurally different — it can trigger several
+    **independent, simultaneous** notification obligations to different
+    audiences at once (a supervisory authority under one framework,
+    affected individuals under another, a state attorney general under a
+    third), none of which "governs" over the others. Force-fitting that
+    into one `governing_deadline` field would have silently dropped
+    every obligation but one. Caught this before writing any code, not
+    after — worth recording as the honest correction to step 13's
+    prediction that it was.
+
+    Built a third module instead, `src/privacy_and_ai_governance/
+    incident.py`, sharing `triage.py`'s helpers and discipline
+    (`_nonempty`, `_parse_date`, the same `frameworks_considered`
+    pattern, the same compliance/CST boundary) but with its own shape:
+    `incident` (facts: description, `discovered_date`, affected systems,
+    data types, an estimate of individuals affected), `severity` (one of
+    `low`/`moderate`/`high`/`critical`, with a rationale — the one place
+    in this project's schemas that validates against a fixed enum rather
+    than free text, because "how bad is this" needs to sort and compare
+    across incidents in a way a rights-request classification doesn't),
+    `notification_obligations` (a **list**, each with its own
+    `framework_id`, `audience`, `citation`, `due_date`, and `basis` — the
+    structural fix), `gaps`, and `escalation` (`required` plus a
+    rationale, directly matching `jobduties.md`'s "Escalate incidents
+    that meet predefined severity, notification, legal, or
+    executive-reporting thresholds"). `concision.lint_incident` and
+    `report.render_incident_markdown` are new siblings of their
+    `triage`-shaped counterparts; `report.py`'s existing `render_fn`
+    parameter on `write_report` needed no change at all — this is exactly
+    what it was generalized for in step 12.
+
+    Three new frameworks needed for this skill to have anything to
+    reason over, each citation verified against a primary source before
+    writing it down: `gdpr-breach-notification` (Arts. 33-34, verified
+    against gdpr-info.eu's article text — 72 hours to the supervisory
+    authority, without-undue-delay to data subjects when high-risk,
+    split into two required elements since the two audiences have
+    different deadlines and different exception conditions);
+    `ca-breach-notification` (Civ. Code § 1798.82, verified directly
+    against leginfo.legislature.ca.gov's statutory text through two
+    successive fetches — the first fetch's own paraphrase claimed a
+    30-day deadline, which didn't match this author's prior general
+    knowledge of the older "most expedient time possible" standard, so a
+    second fetch pulled the literal text of (a)(2)(A)-(B) to resolve the
+    discrepancy directly rather than either trusting the paraphrase or
+    silently reverting to memory — the statute genuinely was amended to
+    add the 30-day standard, confirmed from its own words, not
+    reconciled by guessing). `hipaa.yaml` already had a `breach-
+    notification` required element from step 7 and needed no changes.
+    Registered `ca-breach-notification` and `gdpr-breach-notification` as
+    separate framework files from `ccpa-cpra` and `gdpr-dpia`/`gdpr-
+    data-subject-rights` respectively, matching this registry's existing
+    pattern of splitting by citation root and applicability trigger, not
+    by statute family — a breach-notification duty and a consumer/
+    data-subject-rights duty are genuinely different obligations even
+    under the same code title.
+
+    `family-manifest.yaml`'s `triage-privacy-incident` entry is now
+    `rubric: null`, `status: built` — no sync-layer changes were needed
+    this time, since step 13 already built rubric-less-skill support
+    generically. `scripts/incident.py` is hand-authored, dependency-free,
+    structurally the same validation logic as `src/privacy_and_ai_
+    governance/incident.py`. Proved end-to-end with the bare
+    dependency-free `python3.12` interpreter on a fabricated stolen-
+    laptop scenario spanning California and EU donors — three
+    independent notification obligations (California residents, the EU
+    supervisory authority, EU data subjects) all rendered as separate,
+    correctly dated line items, not collapsed into one.
+
+    238 tests, 98% coverage, clean under `ruff`, `mypy --strict`, and
+    `agentskills validate` for all six skills. Registered in
+    `.claude-plugin/marketplace.json`; `README.md` and `CHECKLIST.md`
+    updated to match. Next: any of the remaining six backlog skills in
+    §8 — `triage-ai-incident` is this skill's AI-governance sibling and
+    can likely reuse the `incident.py` shape (severity + parallel
+    notification/reporting obligations) directly, the same way this step
+    reused step 13's rubric-less sync-layer plumbing.

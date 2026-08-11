@@ -1,0 +1,61 @@
+id: ca-breach-notification
+name: "California data breach notification law"
+citation_root: "Cal. Civ. Code § 1798.82"
+source_url: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.82.&lawCode=CIV"
+review_status: unreviewed
+
+applicability:
+  trigger: >
+    Applies to any individual or business that conducts business in
+    California and owns or licenses computerized data including personal
+    information, on discovering a breach of the security of the system —
+    unauthorized acquisition of computerized data that compromises the
+    security, confidentiality, or integrity of personal information. A
+    materially broader trigger than `ccpa-cpra` in this registry: no
+    revenue or data-volume threshold applies here, unlike CCPA/CPRA's
+    "business" definition — this is a separate, older statute in the same
+    Civil Code title, not a CCPA/CPRA provision.
+  jurisdiction:
+    - California
+
+required_elements:
+  - id: notification-deadline
+    citation: "Civ. Code § 1798.82(a)(2)(A)"
+    requirement: >
+      Subject to the delay exception below, disclosure of the breach to
+      affected California residents must be made within 30 calendar days
+      of discovery or notification of the breach.
+  - id: permitted-delay
+    citation: "Civ. Code § 1798.82(a)(2)(B)"
+    requirement: >
+      The 30-day disclosure may be delayed to accommodate the legitimate
+      needs of law enforcement, or as necessary to determine the scope of
+      the breach and restore the reasonable integrity of the data system.
+  - id: who-must-be-notified
+    citation: "Civ. Code § 1798.82(a)(1)"
+    requirement: >
+      Notification is owed to a California resident whose unencrypted
+      personal information was, or is reasonably believed to have been,
+      acquired by an unauthorized person, or whose encrypted personal
+      information was acquired together with the encryption key or
+      security credential that could render it readable.
+
+terms_of_art:
+  - term: breach of the security of the system
+    meaning: >
+      Unauthorized acquisition of computerized data that compromises the
+      security, confidentiality, or integrity of personal information
+      maintained by the individual or business — good-faith acquisition by
+      an employee or agent for a legitimate business purpose is not a
+      breach if the information is not further used or subject to
+      unauthorized disclosure (Civ. Code § 1798.82(g)).
+  - term: personal information (breach-notification sense)
+    meaning: >
+      A materially different, narrower definition from CCPA/CPRA's
+      "personal information" — here, an individual's first name/initial
+      and last name in combination with specified data elements (e.g. SSN,
+      driver's license number, financial account number with access code,
+      medical information), or a username/email combined with a password
+      or security question answer (Civ. Code § 1798.82(h)-(i)). Never
+      assume `ccpa-cpra`'s broader definition applies here without
+      checking this one.

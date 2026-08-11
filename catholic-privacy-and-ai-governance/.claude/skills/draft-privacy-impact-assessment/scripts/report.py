@@ -1,11 +1,14 @@
-"""Renders a validated assessment or triage record to Markdown. Compliance
-always precedes the Catholic Social Teaching reflection, per build-plan.md
-§2.1 — a reader who wants only the compliance content can act on it
-without reading past it. Two renderers live here because two shapes exist
-(build-plan.md step 12): render_markdown for the rubric-scored shape
-(assessment.py), render_triage_markdown for the classify/deadline/gaps
-shape (triage.py). write_report takes the renderer as a parameter rather
-than each shape needing its own copy of the file-writing logic.
+"""Renders a validated assessment, triage, or incident record to Markdown.
+Compliance always precedes the Catholic Social Teaching reflection, per
+build-plan.md §2.1 — a reader who wants only the compliance content can act
+on it without reading past it. Three renderers live here because three
+shapes exist (build-plan.md steps 12 and 14): render_markdown for the
+rubric-scored shape (assessment.py), render_triage_markdown for the
+single-governing-deadline classify/deadline/gaps shape (triage.py), and
+render_incident_markdown for the shape with several independent,
+simultaneous notification obligations (incident.py). write_report takes
+the renderer as a parameter rather than each shape needing its own copy of
+the file-writing logic.
 """
 
 from __future__ import annotations
@@ -155,6 +158,89 @@ def render_triage_markdown(triage: dict[str, Any]) -> str:
     lines.append("## Catholic Social Teaching reflection")
     lines.append("")
     lines.append(triage["cst_reflection"])
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def render_incident_markdown(incident: dict[str, Any]) -> str:
+    lines: list[str] = []
+    lines.append(f"# {incident['title']}")
+    lines.append("")
+    lines.append(
+        "*Advisory draft, grounded in a working interpretation of the frameworks "
+        "considered below — not a legal opinion. Requires review and approval by "
+        "an accountable person before any notification is sent.*"
+    )
+    lines.append("")
+
+    facts = incident["incident"]
+    lines.append("## Incident")
+    lines.append("")
+    lines.append(f"- **Description:** {facts['description']}")
+    lines.append(f"- **Discovered:** {facts['discovered_date']}")
+    if facts.get("affected_systems"):
+        lines.append(f"- **Affected systems:** {', '.join(facts['affected_systems'])}")
+    if facts.get("data_types"):
+        lines.append(f"- **Data types:** {', '.join(facts['data_types'])}")
+    if facts.get("individuals_affected_estimate") is not None:
+        lines.append(
+            f"- **Individuals affected (estimate):** {facts['individuals_affected_estimate']}"
+        )
+    lines.append("")
+
+    lines.append("## Frameworks considered")
+    lines.append("")
+    for framework in incident["frameworks_considered"]:
+        status = "Applicable" if framework.get("applicable") else "Not applicable"
+        lines.append(f"- **{framework['id']}** — {status}: {framework['basis']}")
+    lines.append("")
+
+    severity = incident["severity"]
+    lines.append("## Severity")
+    lines.append("")
+    lines.append(f"**{severity['level'].capitalize()}.** {severity['rationale']}")
+    lines.append("")
+
+    lines.append("## Notification obligations")
+    lines.append("")
+    obligations = incident.get("notification_obligations", [])
+    if not obligations:
+        lines.append("No notification obligation identified.")
+    else:
+        for obligation in obligations:
+            lines.append(
+                f"- **{obligation['audience']}** — due {obligation['due_date']} "
+                f"({obligation['citation']}): {obligation['basis']}"
+            )
+    lines.append("")
+
+    lines.append("## Compliance")
+    lines.append("")
+    lines.append(incident["compliance"])
+    lines.append("")
+
+    lines.append("## Gaps and outstanding items")
+    lines.append("")
+    gaps = incident.get("gaps", [])
+    if not gaps:
+        lines.append("No outstanding gaps identified.")
+    else:
+        for gap in gaps:
+            marker = "**Blocking.**" if gap.get("blocking") else "Non-blocking."
+            lines.append(f"- {marker} {gap['description']}")
+    lines.append("")
+
+    escalation = incident["escalation"]
+    lines.append("## Escalation")
+    lines.append("")
+    verdict = "Required." if escalation.get("required") else "Not required."
+    lines.append(f"**{verdict}** {escalation['rationale']}")
+    lines.append("")
+
+    lines.append("## Catholic Social Teaching reflection")
+    lines.append("")
+    lines.append(incident["cst_reflection"])
     lines.append("")
 
     return "\n".join(lines)

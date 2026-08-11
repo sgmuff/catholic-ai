@@ -31,6 +31,22 @@ frameworks:
     version: "Cal. Civ. Code § 1798.100 et seq., as amended by Prop 24 (2020)"
     last_reviewed: 2026-08-11
     status: active
+  - id: gdpr-breach-notification
+    name: "GDPR Arts. 33-34 — Notification of a Personal Data Breach"
+    type: law
+    domain: privacy
+    file: privacy/gdpr-breach-notification.yaml
+    version: "Regulation (EU) 2016/679, as amended"
+    last_reviewed: 2026-08-11
+    status: active
+  - id: ca-breach-notification
+    name: "California data breach notification law"
+    type: law
+    domain: privacy
+    file: privacy/ca-breach-notification.yaml
+    version: "Cal. Civ. Code § 1798.82"
+    last_reviewed: 2026-08-11
+    status: active
   - id: hipaa
     name: "HIPAA — Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)"
     type: law

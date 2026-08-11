@@ -1,0 +1,5 @@
+{
+  "name": "triage-privacy-incident",
+  "description": "Triages a reported privacy incident or possible data breach against the current framework registry (GDPR, CCPA/CPRA, California's breach notification law, HIPAA), scores its severity, identifies every independent notification obligation and its deadline, and states whether it meets the threshold for escalation.",
+  "version": "0.1.0"
+}

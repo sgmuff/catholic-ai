@@ -68,16 +68,19 @@ class TestFamilyManifest:
                     f"{skill['name']} is marked built but has no folder"
                 )
 
-    def test_exactly_four_skills_are_built_so_far(self) -> None:
+    def test_exactly_five_skills_are_built_so_far(self) -> None:
         # Both flagships (step 11), draft-privacy-notice-update (step 12),
-        # and triage-privacy-rights-request (step 12 continued, the first
-        # rubric-less/triage-shaped skill) — the rest are planned.
+        # triage-privacy-rights-request (step 12 continued, the first
+        # rubric-less/triage-shaped skill), and triage-privacy-incident
+        # (step 14, a sibling shape with parallel notification obligations
+        # instead of a single governing deadline) — the rest are planned.
         built = {s["name"] for s in self._skills() if s["status"] == "built"}
         assert built == {
             "draft-privacy-impact-assessment",
             "assess-ai-system-risk-tier",
             "draft-privacy-notice-update",
             "triage-privacy-rights-request",
+            "triage-privacy-incident",
         }
 
     def test_every_entry_with_a_rubric_field_points_at_a_real_file(self) -> None:

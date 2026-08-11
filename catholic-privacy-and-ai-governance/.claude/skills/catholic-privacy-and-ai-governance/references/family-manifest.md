@@ -15,7 +15,7 @@
 ## triage-privacy-incident
 
 - **Domain:** privacy
-- **Status:** planned
+- **Status:** built
 - **Trigger:** a possible data breach or privacy incident happened
 
 ## review-vendor-privacy-assessment

@@ -33,6 +33,28 @@
 - **Jurisdiction:** California
 - **File:** `frameworks/privacy/ccpa-cpra.yaml`
 
+## gdpr-breach-notification — GDPR Arts. 33-34 — Notification of a Personal Data Breach
+
+- **Type:** law
+- **Citation root:** GDPR Arts. 33-34
+- **Review status:** unreviewed
+- **Source:** https://gdpr-info.eu/art-33-gdpr/
+- **Trigger:** Applies whenever a controller becomes aware of a personal data breach — a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data. Distinct from `gdpr-dpia` (Art. 35's pre-processing impact assessment) and `gdpr-data-subject-rights` (Chapter III's response obligations to a rights request) in this registry — an incident-triage task should cite this entry, not those.
+
+- **Jurisdiction:** European Union, European Economic Area, Any controller or processor outside the EU/EEA processing EU/EEA data subjects' personal data under GDPR's extraterritorial scope (Art. 3)
+- **File:** `frameworks/privacy/gdpr-breach-notification.yaml`
+
+## ca-breach-notification — California data breach notification law
+
+- **Type:** law
+- **Citation root:** Cal. Civ. Code § 1798.82
+- **Review status:** unreviewed
+- **Source:** https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.82.&lawCode=CIV
+- **Trigger:** Applies to any individual or business that conducts business in California and owns or licenses computerized data including personal information, on discovering a breach of the security of the system — unauthorized acquisition of computerized data that compromises the security, confidentiality, or integrity of personal information. A materially broader trigger than `ccpa-cpra` in this registry: no revenue or data-volume threshold applies here, unlike CCPA/CPRA's "business" definition — this is a separate, older statute in the same Civil Code title, not a CCPA/CPRA provision.
+
+- **Jurisdiction:** California
+- **File:** `frameworks/privacy/ca-breach-notification.yaml`
+
 ## hipaa — HIPAA — Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)
 
 - **Type:** law

@@ -2,6 +2,7 @@ import datetime
 from pathlib import Path
 
 from privacy_and_ai_governance.report import (
+    render_incident_markdown,
     render_markdown,
     render_triage_markdown,
     slugify,
@@ -154,6 +155,121 @@ class TestRenderTriageMarkdown:
 
     def test_advisory_disclosure_is_present(self) -> None:
         markdown = render_triage_markdown(_triage())
+        assert "not a legal opinion" in markdown
+        assert "accountable person" in markdown
+
+
+def _incident() -> dict:
+    return {
+        "title": "Misdirected email containing parishioner records",
+        "incident": {
+            "description": "A parish office staff member emailed a spreadsheet of "
+            "150 parishioners' donation history to the wrong distribution list.",
+            "discovered_date": "2026-08-01",
+            "affected_systems": ["parish office email"],
+            "data_types": ["name", "donation history"],
+            "individuals_affected_estimate": 150,
+        },
+        "frameworks_considered": [
+            {
+                "id": "ca-breach-notification",
+                "applicable": True,
+                "basis": "Some affected parishioners are California residents.",
+            }
+        ],
+        "severity": {
+            "level": "moderate",
+            "rationale": "Financial data exposed internally, not to a malicious actor.",
+        },
+        "notification_obligations": [
+            {
+                "id": "ca-residents",
+                "framework_id": "ca-breach-notification",
+                "audience": "Affected California residents",
+                "citation": "Civ. Code § 1798.82(a)(2)(A)",
+                "due_date": "2026-08-31",
+                "basis": "30 calendar days from the 2026-08-01 discovery date.",
+            }
+        ],
+        "gaps": [
+            {
+                "id": "scope",
+                "description": "Full list of affected recipients not yet confirmed.",
+                "blocking": True,
+            }
+        ],
+        "escalation": {
+            "required": True,
+            "rationale": "Meets the notification-obligation threshold.",
+        },
+        "compliance": "Under Civ. Code § 1798.82(a)(2)(A), affected California "
+        "residents must be notified within 30 calendar days of discovery.",
+        "cst_reflection": "Treating the exposure as owed a prompt, honest accounting.",
+    }
+
+
+class TestRenderIncidentMarkdown:
+    def test_renders_the_title_as_a_heading(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        assert markdown.startswith("# Misdirected email containing parishioner records")
+
+    def test_compliance_section_precedes_cst_reflection(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        compliance_index = markdown.index("## Compliance")
+        cst_index = markdown.index("## Catholic Social Teaching reflection")
+        assert compliance_index < cst_index
+
+    def test_severity_is_rendered(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        assert "moderate" in markdown.lower()
+
+    def test_every_notification_obligation_appears_with_its_audience_and_due_date(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        assert "Affected California residents" in markdown
+        assert "2026-08-31" in markdown
+        assert "Civ. Code § 1798.82(a)(2)(A)" in markdown
+
+    def test_multiple_notification_obligations_all_appear(self) -> None:
+        incident = _incident()
+        incident["frameworks_considered"].append(
+            {
+                "id": "gdpr-breach-notification",
+                "applicable": True,
+                "basis": "Some affected parishioners are EU residents.",
+            }
+        )
+        incident["notification_obligations"].append(
+            {
+                "id": "eu-authority",
+                "framework_id": "gdpr-breach-notification",
+                "audience": "Competent supervisory authority",
+                "citation": "Art. 33(1)",
+                "due_date": "2026-08-04",
+                "basis": "72 hours from discovery.",
+            }
+        )
+        markdown = render_incident_markdown(incident)
+        assert "Affected California residents" in markdown
+        assert "Competent supervisory authority" in markdown
+
+    def test_no_notification_obligations_renders_a_clean_statement_not_an_empty_section(
+        self,
+    ) -> None:
+        incident = _incident()
+        incident["notification_obligations"] = []
+        markdown = render_incident_markdown(incident)
+        assert "no notification" in markdown.lower() or "none identified" in markdown.lower()
+
+    def test_escalation_is_rendered(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        assert "escalat" in markdown.lower()
+
+    def test_blocking_gap_is_rendered(self) -> None:
+        markdown = render_incident_markdown(_incident())
+        assert "Full list of affected recipients not yet confirmed." in markdown
+
+    def test_advisory_disclosure_is_present(self) -> None:
+        markdown = render_incident_markdown(_incident())
         assert "not a legal opinion" in markdown
         assert "accountable person" in markdown
 

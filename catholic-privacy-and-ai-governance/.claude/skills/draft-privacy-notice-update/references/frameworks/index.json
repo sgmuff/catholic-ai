@@ -276,6 +276,114 @@
     ]
   },
   {
+    "id": "gdpr-breach-notification",
+    "name": "GDPR Arts. 33-34 \u2014 Notification of a Personal Data Breach",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/gdpr-breach-notification.yaml",
+    "version": "Regulation (EU) 2016/679, as amended",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "GDPR Arts. 33-34",
+    "source_url": "https://gdpr-info.eu/art-33-gdpr/",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies whenever a controller becomes aware of a personal data breach \u2014 a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data. Distinct from `gdpr-dpia` (Art. 35's pre-processing impact assessment) and `gdpr-data-subject-rights` (Chapter III's response obligations to a rights request) in this registry \u2014 an incident-triage task should cite this entry, not those.\n",
+      "jurisdiction": [
+        "European Union",
+        "European Economic Area",
+        "Any controller or processor outside the EU/EEA processing EU/EEA data subjects' personal data under GDPR's extraterritorial scope (Art. 3)"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "supervisory-authority-notification-deadline",
+        "citation": "Art. 33(1)",
+        "requirement": "The controller shall notify the competent supervisory authority without undue delay and, where feasible, not later than 72 hours after having become aware of a personal data breach, unless the breach is unlikely to result in a risk to the rights and freedoms of natural persons. Where notification is not made within 72 hours, it shall be accompanied by reasons for the delay.\n"
+      },
+      {
+        "id": "processor-notifies-controller",
+        "citation": "Art. 33(2)",
+        "requirement": "A processor shall notify the controller without undue delay after becoming aware of a personal data breach \u2014 the processor has no independent duty to notify the supervisory authority or data subjects directly.\n"
+      },
+      {
+        "id": "supervisory-authority-notification-content",
+        "citation": "Art. 33(3)",
+        "requirement": "The notification to the supervisory authority must at least describe the nature of the breach (including categories and approximate numbers of data subjects and records concerned), the data protection officer's or other contact point's details, the likely consequences, and the measures taken or proposed to address the breach and mitigate its effects.\n"
+      },
+      {
+        "id": "data-subject-notification-standard",
+        "citation": "Art. 34(1)",
+        "requirement": "When a personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the breach to the affected data subjects without undue delay, in clear and plain language.\n"
+      },
+      {
+        "id": "data-subject-notification-exceptions",
+        "citation": "Art. 34(3)",
+        "requirement": "Notification to data subjects is not required if the controller has implemented protective measures (e.g. encryption) that render the data unintelligible to anyone not authorized to access it, has taken subsequent measures ensuring the high risk is no longer likely to materialize, or if individual notification would involve disproportionate effort \u2014 in which case a public communication or similarly effective measure is used instead.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "personal data breach",
+        "meaning": "A breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data transmitted, stored, or otherwise processed (Art. 4(12)).\n"
+      },
+      {
+        "term": "without undue delay",
+        "meaning": "The governing standard for both the 72-hour supervisory-authority notification and the data-subject notification \u2014 assessed against how quickly a controller, acting responsibly, could reasonably act once aware, not a fixed grace period on top of the stated deadline.\n"
+      },
+      {
+        "term": "high risk (Art. 34)",
+        "meaning": "A materially higher threshold than Art. 33's \"risk\" standard for notifying the supervisory authority \u2014 not every breach reportable to a supervisory authority also triggers the data-subject notification duty.\n"
+      }
+    ]
+  },
+  {
+    "id": "ca-breach-notification",
+    "name": "California data breach notification law",
+    "type": "law",
+    "domain": "privacy",
+    "file": "privacy/ca-breach-notification.yaml",
+    "version": "Cal. Civ. Code \u00a7 1798.82",
+    "last_reviewed": "2026-08-11",
+    "status": "active",
+    "citation_root": "Cal. Civ. Code \u00a7 1798.82",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.82.&lawCode=CIV",
+    "review_status": "unreviewed",
+    "applicability": {
+      "trigger": "Applies to any individual or business that conducts business in California and owns or licenses computerized data including personal information, on discovering a breach of the security of the system \u2014 unauthorized acquisition of computerized data that compromises the security, confidentiality, or integrity of personal information. A materially broader trigger than `ccpa-cpra` in this registry: no revenue or data-volume threshold applies here, unlike CCPA/CPRA's \"business\" definition \u2014 this is a separate, older statute in the same Civil Code title, not a CCPA/CPRA provision.\n",
+      "jurisdiction": [
+        "California"
+      ]
+    },
+    "required_elements": [
+      {
+        "id": "notification-deadline",
+        "citation": "Civ. Code \u00a7 1798.82(a)(2)(A)",
+        "requirement": "Subject to the delay exception below, disclosure of the breach to affected California residents must be made within 30 calendar days of discovery or notification of the breach.\n"
+      },
+      {
+        "id": "permitted-delay",
+        "citation": "Civ. Code \u00a7 1798.82(a)(2)(B)",
+        "requirement": "The 30-day disclosure may be delayed to accommodate the legitimate needs of law enforcement, or as necessary to determine the scope of the breach and restore the reasonable integrity of the data system.\n"
+      },
+      {
+        "id": "who-must-be-notified",
+        "citation": "Civ. Code \u00a7 1798.82(a)(1)",
+        "requirement": "Notification is owed to a California resident whose unencrypted personal information was, or is reasonably believed to have been, acquired by an unauthorized person, or whose encrypted personal information was acquired together with the encryption key or security credential that could render it readable.\n"
+      }
+    ],
+    "terms_of_art": [
+      {
+        "term": "breach of the security of the system",
+        "meaning": "Unauthorized acquisition of computerized data that compromises the security, confidentiality, or integrity of personal information maintained by the individual or business \u2014 good-faith acquisition by an employee or agent for a legitimate business purpose is not a breach if the information is not further used or subject to unauthorized disclosure (Civ. Code \u00a7 1798.82(g)).\n"
+      },
+      {
+        "term": "personal information (breach-notification sense)",
+        "meaning": "A materially different, narrower definition from CCPA/CPRA's \"personal information\" \u2014 here, an individual's first name/initial and last name in combination with specified data elements (e.g. SSN, driver's license number, financial account number with access code, medical information), or a username/email combined with a password or security question answer (Civ. Code \u00a7 1798.82(h)-(i)). Never assume `ccpa-cpra`'s broader definition applies here without checking this one.\n"
+      }
+    ]
+  },
+  {
     "id": "hipaa",
     "name": "HIPAA \u2014 Health Insurance Portability and Accountability Act (Privacy, Security, and Breach Notification Rules)",
     "type": "law",
