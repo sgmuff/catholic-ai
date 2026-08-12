@@ -200,3 +200,13 @@ via this repo's root `.claude-plugin/marketplace.json`:
 scoped it would have duplicated `assess-ai-system-risk-tier`'s already-
 built full rubric-scored assessment. The backlog in `family-manifest.yaml`
 and `build-plan.md` §8 is otherwise complete.
+
+### Launcher
+
+`/governance` (`.claude/commands/governance.md`) always shows the full
+`built`-skill menu immediately, deterministically — unlike the
+`catholic-privacy-and-ai-governance` router skill above, which only
+surfaces a menu when it judges a request ambiguous, and asks a clarifying
+question before showing one. Both read the same generated
+`references/family-manifest.md`, so neither can drift from the other or
+list a skill that isn't actually built.
