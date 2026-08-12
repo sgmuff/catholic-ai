@@ -64,6 +64,13 @@ output, and how long inputs/outputs/training-derived data are kept. Stop
 asking once there's enough to reason about every rubric dimension, the
 same discipline `assess-ai-system-risk-tier` follows.
 
+When part of this — the underlying model's own public model card, technical
+report, or provider documentation — plausibly has a public source, offer
+the user a choice: supply it directly, or have this skill search for it and
+bring back what it finds, cited with a link, for the user to confirm before
+it's relied on (build-plan.md §2.4). This never extends to searching for
+information about the specific people the system acts on.
+
 ## 2. Identify applicable frameworks
 
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full, exactly
@@ -131,9 +138,10 @@ problem than documentation that's merely incomplete.
 
 Same grounding as `assess-ai-system-risk-tier`'s own §7.3-equivalent —
 personalism, subsidiarity, solidarity, and the primacy of human judgment
-over automated determination — with one dimension specific to this
-skill's own purpose: a model card is how a system that acts on a person
-remains answerable to the people who rely on it or are affected by it.
+over automated determination, each with its own citation at build-plan.md
+§2.3 — with one dimension specific to this skill's own purpose: a model
+card is how a system that acts on a person remains answerable to the
+people who rely on it or are affected by it.
 Documentation that's technically accurate but written to obscure a real
 limitation isn't honoring that; it's exploiting the gap between disclosure
 and comprehension. This reasoning belongs in `cst_reflection`, alongside

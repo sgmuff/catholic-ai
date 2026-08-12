@@ -93,7 +93,12 @@ gets read here.
 Ask what happened, in concrete terms: what was disclosed, lost, or
 accessed; which systems and data types were involved; roughly how many
 individuals are affected; and when it was discovered (not when it
-happened, if the two differ — deadlines below run from discovery). Read
+happened, if the two differ — deadlines below run from discovery). What
+actually happened is internal information only the user has, and this
+skill never searches for or about the individuals affected — but if a
+vendor is involved and has already published its own advisory or
+notification about this same incident, offer to find and cite it as
+corroborating context, confirmed by the user (build-plan.md §2.4). Read
 `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For each
 entry, ask or infer whether the triggering jurisdiction or facts apply (a
 diocese with EU parishioners in the affected data → GDPR breach
@@ -184,11 +189,13 @@ that's already close or passed, and any severity assessed `high` or
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why those affected
-are owed a prompt, honest accounting of what happened to their data, not
-a risk to be managed quietly. Subsidiarity keeps the response as close as
-possible to those actually affected rather than deferring entirely to
-process. Solidarity weighs toward disclosure when severity is genuinely
-uncertain rather than treating uncertainty as grounds to delay. This
-reasoning belongs in `cst_reflection`, alongside the compliance findings,
-never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why those affected are owed a prompt, honest accounting of what
+happened to their data, not a risk to be managed quietly. Subsidiarity
+(Compendium of the Social Doctrine of the Church §§185-187) keeps the
+response as close as possible to those actually affected rather than
+deferring entirely to process. Solidarity (Compendium §§192-194; John Paul
+II, *Sollicitudo Rei Socialis* §38) weighs toward disclosure when severity
+is genuinely uncertain rather than treating uncertainty as grounds to
+delay. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.

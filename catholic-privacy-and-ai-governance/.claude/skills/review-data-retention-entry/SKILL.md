@@ -77,7 +77,11 @@ actually gets read here.
 Ask what this data-inventory entry covers: what it is, its purpose, and
 what retention interval currently applies to it (a stated policy, a
 regulatory maximum, or "until the relationship ends" — whatever's
-actually on record) and when it was last reviewed. Read
+actually on record) and when it was last reviewed. What the entry actually
+is and why it's kept is internal information only the user has; if the
+applicable regulatory maximum itself needs checking against the source
+text rather than what's on record, that's already covered by the framework
+lookup below rather than a separate search (build-plan.md §2.4). Read
 `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full, and read
 the specific file(s) that apply — most frameworks in this registry state
 their own retention-adjacent requirement (data minimization, storage
@@ -150,11 +154,12 @@ unreviewed until its own target date arrives.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why data kept
-without an active justification is a quiet harm even when nothing else
-goes wrong with it — a person's data outliving its purpose treats
-convenience as sufficient reason to keep something that was only ever
-justified by a specific need. Subsidiarity keeps the retention decision
-close to an active, reviewable justification rather than defaulting to
-indefinite storage. This reasoning belongs in `cst_reflection`, alongside
-the compliance findings, never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why data kept without an active justification is a quiet harm even
+when nothing else goes wrong with it — a person's data outliving its
+purpose treats convenience as sufficient reason to keep something that was
+only ever justified by a specific need. Subsidiarity (Compendium of the
+Social Doctrine of the Church §§185-187) keeps the retention decision close
+to an active, reviewable justification rather than defaulting to indefinite
+storage. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.

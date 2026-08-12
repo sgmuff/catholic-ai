@@ -82,8 +82,11 @@ gets read here.
 Ask what the requester asked for (in their own words), which right it maps
 to (access, deletion, correction, portability, restriction, objection),
 how and when it arrived, and who's asking and their relationship to the
-data. Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full.
-For each entry, ask or infer whether the triggering jurisdiction or facts
+data. This is inherently information about a specific person, so this
+skill never searches for or about the requester (build-plan.md §2.4) —
+intake here is always taken directly from the user. Read
+`${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For each
+entry, ask or infer whether the triggering jurisdiction or facts
 apply (a diocese handling an EU parishioner's request → GDPR; a US
 Catholic hospital and a request for medical records → HIPAA; a business
 serving a California resident → CCPA/CPRA). Read the specific file(s) that
@@ -156,10 +159,12 @@ deadline that's already close or passed.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground a data subject's
-claim to their own data — a request is owed a response, not granted as a
-favor. Subsidiarity keeps the decision about the data as close as possible
-to the person concerned. Solidarity weighs toward the requester when a
-request is ambiguous rather than treating ambiguity as grounds to delay.
-This reasoning belongs in `cst_reflection`, alongside the compliance
-findings, never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground a data subject's claim to their own data — a request is owed a
+response, not granted as a favor. Subsidiarity (Compendium of the Social
+Doctrine of the Church §§185-187) keeps the decision about the data as
+close as possible to the person concerned. Solidarity (Compendium §§192-194;
+John Paul II, *Sollicitudo Rei Socialis* §38) weighs toward the requester
+when a request is ambiguous rather than treating ambiguity as grounds to
+delay. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.

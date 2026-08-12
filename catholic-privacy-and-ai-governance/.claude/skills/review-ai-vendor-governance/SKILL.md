@@ -89,7 +89,11 @@ is what actually gets read here.
 Ask what the vendor's system or model does, what institutional data or
 decisions it touches, and what documentation is available to review (a
 model card, technical documentation, evaluation results, a contract's AI
-provisions...). Read
+provisions...). Offer the user a choice for any of this that plausibly has
+a public source — the vendor's or model provider's own published model
+card, technical documentation, or evaluation results: supply it directly,
+or have this skill search for and fetch it, cited with a link, for the user
+to confirm before it's treated as evidence (build-plan.md §2.4). Read
 `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For each
 entry, ask or infer whether it applies (a vendor supplying a high-risk AI
 system under the EU AI Act's Annex III categories, in scope of the Act's
@@ -175,14 +179,17 @@ item marked `missing`.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why relying on a
-vendor's AI system doesn't dissolve the institution's own responsibility
-for decisions it makes about people using that system. The primacy of
-human judgment over automated determination grounds why the
-human-oversight-support item matters as much as any technical
-capability. Subsidiarity keeps oversight of the vendor relationship
-active rather than delegated away unexamined once a contract is signed.
-Solidarity weighs toward closing a gap rather than accepting residual
-risk when the system's decisions affect those least able to contest them.
-This reasoning belongs in `cst_reflection`, alongside the compliance
-findings, never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why relying on a vendor's AI system doesn't dissolve the
+institution's own responsibility for decisions it makes about people using
+that system. The primacy of human judgment over automated determination
+(*Antiqua et Nova*, DDF & Dicastery for Culture and Education, 28 Jan. 2025,
+§44) grounds why the human-oversight-support item matters as much as any
+technical capability. Subsidiarity (Compendium of the Social Doctrine of the
+Church §§185-187) keeps oversight of the vendor relationship active rather
+than delegated away unexamined once a contract is signed. Solidarity
+(Compendium §§192-194; John Paul II, *Sollicitudo Rei Socialis* §38) weighs
+toward closing a gap rather than accepting residual risk when the system's
+decisions affect those least able to contest them. Full citations:
+build-plan.md §2.3. This reasoning belongs in `cst_reflection`, alongside
+the compliance findings, never inside them.

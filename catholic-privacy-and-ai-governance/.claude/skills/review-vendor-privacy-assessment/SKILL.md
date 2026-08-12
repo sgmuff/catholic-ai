@@ -91,7 +91,12 @@ is what actually gets read here.
 
 Ask what the vendor does, what institutional data or systems it touches,
 and what documentation is available to review (a completed questionnaire,
-a DPA, a security certification, a public sub-processor list...). Read
+a DPA, a security certification, a public sub-processor list...). Offer the
+user a choice for any of this that plausibly has a public source — the
+vendor's own published privacy policy, DPA template, or security/compliance
+certification page: supply it directly, or have this skill search for and
+fetch it, cited with a link, for the user to confirm before it's treated as
+evidence (build-plan.md §2.4). Read
 `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For each
 entry, ask or infer whether it applies to this vendor relationship (a
 vendor processing EU-resident data on the institution's behalf → GDPR; a
@@ -174,12 +179,14 @@ high-sensitivity data with any baseline item marked `missing`.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why a vendor
-relationship doesn't dissolve the institution's own responsibility for
-data entrusted to it — a person's data passing through a vendor is still
-that person's data. Subsidiarity keeps oversight of that relationship
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why a vendor relationship doesn't dissolve the institution's own
+responsibility for data entrusted to it — a person's data passing through a
+vendor is still that person's data. Subsidiarity (Compendium of the Social
+Doctrine of the Church §§185-187) keeps oversight of that relationship
 active rather than delegated away unexamined once a contract is signed.
-Solidarity weighs toward closing a gap rather than accepting residual
-risk when the data involved is used by or about those least able to
-contest how it's handled. This reasoning belongs in `cst_reflection`,
-alongside the compliance findings, never inside them.
+Solidarity (Compendium §§192-194; John Paul II, *Sollicitudo Rei Socialis*
+§38) weighs toward closing a gap rather than accepting residual risk when
+the data involved is used by or about those least able to contest how it's
+handled. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.

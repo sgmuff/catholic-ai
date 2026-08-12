@@ -84,6 +84,13 @@ receives the data (internal teams, vendors, other institutions), where it's
 stored, and how long it's kept. Stop asking once there's enough to reason
 about every rubric dimension — not a fixed questionnaire run to exhaustion.
 
+When part of this — a vendor's published privacy policy or DPA, a system's
+public-facing documentation — plausibly has a public source, offer the user
+a choice: supply it directly, or have this skill search for it and bring
+back what it finds, cited with a link, for the user to confirm before it's
+relied on (build-plan.md §2.4). This never extends to searching for
+information about the specific people the activity concerns.
+
 ## 2. Identify applicable frameworks
 
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For each
@@ -170,14 +177,17 @@ stopped — stays a human decision every time.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground informational
-self-determination: a person's data is an extension of the person, not a
-resource to optimize. Subsidiarity keeps data-handling decisions and consent
-as close as possible to the person concerned. Solidarity protects those
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground informational self-determination: a person's data is an extension of
+the person, not a resource to optimize. Subsidiarity (Compendium of the
+Social Doctrine of the Church §§185-187) keeps data-handling decisions and
+consent as close as possible to the person concerned. Solidarity (Compendium
+§§192-194; John Paul II, *Sollicitudo Rei Socialis* §38) protects those
 least able to contest how their data is used. The primacy of human judgment
-over automated determination grounds the human-oversight dimension
-specifically. This reasoning belongs in `cst_reflection`, alongside the
-compliance findings, never inside them.
+over automated determination (*Antiqua et Nova*, DDF & Dicastery for Culture
+and Education, 28 Jan. 2025, §44) grounds the human-oversight dimension
+specifically. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.
 
 `render_markdown` puts this section first, as the report's Catholic Social
 Teaching summary (build-plan.md §2.1 amendment) — so write it to name what

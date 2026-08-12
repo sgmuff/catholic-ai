@@ -79,7 +79,11 @@ actually gets read here.
 
 Ask what this AI system is, its purpose, its risk tier (which sets its
 own re-evaluation interval — a high-risk system needs more frequent
-reassessment than a minimal-risk one), and when it was last assessed.
+reassessment than a minimal-risk one), and when it was last assessed. If
+the system is vendor-supplied and its provider has published updated
+documentation or a new model card since the last assessment, offer to find
+and cite it — that's often exactly what triggers a `needs-update` verdict
+below — confirmed by the user before it's relied on (build-plan.md §2.4).
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full, and
 read the specific file(s) that apply — the EU AI Act's obligations and
 NIST AI RMF's MEASURE/MANAGE functions both bear directly on whether a
@@ -153,11 +157,13 @@ a person.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why a system
-whose documentation has gone stale is a quiet harm even when nothing else
-goes wrong with it — a system a person's outcome depends on is owed
-active, current oversight, not a one-time assessment treated as
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why a system whose documentation has gone stale is a quiet harm even
+when nothing else goes wrong with it — a system a person's outcome depends
+on is owed active, current oversight, not a one-time assessment treated as
 permanent. The primacy of human judgment over automated determination
-grounds why a lapsed interval gets flagged rather than silently assumed
-still valid. This reasoning belongs in `cst_reflection`, alongside the
-compliance findings, never inside them.
+(*Antiqua et Nova*, DDF & Dicastery for Culture and Education, 28 Jan. 2025,
+§44) grounds why a lapsed interval gets flagged rather than silently
+assumed still valid. Full citations: build-plan.md §2.3. This reasoning
+belongs in `cst_reflection`, alongside the compliance findings, never
+inside them.

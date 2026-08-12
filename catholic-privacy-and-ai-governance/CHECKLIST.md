@@ -53,6 +53,21 @@ one-line reason.
       no restated rubric text, no repeated boilerplate, no padding around a
       required finding — confirmed by eye on the same three dry-run reports;
       none tripped the concision lint either
+- [x] **§2.3 — cited Catholic grounding:** every skill's `## Grounding`
+      section names a real, checkable source for each principle it invokes
+      (Catechism §§356-357, 1700; Compendium of the Social Doctrine of the
+      Church §§185-187 and §§192-194; John Paul II, *Sollicitudo Rei
+      Socialis* §38; *Antiqua et Nova* §44), each verified against a primary
+      or authoritative secondary source rather than recalled from memory —
+      confirmed across all 13 specialist skills; `make test`, `make lint`,
+      and `agentskills validate` all pass on every skill after the change
+- [x] **§2.4 — intake offers a lookup:** every specialist skill's intake step
+      offers the user a choice between supplying plausibly-public
+      information directly or having the skill search for and cite it,
+      scoped to what's actually public for that skill's own subject matter,
+      and explicitly excluding any search for or about a named individual
+      (a rights requester, an incident-affected person) — confirmed across
+      all 13 specialist skills
 
 ## Pluggable frameworks (`build-plan.md` §3)
 

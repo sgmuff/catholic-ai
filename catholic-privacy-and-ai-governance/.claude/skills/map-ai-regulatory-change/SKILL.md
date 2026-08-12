@@ -90,6 +90,11 @@ specific citation if one exists, what changed in plain terms, and when it
 was published or takes effect. This skill doesn't monitor anything on its
 own — it works from what the user brings to the conversation.
 
+If the user only has a name or citation and not the full text, offer to
+search for and fetch the official published text instead of working from a
+paraphrase — cited with a link, and confirmed by the user before it's
+treated as the development's actual content (build-plan.md §2.4).
+
 ## 2. Map impact against the registry
 
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For
@@ -165,11 +170,13 @@ a routine registry update.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why the framework
-registry itself needs active upkeep — a stale registry quietly
-under-serves the very people affected by the AI systems these frameworks
-govern, even though nothing about the institution's own systems has
-changed. The primacy of human judgment over automated determination
-grounds why a change that affects human-oversight obligations gets
-flagged with particular care. This reasoning belongs in
-`cst_reflection`, alongside the compliance findings, never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why the framework registry itself needs active upkeep — a stale
+registry quietly under-serves the very people affected by the AI systems
+these frameworks govern, even though nothing about the institution's own
+systems has changed. The primacy of human judgment over automated
+determination (*Antiqua et Nova*, DDF & Dicastery for Culture and Education,
+28 Jan. 2025, §44) grounds why a change that affects human-oversight
+obligations gets flagged with particular care. Full citations: build-plan.md
+§2.3. This reasoning belongs in `cst_reflection`, alongside the compliance
+findings, never inside them.

@@ -215,6 +215,91 @@ drop something the rubric requires.
 - A go-live item in `CHECKLIST.md`, alongside §2.1's: a sampled report reads as
   tight, not merely correct.
 
+### 2.3 Catholic grounding cites a real source, not just a principle's name
+
+A `cst_reflection` (or a skill's `## Grounding` section) that only names
+personalism, subsidiarity, solidarity, or the primacy of human judgment,
+without pointing to where the Church actually says so, reads as ethics-speak
+wearing Catholic vocabulary rather than as Catholic Social Teaching. §2.1
+already requires this reasoning to be additive and kept separate from the
+compliance register; this rule requires it to also be *sourced* — the same
+citation-integrity discipline `CONTRIBUTING.md` already demands for the rest
+of this repo, applied specifically to this family's own Grounding sections
+rather than left as an implicit expectation.
+
+**Every skill's Grounding section grounds its stated principles in a real,
+checkable citation**, drawn from — and, absent a reason specific to that
+skill, limited to — this canonical set, so the family cites consistently
+rather than each skill's author picking sources independently:
+
+- **Personalism and the dignity of the human person:** Catechism of the
+  Catholic Church §§356-357, 1700.
+- **Subsidiarity:** Compendium of the Social Doctrine of the Church
+  §§185-187, tracing to Pius XI, *Quadragesimo Anno* §79.
+- **Solidarity:** Compendium §§192-194; John Paul II, *Sollicitudo Rei
+  Socialis* §38 ("a firm and persevering determination to commit oneself to
+  the common good... because we are all really responsible for all").
+- **The primacy of human judgment over automated determination:** Dicastery
+  for the Doctrine of the Faith & Dicastery for Culture and Education,
+  *Antiqua et Nova* (28 Jan. 2025) §44 ("ultimate responsibility for
+  decisions made using AI rests with the human decision-makers").
+
+A skill may cite a different or additional source when its own subject
+matter calls for one more specific than this list carries — but it still
+cites something real and checked, never a paraphrase reconstructed from what
+a principle "usually means." If a citation can't be verified against the
+primary text, the principle is stated without inventing one, per
+`CONTRIBUTING.md`'s own rule.
+
+**How this gets enforced:** a go-live item in `CHECKLIST.md`, alongside
+§2.1's and §2.2's — a sampled Grounding section names a real, checkable
+source for every principle it invokes, not just the principle.
+
+### 2.4 Intake offers a lookup, never assumes one
+
+Every specialist skill's intake step (§7 onward) so far only asks the user
+directly for whatever it needs — even when some of that information
+plausibly already exists in public, citable form: a vendor's published
+privacy policy or DPA, a foundation model's public model card or
+documentation, the official text of a law or standard under review. Asking
+only is unnecessary friction in exactly those cases, and it also misses a
+real accuracy benefit — a user recalling a vendor's retention period from
+memory is a weaker source than the vendor's own published policy.
+
+**Whenever intake needs a fact that plausibly has a public, citable source,
+offer the user a choice: supply it directly, or have the skill search for it
+and bring back what it finds — cited with a link — for the user to confirm
+before anything is built on it.** This never substitutes for genuinely
+internal information only the user has (what actually happened in an
+incident, what a requester asked for, what a system does inside the
+institution) — the offer applies only to the parts of intake that are
+plausibly public, not to intake as a whole, and a user who'd rather just
+state the fact themselves is never pushed toward a search instead. And it
+never extends to searching for information *about a specific person* — a
+rights requester, an incident-affected individual, a data subject named in
+an activity — regardless of how findable that might be online; the "public"
+sources this rule means are institutional and documentary (a vendor's
+policy, a model's documentation, a law's text), not a search for a named
+individual, which this family's own privacy and personalism grounding rules
+out on its own terms.
+
+Web-sourced material carries `CONTRIBUTING.md`'s own citation-integrity
+discipline: quoted or summarized accurately from what the source actually
+says, cited with the specific page or document, and never presented as more
+settled than a live web page actually is (a vendor's public policy page can
+be out of date; the user confirms before it's relied on the same way any DPO
+or legal reviewer would). Record which parts of intake came from the user
+directly and which came from a web lookup — not because the report format
+changes, but so a later reader can tell which facts were independently
+verified against a live source and which were taken on the requester's word.
+
+**How this gets enforced:** written once here rather than drafted separately
+per skill (the same "write once, paste into each skill" pattern as the Human
+Escalation paragraph in §8), and pasted into every specialist skill's intake
+step. A go-live item in `CHECKLIST.md`, alongside §2.1's, §2.2's, and
+§2.3's: a skill's intake step actually offers this choice wherever public
+information is plausible, not just where it's most obvious.
+
 ---
 
 ## 3. Pluggable frameworks: how laws and standards get added or removed

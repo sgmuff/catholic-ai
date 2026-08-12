@@ -82,6 +82,13 @@ who receives or acts on its output, and how long its inputs, outputs, or
 logs are kept. Stop asking once there's enough to reason about every rubric
 dimension — not a fixed questionnaire run to exhaustion.
 
+When part of this — a vendor's or model provider's public model card or
+documentation — plausibly has a public source, offer the user a choice:
+supply it directly, or have this skill search for it and bring back what it
+finds, cited with a link, for the user to confirm before it's relied on
+(build-plan.md §2.4). This never extends to searching for information about
+the specific people the system acts on.
+
 ## 2. Identify applicable frameworks and determine the risk tier
 
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full. For the
@@ -173,19 +180,24 @@ stays a human decision every time.
 
 ## Grounding
 
-Personalism and the dignity of the human person ground why this matters
-beyond the law: a system that decides, recommends, or acts on someone's
-behalf is answerable to that person, not just to a regulator. Subsidiarity
-keeps accountability for the system's behavior close to someone who can
-actually act on a finding, not diffused across an organization no one
-person is answerable for. Solidarity asks whether the system was checked
-for a disparate impact on people it's likely to affect differently, not
-just for the harm it obviously avoids. The primacy of human judgment over
-automated determination grounds the human-oversight dimension specifically
-— the same claim the privacy-domain rubric's own human-oversight dimension
-rests on, applied here to an AI system's own operation rather than to a
-downstream automated decision about personal data. This reasoning belongs
-in `cst_reflection`, alongside the compliance findings, never inside them.
+Personalism and the dignity of the human person (Catechism §§356-357, 1700)
+ground why this matters beyond the law: a system that decides, recommends,
+or acts on someone's behalf is answerable to that person, not just to a
+regulator. Subsidiarity (Compendium of the Social Doctrine of the Church
+§§185-187) keeps accountability for the system's behavior close to someone
+who can actually act on a finding, not diffused across an organization no
+one person is answerable for. Solidarity (Compendium §§192-194; John Paul
+II, *Sollicitudo Rei Socialis* §38) asks whether the system was checked for
+a disparate impact on people it's likely to affect differently, not just
+for the harm it obviously avoids. The primacy of human judgment over
+automated determination (*Antiqua et Nova*, DDF & Dicastery for Culture and
+Education, 28 Jan. 2025, §44: "ultimate responsibility for decisions made
+using AI rests with the human decision-makers") grounds the human-oversight
+dimension specifically — the same claim the privacy-domain rubric's own
+human-oversight dimension rests on, applied here to an AI system's own
+operation rather than to a downstream automated decision about personal
+data. Full citations: build-plan.md §2.3. This reasoning belongs in
+`cst_reflection`, alongside the compliance findings, never inside them.
 
 `render_markdown` puts this section first, as the report's Catholic Social
 Teaching summary (build-plan.md §2.1 amendment) — so write it to name what

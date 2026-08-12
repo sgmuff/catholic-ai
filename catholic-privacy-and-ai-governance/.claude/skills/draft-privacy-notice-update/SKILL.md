@@ -64,6 +64,13 @@ already says about this practice, if anything. Stop asking once there's
 enough to reason about every rubric dimension, the same discipline
 `draft-privacy-impact-assessment` follows.
 
+The *current* published notice or policy text is itself a natural candidate
+for this: offer the user a choice — paste the current language directly, or
+have this skill search for and fetch the published page, cited with a link,
+for the user to confirm before it's treated as the baseline (build-plan.md
+§2.4). This never extends to searching for information about the specific
+people the practice concerns.
+
 ## 2. Identify applicable frameworks
 
 Read `${CLAUDE_SKILL_DIR}/references/frameworks/index.md` in full, exactly
@@ -130,7 +137,8 @@ merely incomplete.
 
 Same grounding as `draft-privacy-impact-assessment` §7.3 — personalism,
 subsidiarity, solidarity, and the primacy of human judgment over automated
-determination — with one dimension specific to this skill's own purpose:
+determination, each with its own citation at build-plan.md §2.3 — with one
+dimension specific to this skill's own purpose:
 transparency itself is a form of respect for the person the notice is
 written for. A notice that's technically accurate but written to be
 skimmed past isn't honoring that; it's exploiting the gap between
