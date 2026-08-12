@@ -1,11 +1,16 @@
 """Renders a validated assessment, triage, incident, review, retention-
-entry, or regulatory-change record to Markdown. Compliance always
-precedes the Catholic Social Teaching reflection, per build-plan.md §2.1
-— a reader who wants only the compliance content can act on it without
-reading past it. Six renderers live here because six shapes exist
-(build-plan.md steps 12, 14, 16, and 18): render_markdown for the
-rubric-scored shape (assessment.py), render_triage_markdown for the
-single-governing-deadline classify/deadline/gaps shape (triage.py),
+entry, or regulatory-change record to Markdown. In five of the six
+shapes, compliance precedes the Catholic Social Teaching reflection, per
+build-plan.md §2.1 — a reader who wants only the compliance content can
+act on it without reading past it. render_markdown is the deliberate
+exception (build-plan.md §2.1 amendment, build sequence step 20): its CST
+section leads, right after the title, as a Catholic executive summary of
+what the assessment found — the compliance/rubric-ratings content that
+follows is still the section a reader who wants only that can act on
+without needing anything above it. Six renderers live here because six
+shapes exist (build-plan.md steps 12, 14, 16, and 18): render_markdown
+for the rubric-scored shape (assessment.py), render_triage_markdown for
+the single-governing-deadline classify/deadline/gaps shape (triage.py),
 render_incident_markdown for the shape with several independent,
 simultaneous notification obligations (incident.py),
 render_review_markdown for the per-item satisfied/partial/missing
@@ -48,6 +53,11 @@ def render_markdown(assessment: dict[str, Any]) -> str:
         "considered below — not a legal opinion. Requires review and approval by "
         "an accountable person before the underlying activity proceeds.*"
     )
+    lines.append("")
+
+    lines.append("## Catholic Social Teaching summary")
+    lines.append("")
+    lines.append(assessment["cst_reflection"])
     lines.append("")
 
     subject = assessment["subject"]
@@ -97,11 +107,6 @@ def render_markdown(assessment: dict[str, Any]) -> str:
         lines.append("")
         lines.append(f"**Ideal:** {rating['ideal']}")
         lines.append("")
-
-    lines.append("## Catholic Social Teaching reflection")
-    lines.append("")
-    lines.append(assessment["cst_reflection"])
-    lines.append("")
 
     return "\n".join(lines)
 

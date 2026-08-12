@@ -60,11 +60,14 @@ class TestRenderMarkdown:
         markdown = render_markdown(_assessment())
         assert markdown.startswith("# Parish Bulletin Sign-Up Form")
 
-    def test_compliance_section_precedes_cst_reflection(self) -> None:
+    def test_cst_summary_precedes_compliance_section(self) -> None:
+        # render_markdown is the one shape where this leads, per
+        # build-plan.md §2.1's amendment (build sequence step 20) — every
+        # other renderer in this module still puts compliance first.
         markdown = render_markdown(_assessment())
+        cst_index = markdown.index("## Catholic Social Teaching summary")
         compliance_index = markdown.index("## Compliance")
-        cst_index = markdown.index("## Catholic Social Teaching reflection")
-        assert compliance_index < cst_index
+        assert cst_index < compliance_index
 
     def test_compliance_text_is_included_verbatim(self) -> None:
         markdown = render_markdown(_assessment())

@@ -186,3 +186,11 @@ automated determination grounds the human-oversight dimension specifically
 rests on, applied here to an AI system's own operation rather than to a
 downstream automated decision about personal data. This reasoning belongs
 in `cst_reflection`, alongside the compliance findings, never inside them.
+
+`render_markdown` puts this section first, as the report's Catholic Social
+Teaching summary (build-plan.md §2.1 amendment) — so write it to name what
+the rubric actually found for this system, not just the grounding in the
+abstract: which dimensions scored where, and why that matters in this
+theological register. A reader who stops after this section should still
+walk away knowing something true and specific about this assessment, not
+just the general principles behind it.

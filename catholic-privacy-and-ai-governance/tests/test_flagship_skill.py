@@ -136,9 +136,9 @@ class TestEndToEnd:
         rendered = list(out_dir.glob("*.md"))
         assert len(rendered) == 1
         assert "Parish Bulletin Sign-Up Form" in rendered[0].read_text()
-        assert rendered[0].read_text().index("## Compliance") < rendered[0].read_text().index(
-            "## Catholic Social Teaching reflection"
-        )
+        assert rendered[0].read_text().index("## Catholic Social Teaching summary") < rendered[
+            0
+        ].read_text().index("## Compliance")
 
     def test_missing_retention_and_unknown_framework_id_both_reported(self, tmp_path: Path) -> None:
         broken = self._valid_assessment()

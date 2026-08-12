@@ -138,3 +138,9 @@ disclosure and comprehension. This reasoning belongs in `cst_reflection`,
 alongside the compliance findings, never inside them — and never inside
 the notice draft itself, which stays in plain, direct language a reader
 without any theology can act on.
+
+`render_markdown` puts this section first, as the report's Catholic Social
+Teaching summary (build-plan.md §2.1 amendment) — so write it to name what
+the rubric actually found for this changed practice, not just the
+grounding in the abstract. A reader who stops after this section should
+still walk away knowing something true and specific about this assessment.

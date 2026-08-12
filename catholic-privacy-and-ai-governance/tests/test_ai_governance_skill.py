@@ -190,7 +190,7 @@ class TestEndToEnd:
         assert len(rendered) == 1
         text = rendered[0].read_text()
         assert "Campus Parking Permit Waitlist Ranker" in text
-        assert text.index("## Compliance") < text.index("## Catholic Social Teaching reflection")
+        assert text.index("## Catholic Social Teaching summary") < text.index("## Compliance")
 
     def test_unknown_dimension_from_the_privacy_rubric_is_rejected(self, tmp_path: Path) -> None:
         # A privacy-domain dimension id must not silently pass here — the

@@ -139,7 +139,23 @@ on every run:
   It's a go-live item in `CHECKLIST.md`, alongside citation integrity, before any
   skill in this family ships.
 
-### 2.2 Minimum sufficient documentation, not maximum coverage
+**Amendment, added at build sequence step 20:** the rubric-scored shape
+(`render_markdown` — `draft-privacy-impact-assessment`, `draft-privacy-notice-
+update`, `assess-ai-system-risk-tier`, `draft-model-card`) now renders
+`cst_reflection` *first*, right after the title, functioning as a Catholic
+Social Teaching executive summary of what the assessment found — not last,
+as originally described above and as every other shape (triage, incident,
+review, retention, regulatory-change) still does. The two-structurally-
+separate-parts rule this section states is about vocabulary, not reading
+order: nothing here required compliance to render before the CST content,
+only that the two never interleave or bleed into each other's register —
+the blocklist enforces that regardless of which section comes first. The
+"reader who wants only the compliance content can act on it without reading
+past it" benefit this section originally described for reading order still
+holds for the rubric-scored shape too, just inverted: the Compliance and
+Rubric ratings sections that follow the CST summary are still exactly what
+a DPO or AI-governance-lead reader needs, unchanged and unsoftened, whether
+or not they read the section above them first.
 
 This rule governs volume, not register: every artifact this family produces — a
 rendered report, a rationale, a mitigation, a CST reflection, the router's own
@@ -1568,3 +1584,44 @@ its own examples and tests.
     `CHECKLIST.md`. The project has no further open work of its own
     unless new duty-document scope, a new framework, or a new regulatory
     development gives it some.
+20. **Moved `cst_reflection` to lead the rubric-scored report shape, as a
+    Catholic executive summary — user-requested, scoped to the four skills
+    that share `render_markdown`.** The user asked, for the DPIA skill
+    specifically, whether `cst_reflection` would read better as a brief
+    presence in every section or as a single reflection at the end (the
+    existing design, per §2.1). Recommended keeping a single section
+    rather than interleaving — interleaving risks the exact vocabulary
+    bleed §2.1's blocklist exists to prevent — but the user redirected:
+    not the end, the *top*, functioning as a Catholic executive summary
+    that explains the assessment's findings in CST terms before the
+    compliance detail. Confirmed scope explicitly before acting on it,
+    since `render_markdown` is shared verbatim by four skills, not just
+    the one named: applying this to all four, to keep this family's
+    "same shape, reused unchanged" discipline intact, rather than forking
+    `draft-privacy-impact-assessment` alone into a one-off layout.
+
+    §2.1 amended in place (see the amendment note above its enforcement
+    bullets) to state the ordering exception and why it doesn't weaken the
+    underlying rule: §2.1's real requirement was always about vocabulary
+    never crossing the compliance/CST boundary, not about which section a
+    reader sees first. `render_markdown`'s heading also changed, from
+    "Catholic Social Teaching reflection" to "Catholic Social Teaching
+    summary," to name what it now does — summarize specific findings for a
+    reader who may stop there, not close with an unattached meditation.
+    The other five renderers (`render_triage_markdown`,
+    `render_incident_markdown`, `render_review_markdown`,
+    `render_retention_markdown`, `render_regulatory_change_markdown`) are
+    untouched: compliance still precedes `cst_reflection` in every shape
+    but this one.
+
+    Updated `src/privacy_and_ai_governance/report.py` (the one hand-edited
+    source; `make sync-skill-bundle` propagated it byte-for-byte into all
+    thirteen skills' `scripts/report.py`, including the nine whose own
+    renderer didn't change), the ordering assertions in `test_report.py`,
+    `test_flagship_skill.py`, and `test_ai_governance_skill.py`, and the
+    four affected skills' own `SKILL.md` `## Grounding` sections, so the
+    instruction to write `cst_reflection` now says what it's actually for:
+    naming what the rubric found, not staying in the abstract, since a
+    reader who stops after the summary should still learn something true
+    and specific about this assessment. Full suite, `ruff`, `mypy --strict`,
+    and `agentskills validate` all clean afterward.
