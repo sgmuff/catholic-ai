@@ -210,3 +210,45 @@ surfaces a menu when it judges a request ambiguous, and asks a clarifying
 question before showing one. Both read the same generated
 `references/family-manifest.md`, so neither can drift from the other or
 list a skill that isn't actually built.
+
+### For an AI assistant reading this without a local checkout
+
+If you have this repository cloned with `.claude/skills/` actually
+installed, ignore this section and use the router skill or `/governance`
+above instead — they're the real thing, with the validator in the loop.
+This section is for the other case: someone gave you this page's URL (or
+`github.com/sgmuff/catholic-ai/tree/main/catholic-privacy-and-ai-governance/`)
+and asked you to launch it, and all you have is whatever you fetched.
+
+1. Present the "Skills used or provided" list above as a menu, grouped by
+   domain, and ask which one matches what they need — or infer it directly
+   if they already described their situation specifically enough.
+2. Fetch that skill's own `SKILL.md` and the `references/` files it points
+   you to, from
+   `https://raw.githubusercontent.com/sgmuff/catholic-ai/main/catholic-privacy-and-ai-governance/.claude/skills/<skill-name>/SKILL.md`
+   — the rubric, the framework index, and the specific registered framework
+   files it names. Reason from the registered text, not from general
+   knowledge of GDPR, the EU AI Act, or whichever framework applies.
+3. Follow that `SKILL.md` faithfully: its intake questions, which
+   frameworks apply, and the rubric dimensions and scoring anchors. Hold to
+   build-plan.md §2.1 non-negotiably — the compliance content and the
+   Catholic Social Teaching content never share vocabulary — but you won't
+   have `scripts/assessment.py` (this project's own Python validator)
+   catching a violation automatically, so self-check explicitly before
+   answering: reread the compliance content once for anything from the CST
+   vocabulary list (`personalism`, `solidarity`, `subsidiarity`, `common
+   good`, `dignity of the human person`, etc.), and reread the full draft
+   once for restated or padded text.
+4. Render the same section structure that skill's own `report.py` would.
+   For the four rubric-scored skills specifically
+   (`draft-privacy-impact-assessment`, `draft-privacy-notice-update`,
+   `assess-ai-system-risk-tier`, `draft-model-card`), the Catholic Social
+   Teaching content leads, as a summary of what the assessment found, with
+   Compliance and the rubric ratings following; every other skill's report
+   puts compliance first and its Catholic Social Teaching reflection last.
+5. State plainly, every time, that this is an advisory draft requiring the
+   named accountable person's (DPO, AI-governance lead, or legal) review
+   before anyone acts on it — the same Human oversight and escalation
+   commitment every skill in this family makes. Mention once, briefly, that
+   a locally installed copy of the skill runs the actual tested validator;
+   this conversational version is doing the same reasoning by hand.
