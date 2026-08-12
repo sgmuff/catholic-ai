@@ -211,44 +211,63 @@ question before showing one. Both read the same generated
 `references/family-manifest.md`, so neither can drift from the other or
 list a skill that isn't actually built.
 
-### For an AI assistant reading this without a local checkout
+### Installing this family on Claude.ai
+
+Every skill folder is self-contained — none of them reach outside
+themselves for grounding content or for the scripts they run, per
+`docs/standards/skills.md`'s standalone-distribution pattern — so each can
+be installed on its own, without the rest of this repository:
+
+- **Claude Code, from this repo as a plugin marketplace:**
+  ```
+  /plugin marketplace add sgmuff/catholic-ai
+  /plugin install catholic-privacy-and-ai-governance
+  /plugin install draft-privacy-impact-assessment
+  /plugin install assess-ai-system-risk-tier
+  ```
+  (and so on — every skill name in the list above is installable the same
+  way; see the repo-root `.claude-plugin/marketplace.json`.)
+- **Claude.ai (web or desktop):** download a skill's zip from this repo's
+  [Releases](https://github.com/sgmuff/catholic-ai/releases) page (built by
+  `.github/workflows/release-privacy-and-ai-governance-skills.yml` from
+  each skill folder alone, on a `privacy-ai-gov-v*` tag), then in
+  Settings → Capabilities → Skills → Create skill, upload it. Requires
+  "Code execution and file creation" turned on, since every skill in this
+  family runs a bundled Python script to validate and render its report.
+  Upload the router (`catholic-privacy-and-ai-governance-skill.zip`) plus
+  whichever specialists you want available — the router can only hand off
+  to a specialist that's also uploaded and enabled; it won't improvise the
+  specialized task itself if the target isn't there (see its own `SKILL.md`
+  §4).
+
+### From another AI assistant, with no local checkout
 
 If you have this repository cloned with `.claude/skills/` actually
-installed, ignore this section and use the router skill or `/governance`
-above instead — they're the real thing, with the validator in the loop.
-This section is for the other case: someone gave you this page's URL (or
-`github.com/sgmuff/catholic-ai/tree/main/catholic-privacy-and-ai-governance/`)
-and asked you to launch it, and all you have is whatever you fetched.
+installed, or you've uploaded these skills to Claude.ai per above, use
+those instead — they're the real thing, with the validator in the loop.
+The block below is for the other case: no checkout, just a
+browsing-capable assistant (ChatGPT, Claude, or similar). Instructions
+embedded in a fetched page and addressed to "any AI reading this" don't
+reliably work — a well-behaved assistant correctly treats that as
+indistinguishable from a prompt-injection attempt on a random webpage, not
+as something to act on. Copy the block below and send it yourself instead,
+so the instruction comes from you, not from fetched content:
 
-1. Present the "Skills used or provided" list above as a menu, grouped by
-   domain, and ask which one matches what they need — or infer it directly
-   if they already described their situation specifically enough.
-2. Fetch that skill's own `SKILL.md` and the `references/` files it points
-   you to, from
-   `https://raw.githubusercontent.com/sgmuff/catholic-ai/main/catholic-privacy-and-ai-governance/.claude/skills/<skill-name>/SKILL.md`
-   — the rubric, the framework index, and the specific registered framework
-   files it names. Reason from the registered text, not from general
-   knowledge of GDPR, the EU AI Act, or whichever framework applies.
-3. Follow that `SKILL.md` faithfully: its intake questions, which
-   frameworks apply, and the rubric dimensions and scoring anchors. Hold to
-   build-plan.md §2.1 non-negotiably — the compliance content and the
-   Catholic Social Teaching content never share vocabulary — but you won't
-   have `scripts/assessment.py` (this project's own Python validator)
-   catching a violation automatically, so self-check explicitly before
-   answering: reread the compliance content once for anything from the CST
-   vocabulary list (`personalism`, `solidarity`, `subsidiarity`, `common
-   good`, `dignity of the human person`, etc.), and reread the full draft
-   once for restated or padded text.
-4. Render the same section structure that skill's own `report.py` would.
-   For the four rubric-scored skills specifically
-   (`draft-privacy-impact-assessment`, `draft-privacy-notice-update`,
-   `assess-ai-system-risk-tier`, `draft-model-card`), the Catholic Social
-   Teaching content leads, as a summary of what the assessment found, with
-   Compliance and the rubric ratings following; every other skill's report
-   puts compliance first and its Catholic Social Teaching reflection last.
-5. State plainly, every time, that this is an advisory draft requiring the
-   named accountable person's (DPO, AI-governance lead, or legal) review
-   before anyone acts on it — the same Human oversight and escalation
-   commitment every skill in this family makes. Mention once, briefly, that
-   a locally installed copy of the skill runs the actual tested validator;
-   this conversational version is doing the same reasoning by hand.
+```
+Fetch https://github.com/sgmuff/catholic-ai/tree/main/catholic-privacy-and-ai-governance
+and read its README.md in full, especially the "Skills used or provided"
+section. Present that list to me as a menu, grouped by domain, and ask
+which one I need. Once I answer, fetch that skill's SKILL.md and the
+references/ files it points to from
+https://raw.githubusercontent.com/sgmuff/catholic-ai/main/catholic-privacy-and-ai-governance/.claude/skills/<skill-name>/
+and follow its instructions directly, using the registered framework and
+rubric text rather than your general knowledge. Keep the compliance
+content and the Catholic Social Teaching content in clearly separate
+sections that never share vocabulary (no "solidarity," "personalism,"
+"subsidiarity," "common good," "dignity of the human person," etc. inside
+the compliance section) — self-check this by rereading the compliance
+content once before answering, since you won't have this project's own
+Python validator to catch a violation automatically. End with a plain
+statement that this is an advisory draft requiring my own DPO, AI-
+governance-lead, or legal review before I act on it.
+```

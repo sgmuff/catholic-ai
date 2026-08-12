@@ -1,0 +1,52 @@
+name: Release Catholic Privacy and AI Governance skills
+
+# Publishes a ready-to-upload zip for every skill in the family (the router
+# plus all thirteen specialists), each attached as its own asset on one
+# GitHub Release. Each zip is just that skill's own folder — SKILL.md,
+# references/, scripts/, .claude-plugin/ — which is what Claude.ai's zip
+# upload flow (Settings -> Capabilities -> Skills -> Create skill) actually
+# copies, since it has no install-from-git-URL flow. Claude Code users
+# install from this repo directly instead — see the repo-root
+# .claude-plugin/marketplace.json and catholic-privacy-and-ai-governance/
+# README.md. Mirrors release-cst-finding-skill.yml's pattern, generalized to
+# loop over every skill directory instead of naming one, so a new skill
+# added to the family gets released automatically without editing this file.
+#
+# Triggered by pushing a tag like `privacy-ai-gov-v0.1.0`; never runs on an
+# ordinary push, so it only fires when someone deliberately cuts a release.
+# Every skill in the family currently shares one version (each
+# .claude-plugin/plugin.json says 0.1.0), so one tag releases all of them
+# together.
+
+on:
+  push:
+    tags:
+      - "privacy-ai-gov-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip every skill folder in the family
+        run: |
+          mkdir -p "${GITHUB_WORKSPACE}/dist"
+          cd catholic-privacy-and-ai-governance/.claude/skills
+          for skill_dir in */; do
+            skill_name="${skill_dir%/}"
+            zip -r "${GITHUB_WORKSPACE}/dist/${skill_name}-skill.zip" "$skill_name" \
+              -x "*/__pycache__/*" "*/.mypy_cache/*" "*/.pytest_cache/*"
+          done
+
+      - name: Create release with every skill's zip attached
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            "${GITHUB_WORKSPACE}"/dist/*-skill.zip \
+            --title "Catholic Privacy and AI Governance skills ${{ github.ref_name }}" \
+            --notes "Standalone Claude Skills for the Catholic Privacy and AI Governance family — the router (catholic-privacy-and-ai-governance-skill.zip) plus thirteen specialists. Upload the router and whichever specialists you want in Claude.ai (Settings -> Capabilities -> Skills -> Create skill) — the router can only hand off to a specialist that's also uploaded and enabled. Or unzip any of them into your own .claude/skills/ for Claude Code."
