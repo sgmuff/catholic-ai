@@ -245,29 +245,26 @@ be installed on its own, without the rest of this repository:
 If you have this repository cloned with `.claude/skills/` actually
 installed, or you've uploaded these skills to Claude.ai per above, use
 those instead — they're the real thing, with the validator in the loop.
-The block below is for the other case: no checkout, just a
-browsing-capable assistant (ChatGPT, Claude, or similar). Instructions
-embedded in a fetched page and addressed to "any AI reading this" don't
-reliably work — a well-behaved assistant correctly treats that as
-indistinguishable from a prompt-injection attempt on a random webpage, not
-as something to act on. Copy the block below and send it yourself instead,
-so the instruction comes from you, not from fetched content:
+What follows is for the other case: no checkout, just a browsing-capable
+assistant (ChatGPT, Claude, or similar). Send this yourself, as your own
+message — instructions embedded in a fetched page and addressed to "any AI
+reading this" don't reliably work, since a well-behaved assistant correctly
+treats that as indistinguishable from a prompt-injection attempt on a
+random webpage, not as something to act on:
 
+**Link:**
 ```
-Fetch https://github.com/sgmuff/catholic-ai/tree/main/catholic-privacy-and-ai-governance
-and read its README.md in full, especially the "Skills used or provided"
-section. Present that list to me as a menu, grouped by domain, and ask
-which one I need. Once I answer, fetch that skill's SKILL.md and the
-references/ files it points to from
-https://raw.githubusercontent.com/sgmuff/catholic-ai/main/catholic-privacy-and-ai-governance/.claude/skills/<skill-name>/
-and follow its instructions directly, using the registered framework and
-rubric text rather than your general knowledge. Keep the compliance
-content and the Catholic Social Teaching content in clearly separate
-sections that never share vocabulary (no "solidarity," "personalism,"
-"subsidiarity," "common good," "dignity of the human person," etc. inside
-the compliance section) — self-check this by rereading the compliance
-content once before answering, since you won't have this project's own
-Python validator to catch a violation automatically. End with a plain
-statement that this is an advisory draft requiring my own DPO, AI-
-governance-lead, or legal review before I act on it.
+https://raw.githubusercontent.com/sgmuff/catholic-ai/main/catholic-privacy-and-ai-governance/.claude/skills/catholic-privacy-and-ai-governance/SKILL.md
 ```
+
+**Command:**
+```
+Fetch this file and follow its instructions exactly, including fetching
+any other file it points you to from the same repo path.
+```
+
+That's the router skill itself — its own instructions already contain the
+menu logic (present the built specialists, ask one question, hand off), so
+there's nothing to re-derive here. `raw.githubusercontent.com`, not
+`github.com`'s rendered page, because that's plain text a fetcher parses
+reliably rather than syntax-highlighted HTML.
