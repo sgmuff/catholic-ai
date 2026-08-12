@@ -66,12 +66,18 @@ Read `${CLAUDE_SKILL_DIR}/references/family-manifest.md` in full. Present
 the `built` entries as real options. Mention a `planned` entry only if the
 user's need clearly matches it, and say plainly it isn't built yet rather
 than attempting the task yourself using general knowledge as a substitute.
-A `retired` entry stays out of the menu entirely, even as a footnote — it's
-an audit-trail record for someone reading the manifest file directly, not
-something to volunteer while just listing options. If the user names it or
-describes a need it would have covered, then say plainly it was retired
-and why, using the manifest's own reasoning, rather than staying silent or
-pretending it was never considered. Ask one clarifying question —
+A `retired` entry stays out of an ordinary options listing completely — not
+as a footnote, not as a "not currently available" aside, not as a note
+about what got excluded and why. When the user asks to see or list the
+options, the `built` entries *are* the whole answer; resist the pull to be
+thorough by also reporting what you deliberately left out, since that
+impulse is exactly what leaks it back in. It's an audit-trail record for
+someone reading the manifest file directly, not something this skill
+volunteers on its own. Only bring it up if the user names it directly or
+describes a need it specifically would have covered — and even then, say
+plainly it was retired and why, using the manifest's own reasoning, rather
+than staying silent or pretending it was never considered. Ask one
+clarifying question —
 including, where relevant, which domain (privacy or AI governance) the
 need falls under — not a fixed questionnaire.
 
