@@ -16,9 +16,10 @@ regardless of whether they share the theology grounding it.
 ## Status
 
 `active`. All thirteen skills across both domains are built, tested, and
-validated end-to-end — the full backlog from `build-plan.md` §8, minus
-one (`draft-ai-risk-impact-assessment`) retired as a duplicate of an
-already-built skill. Together they cover six distinct task shapes:
+validated end-to-end — the full backlog from `build-plan.md` §8, minus one
+retired as a duplicate of an already-built skill (`build-plan.md` step 17
+has the full account; it's history now, not a live manifest entry — step
+21). Together they cover six distinct task shapes:
 rubric-scored assessment (`draft-privacy-impact-assessment`,
 `assess-ai-system-risk-tier`, `draft-privacy-notice-update`,
 `draft-model-card`), single-governing-deadline triage
@@ -196,10 +197,13 @@ via this repo's root `.claude-plugin/marketplace.json`:
 - `map-ai-regulatory-change` — the AI-governance sibling of
   `map-regulatory-change`, reusing the same shape unchanged.
 
-`draft-ai-risk-impact-assessment` is retired, not planned — as originally
-scoped it would have duplicated `assess-ai-system-risk-tier`'s already-
-built full rubric-scored assessment. The backlog in `family-manifest.yaml`
-and `build-plan.md` §8 is otherwise complete.
+One entry from `build-plan.md` §8's backlog, `draft-ai-risk-impact-
+assessment`, was retired rather than built — as originally scoped it would
+have duplicated `assess-ai-system-risk-tier`'s already-built full
+rubric-scored assessment (step 17). It's no longer a `family-manifest.yaml`
+entry either, removed at step 21 once its retired status kept surfacing in
+the router's menu unprompted; `build-plan.md` carries the full account.
+The backlog is otherwise complete.
 
 ### Launcher
 

@@ -48,12 +48,6 @@
 - **Status:** built
 - **Trigger:** deploying, building, or procuring a new AI system or feature, or asks for a risk-tier classification by name
 
-## draft-ai-risk-impact-assessment
-
-- **Domain:** ai-governance
-- **Status:** retired
-- **Trigger:** an AI system needs a structured risk or impact assessment
-
 ## draft-model-card
 
 - **Domain:** ai-governance

@@ -83,7 +83,8 @@ class TestFamilyManifest:
         # retention/verdict and regulatory-change shapes' four skills
         # (step 18: review-data-retention-entry, review-ai-system-
         # reassessment, map-regulatory-change, map-ai-regulatory-change)
-        # — draft-ai-risk-impact-assessment is retired, not planned; the
+        # — draft-ai-risk-impact-assessment was retired, not planned, and
+        # its manifest row was later removed entirely (step 21); the
         # backlog is otherwise empty.
         built = {s["name"] for s in self._skills() if s["status"] == "built"}
         assert built == {

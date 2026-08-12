@@ -23,6 +23,20 @@
 # already-built skill — flip status rather than deleting the entry, the
 # same audit-trail discipline frameworks/index.yaml already applies to a
 # retired framework.
+#
+# Amendment, build sequence step 21: draft-ai-risk-impact-assessment's
+# retired row was later removed entirely, not just left as a stub — the
+# router kept volunteering its retired status unprompted even after
+# SKILL.md was tightened twice to stop it, since a live row is something a
+# fetching model can always choose to mention regardless of instruction
+# wording. The record of *why* it was never built stays fully intact in
+# build-plan.md step 17 and isn't repeated here — that's the permanent
+# audit trail, not this file. This file only ever needed to be a live,
+# consulted registry; once a decision no longer needs to shape live
+# routing behavior, keeping its stub here bought nothing but another
+# thing a model could surface unprompted. A future retirement still flips
+# status first, per the paragraph above — deleting is the second, later
+# step, taken deliberately, not the default.
 
 skills:
   # --- privacy domain --------------------------------------------------
@@ -69,11 +83,6 @@ skills:
     status: built
     rubric: rubric/ai-criteria.md
     trigger: "deploying, building, or procuring a new AI system or feature, or asks for a risk-tier classification by name"
-  - name: draft-ai-risk-impact-assessment
-    domain: ai-governance
-    status: retired # never built — duplicates assess-ai-system-risk-tier's already-built full rubric-scored assessment (build-plan.md step 17)
-    rubric: null
-    trigger: "an AI system needs a structured risk or impact assessment"
   - name: draft-model-card
     domain: ai-governance
     status: built

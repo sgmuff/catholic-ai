@@ -1625,3 +1625,55 @@ its own examples and tests.
     reader who stops after the summary should still learn something true
     and specific about this assessment. Full suite, `ruff`, `mypy --strict`,
     and `agentskills validate` all clean afterward.
+21. **Removed `draft-ai-risk-impact-assessment`'s manifest row entirely —
+    user-requested, after tightening the router's own wording twice
+    didn't stop it from being volunteered.** The user tested the router
+    from a fresh, uncached ChatGPT conversation, fetching the live
+    `SKILL.md` directly, and asked it to list all options. Even after
+    step 20's-adjacent router wording change telling it a `retired` entry
+    "stays out of the menu entirely, even as a footnote," it still added
+    a "Not currently available" section naming the retired entry and why
+    — technically not a footnote, but the exact thing the instruction
+    meant to prevent. Tightened the wording once more, naming that exact
+    failure pattern explicitly rather than the word "footnote," but was
+    honest with the user that a "don't mention X" instruction inside
+    fetched content has a real reliability ceiling no amount of rewording
+    guarantees past — suppressing a completion is harder for a model to
+    hold to than following a positive instruction, and this skill's own
+    `SKILL.md` is content a remote assistant is choosing to comply with,
+    not a system-level constraint on it.
+
+    The user asked for a deterministic alternative instead: un-retire it,
+    or delete it outright. Un-retiring wasn't a real option — the row was
+    never built in the first place because it would have exactly
+    duplicated `assess-ai-system-risk-tier` (step 17); making it real
+    would mean designing a genuinely different, non-redundant skill from
+    scratch, disproportionate to the actual problem. Deletion was the
+    right call once it was clear it didn't have to cost the audit trail
+    this project has otherwise insisted on everywhere (§2's own
+    discipline, `frameworks/index.yaml`'s retirement convention,
+    `family-manifest.yaml`'s own header comment on why `retired` beats
+    deletion): step 17's account of *why* it was never built already
+    lives permanently in this file, untouched by anything happening to a
+    live manifest row. The manifest was only ever a *live, consulted*
+    registry — once a retired entry no longer needs to shape live routing
+    behavior, keeping its stub there bought nothing but one more thing a
+    fetching model could surface on its own regardless of instruction
+    wording. Removing it is strictly stronger than any prompt tightening
+    could be: there's nothing left in the live path for a model to
+    volunteer, not just a weaker pull to do so.
+
+    Removed the row from `family-manifest.yaml` (with a header amendment
+    explaining the reasoning, so a future retirement still defaults to
+    flip-status-first, per the paragraph above it — deleting is a
+    deliberate second step, not the default), re-ran
+    `make sync-skill-bundle` so the router's generated
+    `references/family-manifest.md` drops it too, and updated both
+    `README.md` mentions and a stale test comment
+    (`tests/test_router_skill.py`) to point at this step's account rather
+    than a manifest row that no longer exists. No test assertion actually
+    depended on the row being present — `test_exactly_thirteen_skills_
+    are_built_so_far` only ever checked the `built` set — so nothing
+    beyond the comment needed touching there. Full suite (441 tests),
+    `ruff`, `mypy --strict`, and `agentskills validate` all clean
+    afterward.
