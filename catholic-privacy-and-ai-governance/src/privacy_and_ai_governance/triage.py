@@ -84,17 +84,37 @@ def validate_triage(
     if not governing_deadline:
         errors.append("governing_deadline is required")
     else:
+        statutory = governing_deadline.get("statutory")
+        if not isinstance(statutory, bool):
+            errors.append("governing_deadline.statutory must be present and a boolean")
+
         gfid = governing_deadline.get("framework_id")
-        if gfid not in known_framework_ids:
-            errors.append(
-                f"governing_deadline.framework_id references unknown framework id '{gfid}'"
-            )
-        elif gfid not in known_applicable_ids:
-            errors.append(
-                f"governing_deadline.framework_id '{gfid}' must be marked applicable "
-                "in frameworks_considered — a deadline can't be governed by a "
-                "framework that was ruled inapplicable"
-            )
+        if statutory is False:
+            if gfid is not None:
+                errors.append(
+                    "governing_deadline.framework_id must be null when statutory is "
+                    "false — an internal target can't be attributed to a framework "
+                    "that doesn't actually govern it"
+                )
+            if known_applicable_ids:
+                errors.append(
+                    "governing_deadline.statutory may only be false when no framework "
+                    "in frameworks_considered is marked applicable — "
+                    f"{sorted(known_applicable_ids)} is/are applicable here, so its/their "
+                    "deadline governs and can't be sidestepped"
+                )
+        else:
+            if gfid not in known_framework_ids:
+                errors.append(
+                    f"governing_deadline.framework_id references unknown framework id '{gfid}'"
+                )
+            elif gfid not in known_applicable_ids:
+                errors.append(
+                    f"governing_deadline.framework_id '{gfid}' must be marked applicable "
+                    "in frameworks_considered — a deadline can't be governed by a "
+                    "framework that was ruled inapplicable"
+                )
+
         if not _nonempty(governing_deadline.get("citation")):
             errors.append("governing_deadline.citation must not be empty")
         if not _nonempty(governing_deadline.get("basis")):

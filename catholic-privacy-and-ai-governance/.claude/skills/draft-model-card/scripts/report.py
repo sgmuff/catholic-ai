@@ -143,9 +143,17 @@ def render_triage_markdown(triage: dict[str, Any]) -> str:
     lines.append("")
 
     deadline = triage["governing_deadline"]
-    lines.append("## Governing deadline")
-    lines.append("")
-    lines.append(f"**Response due: {deadline['response_due']}** ({deadline['citation']})")
+    if deadline.get("statutory") is False:
+        lines.append("## Governing deadline")
+        lines.append("")
+        lines.append(
+            f"**No statutory deadline applies. Internal target: {deadline['response_due']}** "
+            f"(non-binding — {deadline['citation']})"
+        )
+    else:
+        lines.append("## Governing deadline")
+        lines.append("")
+        lines.append(f"**Response due: {deadline['response_due']}** ({deadline['citation']})")
     lines.append("")
     lines.append(deadline["basis"])
     lines.append("")

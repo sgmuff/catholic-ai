@@ -115,6 +115,7 @@ def _triage() -> dict:
             }
         ],
         "governing_deadline": {
+            "statutory": True,
             "framework_id": "gdpr-data-subject-rights",
             "citation": "Art. 12(3)",
             "response_due": "2026-09-01",
@@ -163,6 +164,27 @@ class TestRenderTriageMarkdown:
         markdown = render_triage_markdown(_triage())
         assert "not a legal opinion" in markdown
         assert "accountable person" in markdown
+
+    def test_non_statutory_deadline_is_labeled_as_an_internal_target(self) -> None:
+        triage = _triage()
+        triage["frameworks_considered"] = [
+            {
+                "id": "gdpr-data-subject-rights",
+                "applicable": False,
+                "basis": "The parishioner has no EU nexus.",
+            }
+        ]
+        triage["governing_deadline"] = {
+            "statutory": False,
+            "framework_id": None,
+            "citation": "Internal target — no applicable framework imposes a deadline.",
+            "response_due": "2026-08-31",
+            "basis": "30 days from the 2026-08-01 receipt date, an internal practice target.",
+        }
+        markdown = render_triage_markdown(triage)
+        assert "No statutory deadline applies" in markdown
+        assert "non-binding" in markdown
+        assert "2026-08-31" in markdown
 
 
 def _incident() -> dict:
