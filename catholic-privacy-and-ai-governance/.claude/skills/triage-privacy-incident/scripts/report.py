@@ -446,7 +446,13 @@ def write_report(
     *out_dir* if needed. Returns the path written.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
-    date = today or datetime.datetime.now(tz=datetime.UTC).date()
+    # datetime.timezone.utc, not the datetime.UTC alias ruff's UP017 wants:
+    # this module is synced byte-for-byte into every skill's scripts/report.py
+    # (see eval/sync_skill_bundle.py), which docs/standards/skills.md and every
+    # SKILL.md promise runs under "a plain python3 wherever this skill ends
+    # up" — datetime.UTC needs Python 3.11+, which isn't guaranteed there even
+    # though this project's own requires-python is >=3.12.
+    date = today or datetime.datetime.now(tz=datetime.timezone.utc).date()  # noqa: UP017
     filename = f"{date.isoformat()}-{slugify(record['title'])}.md"
     path = out_dir / filename
     path.write_text(render_fn(record), encoding="utf-8")
