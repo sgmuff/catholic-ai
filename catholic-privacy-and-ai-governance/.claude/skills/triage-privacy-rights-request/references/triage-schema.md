@@ -44,20 +44,38 @@ than being skipped.
 
 ## `governing_deadline`
 
-The single deadline that controls the response, chosen in step 2 from
-among every framework marked `applicable` above (the shortest applicable
-deadline governs when more than one applies).
+The single deadline that controls the response. Always present — even
+when no registered framework actually applies, a request still gets a
+plainly-stated date, per step 4's "state the governing deadline plainly
+and up front."
 
-- `framework_id` (string, required) — must be marked `applicable` in
-  `frameworks_considered`; a deadline can't be governed by a framework
-  ruled inapplicable.
-- `citation` (string, required) — the specific provision, e.g. `Art.
-  12(3)`.
+- `statutory` (boolean, required) — `true` when a registered framework
+  actually imposes this deadline; `false` when none of the frameworks
+  marked `applicable` in `frameworks_considered` do, and this is an
+  internal, non-binding target instead. `false` is only valid when
+  `frameworks_considered` has **no** entry marked `applicable` — if a
+  framework does apply, its deadline governs and can't be sidestepped.
+- `framework_id` (string or `null`) — when `statutory: true`, required and
+  must be marked `applicable` in `frameworks_considered` (chosen in step 2
+  as the shortest applicable deadline, when more than one framework
+  applies). When `statutory: false`, must be `null` — an internal target
+  can't be attributed to a framework that doesn't actually govern it, the
+  same discipline §2.1 already applies to the `compliance` field.
+- `citation` (string, required) — when `statutory: true`, the specific
+  statutory provision, e.g. `Art. 12(3)`. When `statutory: false`, a short
+  label naming this as institutional practice rather than law, e.g.
+  "Internal target — no applicable framework imposes a deadline."
 - `response_due` (string, required) — ISO date, calculated from
-  `request.received_date` per that provision's stated period. Must not
-  fall before `received_date`.
-- `basis` (string, required) — the calculation shown: which provision, its
-  stated period, and the arithmetic from the received date.
+  `request.received_date`. When `statutory: true`, per the governing
+  provision's stated period. When `statutory: false`, per whatever
+  internal practice or benchmark the institution uses. Must not fall
+  before `received_date` either way.
+- `basis` (string, required) — the calculation shown: the stated period
+  and the arithmetic from the received date, either way. When
+  `statutory: false`, may note that the target's length was calibrated
+  against a real framework's comparable period for reasonableness, but
+  must say plainly that framework doesn't govern this request — an
+  analogy, not an authority.
 
 ## `gaps`
 

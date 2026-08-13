@@ -117,6 +117,7 @@ class TestEndToEnd:
                 },
             ],
             "governing_deadline": {
+                "statutory": True,
                 "framework_id": "gdpr-data-subject-rights",
                 "citation": "Art. 12(3)",
                 "response_due": "2026-09-01",
@@ -195,6 +196,61 @@ class TestEndToEnd:
 
         assert result.returncode == 1
         assert "ccpa-cpra" in result.stderr
+
+    def test_no_applicable_framework_renders_a_non_statutory_internal_target(
+        self, tmp_path: Path
+    ) -> None:
+        # The case a US parish routinely hits: neither GDPR (no EU nexus)
+        # nor CCPA/CPRA (not a business) applies, but the request still
+        # needs a plainly-stated response target.
+        triage = self._valid_triage()
+        for framework in triage["frameworks_considered"]:
+            framework["applicable"] = False
+        triage["governing_deadline"] = {
+            "statutory": False,
+            "framework_id": None,
+            "citation": "Internal target — no applicable framework imposes a deadline.",
+            "response_due": "2026-08-31",
+            "basis": "30 days from the 2026-08-01 receipt date, an internal practice "
+            "target calibrated against HIPAA's 30-day period for comparable requests "
+            "— HIPAA itself does not apply here.",
+        }
+        input_path = tmp_path / "triage.json"
+        input_path.write_text(json.dumps(triage))
+        out_dir = tmp_path / "reports"
+
+        result = self._run(input_path, out_dir)
+
+        assert result.returncode == 0, result.stderr
+        rendered = next(iter(out_dir.glob("*.md"))).read_text()
+        assert "No statutory deadline applies" in rendered
+        assert "2026-08-31" in rendered
+
+    def test_statutory_false_with_a_named_framework_id_is_rejected(self, tmp_path: Path) -> None:
+        broken = self._valid_triage()
+        for framework in broken["frameworks_considered"]:
+            framework["applicable"] = False
+        broken["governing_deadline"]["statutory"] = False
+        # framework_id left set from _valid_triage() — must be null when non-statutory.
+        input_path = tmp_path / "triage.json"
+        input_path.write_text(json.dumps(broken))
+
+        result = self._run(input_path, tmp_path / "reports")
+
+        assert result.returncode == 1
+        assert "null" in result.stderr
+
+    def test_statutory_false_rejected_when_a_framework_is_applicable(self, tmp_path: Path) -> None:
+        broken = self._valid_triage()  # gdpr-data-subject-rights still applicable here
+        broken["governing_deadline"]["statutory"] = False
+        broken["governing_deadline"]["framework_id"] = None
+        input_path = tmp_path / "triage.json"
+        input_path.write_text(json.dumps(broken))
+
+        result = self._run(input_path, tmp_path / "reports")
+
+        assert result.returncode == 1
+        assert "statutory" in result.stderr
 
     def test_cst_vocabulary_in_compliance_is_rejected(self, tmp_path: Path) -> None:
         broken = self._valid_triage()
